@@ -92,6 +92,17 @@ impl PersonSummary {
                 };
                 ("Deposed".to_string(), cn, None)
             }
+            PersonKind::Ruler {
+                courtesy_name,
+                lineage,
+                ..
+            } => {
+                let cn = match courtesy_name {
+                    CourtesyName::Recorded(c) => Some(c.clone()),
+                    CourtesyName::NotRecorded => None,
+                };
+                ("Ruler".to_string(), cn, lineage.clone())
+            }
         };
 
         let section = match person.source.section {

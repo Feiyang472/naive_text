@@ -137,6 +137,16 @@ pub enum PersonKind {
         courtesy_name: CourtesyName,
         childhood_name: ChildhoodName,
     },
+    /// Ruler of a rival/foreign state (載記 figures: 十六國 etc.)
+    /// Not recognized as "emperor" by the compiling dynasty, but
+    /// was sovereign of an independent polity.
+    Ruler {
+        surname: String,
+        given_name: String,
+        courtesy_name: CourtesyName,
+        /// Lineage/origin description, e.g. "皝之第五子", "新興匈奴"
+        lineage: Option<String>,
+    },
 }
 
 // ── A fully identified historical person ──────────────────────────
@@ -173,6 +183,11 @@ impl Person {
             PersonKind::Deposed {
                 title, given_name, ..
             } => format!("{title}{given_name}"),
+            PersonKind::Ruler {
+                surname,
+                given_name,
+                ..
+            } => format!("{surname}{given_name}"),
         }
     }
 
@@ -229,6 +244,18 @@ impl Person {
                     aliases.push(c.clone());
                 }
                 if let ChildhoodName::Recorded(c) = childhood_name {
+                    aliases.push(c.clone());
+                }
+            }
+            PersonKind::Ruler {
+                surname,
+                given_name,
+                courtesy_name,
+                ..
+            } => {
+                aliases.push(format!("{surname}{given_name}"));
+                aliases.push(given_name.clone());
+                if let CourtesyName::Recorded(c) = courtesy_name {
                     aliases.push(c.clone());
                 }
             }

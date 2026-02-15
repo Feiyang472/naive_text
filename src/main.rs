@@ -82,16 +82,19 @@ fn main() {
     let mut emperors = 0usize;
     let mut officials = 0usize;
     let mut deposed = 0usize;
+    let mut rulers = 0usize;
     for p in &persons {
         match &p.kind {
             types::PersonKind::Emperor { .. } => emperors += 1,
             types::PersonKind::Official { .. } => officials += 1,
             types::PersonKind::Deposed { .. } => deposed += 1,
+            types::PersonKind::Ruler { .. } => rulers += 1,
         }
     }
     eprintln!("\nBy kind:");
     eprintln!("  Emperor:  {emperors}");
     eprintln!("  Official: {officials}");
+    eprintln!("  Ruler:    {rulers}");
     eprintln!("  Deposed:  {deposed}");
 
     // Show some examples
