@@ -1,7 +1,9 @@
 mod extract;
+mod intext;
 mod parser;
 mod scanner;
 mod surname;
+mod titles;
 mod types;
 
 use std::path::Path;
@@ -140,7 +142,82 @@ fn main() {
         }
     }
 
+    // ── Phase 4: In-text person name extraction ────────────────────
+    eprintln!("\n══════════════════════════════════════════");
+    eprintln!("  IN-TEXT PERSON NAME RECOGNITION");
+    eprintln!("══════════════════════════════════════════");
+
+    let scanner = intext::InTextScanner::new(&persons);
+    let in_text_persons = scanner.scan_corpus(&bio_files);
+
+    let total_mentions: usize = in_text_persons.iter().map(|p| p.mention_count).sum();
+    let unknown_persons: Vec<_> = in_text_persons.iter().filter(|p| !p.has_own_biography).collect();
+
+    eprintln!(
+        "\nFound {} unique names with {} total mentions",
+        in_text_persons.len(),
+        total_mentions
+    );
+    eprintln!(
+        "  Known (have own biography): {}",
+        in_text_persons.len() - unknown_persons.len()
+    );
+    eprintln!(
+        "  Unknown (in-text only):     {}",
+        unknown_persons.len()
+    );
+
+    // Show top unknown persons
+    eprintln!("\nTop unknown persons (no own biography):");
+    for p in unknown_persons.iter().take(30) {
+        let files_short: Vec<&str> = p
+            .mentioned_in
+            .iter()
+            .take(3)
+            .map(|f| {
+                f.rsplit('/')
+                    .next()
+                    .unwrap_or(f)
+            })
+            .collect();
+        let patterns: Vec<String> = p
+            .pattern_counts
+            .iter()
+            .map(|(k, v)| format!("{k}×{v}"))
+            .collect();
+        eprintln!(
+            "  {} ({}次, {}) — {}",
+            p.name,
+            p.mention_count,
+            patterns.join(", "),
+            files_short.join(", ")
+        );
+    }
+
+    // Show top known persons by cross-reference count
+    let known_persons_list: Vec<_> = in_text_persons.iter().filter(|p| p.has_own_biography).collect();
+    eprintln!("\nTop known persons (most cross-referenced):");
+    for p in known_persons_list.iter().take(20) {
+        eprintln!(
+            "  {} — {}次 across {} files",
+            p.name,
+            p.mention_count,
+            p.mentioned_in.len()
+        );
+    }
+
     // ── JSON output to stdout ──────────────────────────────────────
-    let json = serde_json::to_string_pretty(&summaries).expect("JSON serialization failed");
+    #[derive(serde::Serialize)]
+    struct Output {
+        persons: Vec<extract::PersonSummary>,
+        in_text_mentions: Vec<intext::InTextPerson>,
+    }
+
+    let output = Output {
+        persons: summaries,
+        in_text_mentions: in_text_persons,
+    };
+
+    let json = serde_json::to_string_pretty(&output).expect("JSON serialization failed");
     println!("{json}");
 }
