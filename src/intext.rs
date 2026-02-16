@@ -6,7 +6,7 @@ use serde::Serialize;
 
 use crate::scanner::BiographyFile;
 use crate::surname::{build_name_regex, split_name};
-use crate::titles::{build_title_regex, STANDALONE_TITLES, TITLE_SUFFIXES};
+use crate::titles::{STANDALONE_TITLES, TITLE_SUFFIXES, build_title_regex};
 use crate::types::Person;
 
 // ── Types ────────────────────────────────────────────────────────────
@@ -66,21 +66,45 @@ pub struct InTextPerson {
 /// actually title fragments, geographic terms, or fixed expressions.
 const BLACKLIST: &[&str] = &[
     // 左/右 as title components
-    "左右", "左丞", "右丞", "左曹", "右曹",
-    "左僕射", "右僕射",
-    "左長史", "右長史",
-    "左西屬", "左西掾",
-    "左民郎", "左民尚",
+    "左右",
+    "左丞",
+    "右丞",
+    "左曹",
+    "右曹",
+    "左僕射",
+    "右僕射",
+    "左長史",
+    "右長史",
+    "左西屬",
+    "左西掾",
+    "左民郎",
+    "左民尚",
     // 黃門 compound
-    "黃門侍", "黃門郎",
+    "黃門侍",
+    "黃門郎",
     // 都官/金部/倉部/祠部 etc. — "部郎" pattern
-    "都官郎", "金部郎", "倉部郎", "祠部郎", "殿中郎", "主客郎",
+    "都官郎",
+    "金部郎",
+    "倉部郎",
+    "祠部郎",
+    "殿中郎",
+    "主客郎",
     "度支郎",
     // Geographic + 諸 / multi-state abbreviations
-    "江州諸", "荊州諸", "徐州諸", "揚州諸", "豫州諸", "青州諸",
-    "荊湘雍", "雍梁南", "徐兗青", "揚徐兗", "雍秦涼",
+    "江州諸",
+    "荊州諸",
+    "徐州諸",
+    "揚州諸",
+    "豫州諸",
+    "青州諸",
+    "荊湘雍",
+    "雍梁南",
+    "徐兗青",
+    "揚徐兗",
+    "雍秦涼",
     // Fixed expressions
-    "左氏", "左傳",
+    "左氏",
+    "左傳",
 ];
 
 /// Check if the captured name is a false positive.
@@ -109,20 +133,19 @@ pub fn is_false_positive_name(name: &str) -> bool {
     // But "王猛" (2 chars starting with 王) is a real person.
     let chars: Vec<char> = name.chars().collect();
     let nobility_suffixes = ['王', '公', '侯'];
-    if chars.len() >= 3 {
-        if let Some(&last) = chars.last() {
-            if nobility_suffixes.contains(&last) {
-                return true;
-            }
-        }
+    if chars.len() >= 3
+        && let Some(&last) = chars.last()
+        && nobility_suffixes.contains(&last)
+    {
+        return true;
     }
 
     // If the name ends with 州/郡/縣/國 — geographic, not a person
     let geo_suffixes = ['州', '郡', '縣', '國'];
-    if let Some(&last) = chars.last() {
-        if geo_suffixes.contains(&last) {
-            return true;
-        }
+    if let Some(&last) = chars.last()
+        && geo_suffixes.contains(&last)
+    {
+        return true;
     }
 
     // If the last character is a classical Chinese function word or verb,
@@ -131,22 +154,17 @@ pub fn is_false_positive_name(name: &str) -> bool {
     // in the Six Dynasties period, e.g. 王凝之, 劉穆之)
     let bad_endings: &[char] = &[
         // Prepositions / conjunctions / particles
-        '爲', '為', '以', '請', '遣', '使', '令', '命', '率', '及',
-        '與', '乃', '則', '即', '既', '又', '且', '而', '所', '於',
-        '自', '從', '至', '向', '在', '由', '如', '若', '或', '因',
-        '等', '曰', '諸',
-        // Common action verbs that follow names and get captured
-        '走', '出', '害', '救', '殺', '敗', '收', '攻', '破', '降',
-        '反', '叛', '奔', '歸', '入', '克', '圍', '據', '討', '拒',
-        '聞', '送', '屯', '還', '還',
-        // numbers
-        '二', '三', '四', '五', '六', '七', '八', '九', '十',
-        '百', '千', '萬',
+        '爲', '為', '以', '請', '遣', '使', '令', '命', '率', '及', '與', '乃', '則', '即', '既',
+        '又', '且', '而', '所', '於', '自', '從', '至', '向', '在', '由', '如', '若', '或', '因',
+        '等', '曰', '諸', // Common action verbs that follow names and get captured
+        '走', '出', '害', '救', '殺', '敗', '收', '攻', '破', '降', '反', '叛', '奔', '歸', '入',
+        '克', '圍', '據', '討', '拒', '聞', '送', '屯', '還', '還', // numbers
+        '二', '三', '四', '五', '六', '七', '八', '九', '十', '百', '千', '萬',
     ];
-    if let Some(&last) = chars.last() {
-        if bad_endings.contains(&last) {
-            return true;
-        }
+    if let Some(&last) = chars.last()
+        && bad_endings.contains(&last)
+    {
+        return true;
     }
 
     false
@@ -177,28 +195,19 @@ impl InTextScanner {
         let title_re = build_title_regex();
 
         // Pattern 1: 以 ... name ... 為
-        let re_appointment = Regex::new(&format!(
-            "以[^為]{{0,10}}({name_re})為"
-        ))
-        .expect("appointment regex");
+        let re_appointment =
+            Regex::new(&format!("以[^為]{{0,10}}({name_re})為")).expect("appointment regex");
 
         // Pattern 2: title + name
-        let re_title_name = Regex::new(&format!(
-            "(?:{title_re})({name_re})"
-        ))
-        .expect("title_name regex");
+        let re_title_name =
+            Regex::new(&format!("(?:{title_re})({name_re})")).expect("title_name regex");
 
         // Pattern 3: name + 字 + courtesy
-        let re_courtesy = Regex::new(&format!(
-            "({name_re})字([^\\s，。字]{{1,2}})"
-        ))
-        .expect("courtesy regex");
+        let re_courtesy =
+            Regex::new(&format!("({name_re})字([^\\s，。字]{{1,2}})")).expect("courtesy regex");
 
         // Pattern 4: 問/謂 + name + 曰
-        let re_speech = Regex::new(&format!(
-            "[問謂]({name_re})曰"
-        ))
-        .expect("speech regex");
+        let re_speech = Regex::new(&format!("[問謂]({name_re})曰")).expect("speech regex");
 
         // Build set of known display names and aliases
         let mut known_names = HashSet::new();
@@ -228,10 +237,10 @@ impl InTextScanner {
                 | crate::types::PersonKind::Ruler { surname, .. } => {
                     surnames.insert(surname.clone());
                 }
-                crate::types::PersonKind::Emperor { surname, .. } => {
-                    if let Some(s) = surname {
-                        surnames.insert(s.clone());
-                    }
+                crate::types::PersonKind::Emperor {
+                    surname: Some(s), ..
+                } => {
+                    surnames.insert(s.clone());
                 }
                 _ => {}
             }
@@ -243,44 +252,23 @@ impl InTextScanner {
     pub fn scan_text(&self, content: &str, source_file: &str) -> Vec<InTextMention> {
         let mut mentions = Vec::new();
 
-        // Pattern 1: 以X為
-        for caps in self.re_appointment.captures_iter(content) {
-            if let Some(m) = caps.get(1) {
-                if let Some(mention) =
-                    self.make_mention(m.as_str(), MentionPattern::Appointment, content, m.start(), source_file)
-                {
-                    mentions.push(mention);
-                }
-            }
-        }
+        let patterns: &[(&Regex, MentionPattern)] = &[
+            (&self.re_appointment, MentionPattern::Appointment),
+            (&self.re_title_name, MentionPattern::TitleName),
+            (&self.re_courtesy, MentionPattern::CourtesyIntro),
+            (&self.re_speech, MentionPattern::Speech),
+        ];
 
-        // Pattern 2: title + name
-        for caps in self.re_title_name.captures_iter(content) {
-            if let Some(m) = caps.get(1) {
-                if let Some(mention) =
-                    self.make_mention(m.as_str(), MentionPattern::TitleName, content, m.start(), source_file)
-                {
-                    mentions.push(mention);
-                }
-            }
-        }
-
-        // Pattern 3: name + 字 + courtesy
-        for caps in self.re_courtesy.captures_iter(content) {
-            if let Some(m) = caps.get(1) {
-                if let Some(mention) =
-                    self.make_mention(m.as_str(), MentionPattern::CourtesyIntro, content, m.start(), source_file)
-                {
-                    mentions.push(mention);
-                }
-            }
-        }
-
-        // Pattern 4: speech attribution
-        for caps in self.re_speech.captures_iter(content) {
-            if let Some(m) = caps.get(1) {
-                if let Some(mention) =
-                    self.make_mention(m.as_str(), MentionPattern::Speech, content, m.start(), source_file)
+        for (re, pattern) in patterns {
+            for caps in re.captures_iter(content) {
+                if let Some(m) = caps.get(1)
+                    && let Some(mention) = self.make_mention(
+                        m.as_str(),
+                        pattern.clone(),
+                        content,
+                        m.start(),
+                        source_file,
+                    )
                 {
                     mentions.push(mention);
                 }
@@ -308,7 +296,7 @@ impl InTextScanner {
 
         // Filter: given name must be 1-2 chars
         let given_len = given.chars().count();
-        if given_len < 1 || given_len > 2 {
+        if !(1..=2).contains(&given_len) {
             return None;
         }
 
@@ -327,17 +315,15 @@ impl InTextScanner {
 
     /// Scan all biography files and return aggregated per-name results.
     pub fn scan_corpus(&self, bio_files: &[BiographyFile]) -> Vec<InTextPerson> {
-        // name → (surname, given, mentions-by-file, pattern-counts, contexts)
-        let mut agg: HashMap<
+        type PersonAgg = (
             String,
-            (
-                String,
-                String,
-                HashSet<String>,
-                HashMap<String, usize>,
-                Vec<String>,
-            ),
-        > = HashMap::new();
+            String,
+            HashSet<String>,
+            HashMap<String, usize>,
+            Vec<String>,
+        );
+        // name → (surname, given, mentions-by-file, pattern-counts, contexts)
+        let mut agg: HashMap<String, PersonAgg> = HashMap::new();
 
         for bio in bio_files {
             let content = match fs::read_to_string(&bio.path) {
@@ -411,10 +397,7 @@ fn extract_context(text: &str, byte_offset: usize, char_radius: usize) -> String
     let end = (char_idx + char_radius).min(chars.len());
 
     let window: String = chars[start..end].iter().collect();
-    let line = window
-        .lines()
-        .find(|l| !l.is_empty())
-        .unwrap_or(&window);
+    let line = window.lines().find(|l| !l.is_empty()).unwrap_or(&window);
 
     line.to_string()
 }

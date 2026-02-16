@@ -4,6 +4,7 @@ use std::path::PathBuf;
 // ── Which historical book ──────────────────────────────────────────
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize)]
+#[allow(clippy::enum_variant_names)] // "Shu" suffix is the book name, not redundant
 pub enum Book {
     /// 晉書
     JinShu,
@@ -263,23 +264,4 @@ impl Person {
 
         self.aliases = aliases;
     }
-}
-
-// ── How a person is referenced in running text ────────────────────
-
-#[derive(Debug, Clone, Serialize)]
-#[serde(tag = "ref_type")]
-pub enum PersonRef {
-    /// 褚淵
-    FullName { surname: String, given: String },
-    /// 淵 (in the context of 褚淵's biography)
-    GivenOnly(String),
-    /// 彥回
-    CourtesyOnly(String),
-    /// 尚書令, 司空, etc.
-    Title(String),
-    /// 高祖宣帝 – only for emperors
-    TemplePosthumous { temple: String, posthumous: String },
-    /// Omitted subject – defaults to biography subject
-    SubjectOmitted,
 }

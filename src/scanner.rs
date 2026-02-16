@@ -35,10 +35,7 @@ pub fn scan_corpus(root: &Path) -> Vec<BiographyFile> {
             continue;
         }
 
-        let book_name = book_dir
-            .file_name()
-            .and_then(|n| n.to_str())
-            .unwrap_or("");
+        let book_name = book_dir.file_name().and_then(|n| n.to_str()).unwrap_or("");
         let book = match Book::from_dir_name(book_name) {
             Some(b) => b,
             None => continue, // skip Cargo.toml, src/, etc.
@@ -90,17 +87,14 @@ pub fn scan_corpus(root: &Path) -> Vec<BiographyFile> {
                         continue;
                     }
 
-                    let stem = path
-                        .file_stem()
-                        .and_then(|s| s.to_str())
-                        .unwrap_or("");
+                    let stem = path.file_stem().and_then(|s| s.to_str()).unwrap_or("");
 
                     // Strip leading numeric prefix (e.g. "02_褚淵" → "褚淵")
                     let clean_stem = strip_numeric_prefix(stem);
 
                     // Skip non-biography files, but keep "目录" in 本紀/載記
                     // where it often contains the actual biography text
-                    if skip_names.iter().any(|&s| clean_stem == s) {
+                    if skip_names.contains(&clean_stem) {
                         let keep = clean_stem == "目录"
                             && matches!(section, Section::BenJi | Section::ZaiJi);
                         if !keep {

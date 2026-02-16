@@ -10,33 +10,49 @@ mod types;
 
 use std::path::{Path, PathBuf};
 
+use clap::{Parser, Subcommand};
 use extract::PersonSummary;
 use types::Section;
 
 const OUTPUT_DIR: &str = "output";
 
+#[derive(Parser)]
+#[command(
+    name = "person_extract",
+    about = "Six Dynasties historical text analyzer"
+)]
+struct Cli {
+    #[command(subcommand)]
+    command: Option<Command>,
+}
+
+#[derive(Subcommand)]
+enum Command {
+    /// Run full corpus extraction → output/*.json
+    Extract {
+        /// Path to corpus root directory
+        #[arg(default_value = ".")]
+        corpus: PathBuf,
+    },
+    /// Query time periods from cached output
+    Query {
+        /// Time query, e.g. "太和三年", "太和元年-太和六年", "@東晉"
+        query: Vec<String>,
+    },
+    /// Print the full era-year timeline inventory
+    Timeline,
+}
+
 fn main() {
-    let args: Vec<String> = std::env::args().collect();
+    let cli = Cli::parse();
 
-    // --query MODE: read cached JSONs, return matching scopes + events
-    if args.len() >= 3 && args[1] == "--query" {
-        run_query(&args[2..]);
-        return;
+    match cli.command {
+        Some(Command::Extract { corpus }) => run_extract(&corpus),
+        Some(Command::Query { query }) => run_query(&query),
+        Some(Command::Timeline) => run_timeline(),
+        // Default: extract from current directory
+        None => run_extract(Path::new(".")),
     }
-
-    // --timeline MODE: print the full era-year inventory
-    if args.len() >= 2 && args[1] == "--timeline" {
-        run_timeline();
-        return;
-    }
-
-    // Default: full extraction
-    let root = args
-        .get(1)
-        .map(PathBuf::from)
-        .unwrap_or_else(|| Path::new(".").to_path_buf());
-
-    run_extract(&root);
 }
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -50,8 +66,7 @@ fn output_path(name: &str) -> PathBuf {
 fn write_json<T: serde::Serialize>(name: &str, data: &T) {
     let path = output_path(name);
     let json = serde_json::to_string_pretty(data).expect("JSON serialization failed");
-    std::fs::write(&path, &json)
-        .unwrap_or_else(|e| panic!("cannot write {}: {e}", path.display()));
+    std::fs::write(&path, &json).unwrap_or_else(|e| panic!("cannot write {}: {e}", path.display()));
     eprintln!("  {} ({} bytes)", path.display(), json.len());
 }
 
@@ -88,13 +103,17 @@ fn run_timeline() {
     for regime in &data.timeline.regimes {
         println!("{}:", regime.regime);
         for era in &regime.eras {
-            let years: Vec<String> = era.years.iter().map(|tp| {
-                if tp.occurrence_count > 1 {
-                    format!("{}年(×{})", tp.year, tp.occurrence_count)
-                } else {
-                    format!("{}年", tp.year)
-                }
-            }).collect();
+            let years: Vec<String> = era
+                .years
+                .iter()
+                .map(|tp| {
+                    if tp.occurrence_count > 1 {
+                        format!("{}年(×{})", tp.year, tp.occurrence_count)
+                    } else {
+                        format!("{}年", tp.year)
+                    }
+                })
+                .collect();
             println!("  {}: {}", era.era, years.join(", "));
         }
         println!();
@@ -119,15 +138,15 @@ fn run_query(query_args: &[String]) {
     let parsed = parse_time_query(&raw);
 
     let matching_scopes = match &parsed {
-        TimeQuery::Single { era, year } => {
-            timeline_data.time_index.query(era, *year)
-        }
-        TimeQuery::Range { era, year_from, year_to } => {
-            timeline_data.time_index.query_range(era, *year_from, *year_to)
-        }
-        TimeQuery::Regime { regime } => {
-            timeline_data.time_index.query_regime(regime)
-        }
+        TimeQuery::Single { era, year } => timeline_data.time_index.query(era, *year),
+        TimeQuery::Range {
+            era,
+            year_from,
+            year_to,
+        } => timeline_data
+            .time_index
+            .query_range(era, *year_from, *year_to),
+        TimeQuery::Regime { regime } => timeline_data.time_index.query_regime(regime),
     };
 
     if matching_scopes.is_empty() {
@@ -153,14 +172,14 @@ fn run_query(query_args: &[String]) {
             if let Some(t) = &e.time {
                 match &parsed {
                     TimeQuery::Single { era, year } => {
-                        t.era == *era && year.map_or(true, |y| t.year == y)
+                        t.era == *era && year.is_none_or(|y| t.year == y)
                     }
-                    TimeQuery::Range { era, year_from, year_to } => {
-                        t.era == *era && t.year >= *year_from && t.year <= *year_to
-                    }
-                    TimeQuery::Regime { regime } => {
-                        t.regime == *regime
-                    }
+                    TimeQuery::Range {
+                        era,
+                        year_from,
+                        year_to,
+                    } => t.era == *era && t.year >= *year_from && t.year <= *year_to,
+                    TimeQuery::Regime { regime } => t.regime == *regime,
                 }
             } else {
                 false
@@ -204,7 +223,11 @@ enum TimeQuery {
     /// Single era + optional year: "太和", "太和三年"
     Single { era: String, year: Option<u8> },
     /// Year range within one era: "太和元年-太和六年", "太和1-5"
-    Range { era: String, year_from: u8, year_to: u8 },
+    Range {
+        era: String,
+        year_from: u8,
+        year_to: u8,
+    },
     /// All scopes for a regime: "@東晉", "@北魏"
     Regime { regime: String },
 }
@@ -235,7 +258,11 @@ fn parse_time_query(raw: &str) -> TimeQuery {
 
             if let (Some(yf), Some(yt)) = (year_from, year_to) {
                 // Use the era from the first part (or second if first is just a number)
-                let era = if era_from.is_empty() { era_to } else { era_from };
+                let era = if era_from.is_empty() {
+                    era_to
+                } else {
+                    era_from
+                };
                 return TimeQuery::Range {
                     era,
                     year_from: yf,
@@ -263,10 +290,10 @@ fn parse_era_year(raw: &str) -> (String, Option<u8>) {
     if let Some(idx) = raw.rfind(|c: char| !c.is_ascii_digit()) {
         let char_end = idx + raw[idx..].chars().next().unwrap().len_utf8();
         let after = &raw[char_end..];
-        if !after.is_empty() {
-            if let Ok(y) = after.parse::<u8>() {
-                return (raw[..char_end].to_string(), Some(y));
-            }
+        if !after.is_empty()
+            && let Ok(y) = after.parse::<u8>()
+        {
+            return (raw[..char_end].to_string(), Some(y));
         }
     }
 
@@ -429,10 +456,7 @@ fn run_extract(root: &Path) {
         "  Known (have own biography): {}",
         in_text_persons.len() - unknown_persons.len()
     );
-    eprintln!(
-        "  Unknown (in-text only):     {}",
-        unknown_persons.len()
-    );
+    eprintln!("  Unknown (in-text only):     {}", unknown_persons.len());
 
     eprintln!("\nTop unknown persons (no own biography):");
     for p in unknown_persons.iter().take(20) {
@@ -490,7 +514,10 @@ fn run_extract(root: &Path) {
     for regime in &timeline.regimes {
         let era_count = regime.eras.len();
         let year_count: usize = regime.eras.iter().map(|e| e.years.len()).sum();
-        eprintln!("  {}: {} eras, {} distinct years", regime.regime, era_count, year_count);
+        eprintln!(
+            "  {}: {} eras, {} distinct years",
+            regime.regime, era_count, year_count
+        );
     }
 
     // Sample events

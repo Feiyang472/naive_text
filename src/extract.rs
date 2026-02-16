@@ -61,10 +61,7 @@ impl PersonSummary {
         let ref_stats = count_refs_in_biography(person);
 
         let (kind, courtesy_name, origin) = match &person.kind {
-            PersonKind::Emperor {
-                courtesy_name,
-                ..
-            } => {
+            PersonKind::Emperor { courtesy_name, .. } => {
                 let cn = match courtesy_name {
                     CourtesyName::Recorded(c) => Some(c.clone()),
                     CourtesyName::NotRecorded => None,
@@ -82,10 +79,7 @@ impl PersonSummary {
                 };
                 ("Official".to_string(), cn, origin.clone())
             }
-            PersonKind::Deposed {
-                courtesy_name,
-                ..
-            } => {
+            PersonKind::Deposed { courtesy_name, .. } => {
                 let cn = match courtesy_name {
                     CourtesyName::Recorded(c) => Some(c.clone()),
                     CourtesyName::NotRecorded => None,
