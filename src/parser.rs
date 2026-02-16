@@ -33,9 +33,7 @@ static RE_OFFICIAL: LazyLock<Regex> = LazyLock::new(|| {
 // Pattern 1b: Official without courtesy name
 // {FullName}，{Origin}人也。
 static RE_OFFICIAL_NO_COURTESY: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(
-        r"^(?P<name>[^\s，。、字]{2,4})[，,](?P<origin>[^\s，。人字]+)人也"
-    ).unwrap()
+    Regex::new(r"^(?P<name>[^\s，。、字]{2,4})[，,](?P<origin>[^\s，。人字]+)人也").unwrap()
 });
 
 // Pattern 2a: Emperor with temple name
@@ -65,9 +63,8 @@ static RE_DEPOSED: LazyLock<Regex> = LazyLock::new(|| {
 });
 
 // Pattern for surname extraction from "姓X氏"
-static RE_SURNAME: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"姓(?P<surname>[^\s，。氏]+)氏").unwrap()
-});
+static RE_SURNAME: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"姓(?P<surname>[^\s，。氏]+)氏").unwrap());
 
 // ── 載記 ruler patterns ────────────────────────────────────────────
 //
@@ -87,24 +84,18 @@ static RE_SURNAME: LazyLock<Regex> = LazyLock::new(|| {
 
 // Pattern R1: Ruler with 字 (relaxed: just need name + courtesy)
 static RE_RULER_WITH_COURTESY: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(
-        r"^(?P<name>[^\s，。字]{2,5})[，,]?字(?P<courtesy>[^\s，。]{1,3})"
-    ).unwrap()
+    Regex::new(r"^(?P<name>[^\s，。字]{2,5})[，,]?字(?P<courtesy>[^\s，。]{1,3})").unwrap()
 });
 
 // Pattern R2: Given-name-only start (continuation biography, e.g. "萇字景茂")
 static RE_RULER_GIVEN_ONLY: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(
-        r"^(?P<given>[^\s，。字]{1,2})字(?P<courtesy>[^\s，。]{1,3})"
-    ).unwrap()
+    Regex::new(r"^(?P<given>[^\s，。字]{1,2})字(?P<courtesy>[^\s，。]{1,3})").unwrap()
 });
 
 // Pattern R3: Ruler without 字 (taboo cases)
 // {Name}，{Desc}
 static RE_RULER_NO_COURTESY: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(
-        r"^(?P<name>[^\s，。字]{2,5})[，,](?P<lineage>[^\s。]+也)"
-    ).unwrap()
+    Regex::new(r"^(?P<name>[^\s，。字]{2,5})[，,](?P<lineage>[^\s。]+也)").unwrap()
 });
 
 /// Try to parse a person from a biography file.
@@ -128,10 +119,10 @@ pub fn parse_biography(bio: &BiographyFile) -> Option<Person> {
 
     for line in &lines_to_try {
         // Try emperor patterns first (for 本紀 and 載記)
-        if source.section == Section::BenJi || source.section == Section::ZaiJi {
-            if let Some(p) = try_parse_emperor(line, &content, &source) {
-                return Some(p);
-            }
+        if (source.section == Section::BenJi || source.section == Section::ZaiJi)
+            && let Some(p) = try_parse_emperor(line, &content, &source)
+        {
+            return Some(p);
         }
 
         // Try official pattern (most common)
@@ -140,10 +131,10 @@ pub fn parse_biography(bio: &BiographyFile) -> Option<Person> {
         }
 
         // Try emperor patterns even in 列傳
-        if source.section != Section::BenJi {
-            if let Some(p) = try_parse_emperor(line, &content, &source) {
-                return Some(p);
-            }
+        if source.section != Section::BenJi
+            && let Some(p) = try_parse_emperor(line, &content, &source)
+        {
+            return Some(p);
         }
     }
 
@@ -393,7 +384,10 @@ fn extract_lineage(line: &str) -> Option<String> {
     // Find text after the courtesy name section, looking for patterns like
     // "X之子", "X之後", "X第N子", "X之族子"
     static RE_LINEAGE: LazyLock<Regex> = LazyLock::new(|| {
-        Regex::new(r"(?P<lineage>[^\s，。]{1,10}(?:之第?[^\s，。]*子|之後|之族|第[^\s，。]*子)[^\s，。]*)").unwrap()
+        Regex::new(
+            r"(?P<lineage>[^\s，。]{1,10}(?:之第?[^\s，。]*子|之後|之族|第[^\s，。]*子)[^\s，。]*)",
+        )
+        .unwrap()
     });
 
     RE_LINEAGE
@@ -430,8 +424,7 @@ fn extract_surname_from_juan(juan: &str) -> Option<String> {
 fn extract_temple_from_juan(juan: &str) -> Option<String> {
     // Common temple names
     let temple_names = [
-        "高祖", "太祖", "世祖", "太宗", "世宗", "高宗", "中宗", "肅祖",
-        "顯宗", "孝宗",
+        "高祖", "太祖", "世祖", "太宗", "世宗", "高宗", "中宗", "肅祖", "顯宗", "孝宗",
     ];
     for &tn in &temple_names {
         if juan.contains(tn) {

@@ -67,7 +67,15 @@ impl TimeIndex {
     pub fn query(&self, era: &str, year: Option<u8>) -> Vec<&TimeScope> {
         self.scopes
             .iter()
-            .filter(|s| s.time.era == era && year.map_or(true, |y| s.time.year == y))
+            .filter(|s| s.time.era == era && year.is_none_or(|y| s.time.year == y))
+            .collect()
+    }
+
+    /// Query scopes matching a year range within one era.
+    pub fn query_range(&self, era: &str, year_from: u8, year_to: u8) -> Vec<&TimeScope> {
+        self.scopes
+            .iter()
+            .filter(|s| s.time.era == era && s.time.year >= year_from && s.time.year <= year_to)
             .collect()
     }
 
@@ -77,6 +85,93 @@ impl TimeIndex {
             .iter()
             .filter(|s| s.time.regime == regime)
             .collect()
+    }
+}
+
+// ── Timeline: full era-year inventory ───────────────────────────────
+
+/// A single observed time point (era+year) in the corpus.
+#[derive(Debug, Clone, Serialize, serde::Deserialize)]
+pub struct TimePoint {
+    pub era: String,
+    pub year: u8,
+    pub occurrence_count: usize,
+    /// Source files where this time point appears.
+    pub files: Vec<String>,
+}
+
+/// All observed years for one era name under one regime.
+#[derive(Debug, Clone, Serialize, serde::Deserialize)]
+pub struct EraTimeline {
+    pub era: String,
+    /// Years sorted ascending, each with occurrence counts.
+    pub years: Vec<TimePoint>,
+}
+
+/// All eras observed for one regime.
+#[derive(Debug, Clone, Serialize, serde::Deserialize)]
+pub struct RegimeTimeline {
+    pub regime: String,
+    pub eras: Vec<EraTimeline>,
+}
+
+/// Full corpus chronological inventory.
+#[derive(Debug, Clone, Serialize, serde::Deserialize)]
+pub struct Timeline {
+    pub regimes: Vec<RegimeTimeline>,
+    /// Total distinct (regime, era, year) triples.
+    pub total_time_points: usize,
+}
+
+impl Timeline {
+    /// Build a timeline from all collected time scopes.
+    pub fn from_scopes(scopes: &[TimeScope]) -> Self {
+        // Collect: (regime, era, year) → set of files
+        let mut map: HashMap<(String, String, u8), Vec<String>> = HashMap::new();
+        for s in scopes {
+            let key = (s.time.regime.clone(), s.time.era.clone(), s.time.year);
+            let files = map.entry(key).or_default();
+            let f = &s.span.file;
+            if !files.contains(f) {
+                files.push(f.clone());
+            }
+        }
+
+        // Group by regime → era → years
+        let mut regime_map: HashMap<String, HashMap<String, Vec<TimePoint>>> = HashMap::new();
+        for ((regime, era, year), files) in &map {
+            let era_map = regime_map.entry(regime.clone()).or_default();
+            let years = era_map.entry(era.clone()).or_default();
+            years.push(TimePoint {
+                era: era.clone(),
+                year: *year,
+                occurrence_count: files.len(),
+                files: files.clone(),
+            });
+        }
+
+        let mut regimes: Vec<RegimeTimeline> = regime_map
+            .into_iter()
+            .map(|(regime, era_map)| {
+                let mut eras: Vec<EraTimeline> = era_map
+                    .into_iter()
+                    .map(|(era, mut years)| {
+                        years.sort_by_key(|tp| tp.year);
+                        EraTimeline { era, years }
+                    })
+                    .collect();
+                // Sort eras by their earliest year's first appearance
+                eras.sort_by_key(|e| e.years.first().map(|tp| tp.year).unwrap_or(0));
+                RegimeTimeline { regime, eras }
+            })
+            .collect();
+        regimes.sort_by_key(|r| r.regime.clone());
+
+        let total = map.len();
+        Timeline {
+            regimes,
+            total_time_points: total,
+        }
     }
 }
 
@@ -110,10 +205,7 @@ pub enum EventKind {
         target: String,
     },
     /// X薨/卒/崩 — death
-    Death {
-        person: String,
-        verb: String,
-    },
+    Death { person: String, verb: String },
 }
 
 /// A single extracted event with optional time context.
@@ -225,10 +317,8 @@ impl EventScanner {
 
         // Time: {era}{number}年
         // Captures: era name, year number (Chinese)
-        let re_time = Regex::new(&format!(
-            "({era_re})(元|[一二三四五六七八九十]{{1,3}})年"
-        ))
-        .expect("time regex");
+        let re_time = Regex::new(&format!("({era_re})(元|[一二三四五六七八九十]{{1,3}})年"))
+            .expect("time regex");
 
         // Month + day: (正|二|...|十二)月(干支)
         let re_month_day = Regex::new(
@@ -237,10 +327,8 @@ impl EventScanner {
         .expect("month_day regex");
 
         // Appointment: 以{title?}{name}為{new_title}
-        let re_appointment = Regex::new(&format!(
-            "以[^為]{{0,12}}({name_re})為([^，。]{{2,20}})"
-        ))
-        .expect("appointment regex");
+        let re_appointment = Regex::new(&format!("以[^為]{{0,12}}({name_re})為([^，。]{{2,20}})"))
+            .expect("appointment regex");
 
         // Battle: {name}{verb}{target}
         let re_battle = Regex::new(&format!(
@@ -249,16 +337,12 @@ impl EventScanner {
         .expect("battle regex");
 
         // Death: {title?}{name}(薨|卒|崩|死)
-        let re_death = Regex::new(&format!(
-            "(?:{title_re})?({name_re})(薨|卒|崩)"
-        ))
-        .expect("death regex");
+        let re_death =
+            Regex::new(&format!("(?:{title_re})?({name_re})(薨|卒|崩)")).expect("death regex");
 
         // Place in title: {place}(刺史|太守|...)
-        let re_place_title = Regex::new(
-            r"(南?[^\s，。以為]{1,4})(刺史|太守|內史)"
-        )
-        .expect("place_title regex");
+        let re_place_title =
+            Regex::new(r"(南?[^\s，。以為]{1,4})(刺史|太守|內史)").expect("place_title regex");
 
         EventScanner {
             re_time,
@@ -284,8 +368,8 @@ impl EventScanner {
                 None => continue,
             };
 
-            let regime = regime::resolve_era(era, book)
-                .unwrap_or_else(|| regime::default_regime(book));
+            let regime =
+                regime::resolve_era(era, book).unwrap_or_else(|| regime::default_regime(book));
 
             // Look for month/day after this time reference
             let after = &content[full_match.end()..];
@@ -341,15 +425,12 @@ impl EventScanner {
     }
 
     /// Find the closest preceding time reference for a given byte offset.
-    fn find_time_context(
-        times: &[(usize, TimeRef)],
-        event_offset: usize,
-    ) -> Option<TimeRef> {
+    fn find_time_context(times: &[(usize, TimeRef)], event_offset: usize) -> Option<TimeRef> {
         // Find the last time ref that appears BEFORE this event
         times
             .iter()
-            .filter(|(off, _)| *off < event_offset)
-            .last()
+            .rev()
+            .find(|(off, _)| *off < event_offset)
             .map(|(_, t)| t.clone())
     }
 
@@ -474,10 +555,7 @@ impl EventScanner {
     }
 
     /// Scan the entire corpus.
-    pub fn scan_corpus(
-        &self,
-        bio_files: &[BiographyFile],
-    ) -> (Vec<Event>, TimeIndex, EventStats) {
+    pub fn scan_corpus(&self, bio_files: &[BiographyFile]) -> (Vec<Event>, TimeIndex, EventStats) {
         let mut all_events = Vec::new();
         let mut all_scopes = Vec::new();
         let mut era_dist: HashMap<String, usize> = HashMap::new();
@@ -493,11 +571,8 @@ impl EventScanner {
                 Err(_) => continue,
             };
 
-            let (events, scopes) = self.scan_file(
-                &content,
-                bio.source.book,
-                &bio.path.display().to_string(),
-            );
+            let (events, scopes) =
+                self.scan_file(&content, bio.source.book, &bio.path.display().to_string());
 
             for e in &events {
                 match &e.kind {
@@ -542,9 +617,7 @@ impl EventScanner {
             top_places,
         };
 
-        let time_index = TimeIndex {
-            scopes: all_scopes,
-        };
+        let time_index = TimeIndex { scopes: all_scopes };
 
         (all_events, time_index, stats)
     }
@@ -557,10 +630,10 @@ fn collect_extra_surnames(persons: &[Person]) -> Vec<String> {
             PersonKind::Official { surname, .. } | PersonKind::Ruler { surname, .. } => {
                 surnames.insert(surname.clone());
             }
-            PersonKind::Emperor { surname, .. } => {
-                if let Some(s) = surname {
-                    surnames.insert(s.clone());
-                }
+            PersonKind::Emperor {
+                surname: Some(s), ..
+            } => {
+                surnames.insert(s.clone());
             }
             _ => {}
         }
@@ -584,5 +657,9 @@ fn extract_context(text: &str, byte_offset: usize, char_radius: usize) -> String
     let end = (char_idx + char_radius).min(chars.len());
 
     let window: String = chars[start..end].iter().collect();
-    window.lines().find(|l| !l.is_empty()).unwrap_or(&window).to_string()
+    window
+        .lines()
+        .find(|l| !l.is_empty())
+        .unwrap_or(&window)
+        .to_string()
 }
