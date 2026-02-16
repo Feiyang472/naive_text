@@ -13,14 +13,20 @@ use std::path::{Path, PathBuf};
 use extract::PersonSummary;
 use types::Section;
 
-const OUTPUT_PATH: &str = "output/corpus.json";
+const OUTPUT_DIR: &str = "output";
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
 
-    // --query MODE: read cached JSON, return matching time scopes
+    // --query MODE: read cached JSONs, return matching scopes + events
     if args.len() >= 3 && args[1] == "--query" {
         run_query(&args[2..]);
+        return;
+    }
+
+    // --timeline MODE: print the full era-year inventory
+    if args.len() >= 2 && args[1] == "--timeline" {
+        run_timeline();
         return;
     }
 
@@ -34,51 +40,101 @@ fn main() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-//  QUERY MODE: read output/corpus.json and return matching time scopes
+//  OUTPUT FILE HELPERS
 // ═══════════════════════════════════════════════════════════════════════
 
-#[derive(serde::Deserialize, serde::Serialize)]
-struct Output {
-    persons: Vec<extract::PersonSummary>,
-    in_text_mentions: Vec<intext::InTextPerson>,
-    events: Vec<event::Event>,
-    time_index: event::TimeIndex,
-    event_stats: event::EventStats,
+fn output_path(name: &str) -> PathBuf {
+    Path::new(OUTPUT_DIR).join(name)
 }
+
+fn write_json<T: serde::Serialize>(name: &str, data: &T) {
+    let path = output_path(name);
+    let json = serde_json::to_string_pretty(data).expect("JSON serialization failed");
+    std::fs::write(&path, &json)
+        .unwrap_or_else(|e| panic!("cannot write {}: {e}", path.display()));
+    eprintln!("  {} ({} bytes)", path.display(), json.len());
+}
+
+fn read_json<T: serde::de::DeserializeOwned>(name: &str) -> T {
+    let path = output_path(name);
+    let json = std::fs::read_to_string(&path).unwrap_or_else(|e| {
+        eprintln!("Cannot read {}: {e}", path.display());
+        eprintln!("Run extraction first (without --query) to generate the index.");
+        std::process::exit(1);
+    });
+    serde_json::from_str(&json).unwrap_or_else(|e| {
+        eprintln!("Cannot parse {}: {e}", path.display());
+        eprintln!("The JSON may be from an older format. Re-run extraction.");
+        std::process::exit(1);
+    })
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  TIMELINE MODE: print the era-year inventory to stdout
+// ═══════════════════════════════════════════════════════════════════════
+
+#[derive(serde::Deserialize)]
+struct TimelineFile {
+    timeline: event::Timeline,
+    #[allow(dead_code)]
+    time_index: event::TimeIndex,
+    #[allow(dead_code)]
+    stats: event::EventStats,
+}
+
+fn run_timeline() {
+    let data: TimelineFile = read_json("timeline.json");
+
+    for regime in &data.timeline.regimes {
+        println!("{}:", regime.regime);
+        for era in &regime.eras {
+            let years: Vec<String> = era.years.iter().map(|tp| {
+                if tp.occurrence_count > 1 {
+                    format!("{}年(×{})", tp.year, tp.occurrence_count)
+                } else {
+                    format!("{}年", tp.year)
+                }
+            }).collect();
+            println!("  {}: {}", era.era, years.join(", "));
+        }
+        println!();
+    }
+    eprintln!(
+        "Total: {} distinct (regime, era, year) triples",
+        data.timeline.total_time_points
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  QUERY MODE: read cached JSONs, return matching scopes + events
+// ═══════════════════════════════════════════════════════════════════════
 
 fn run_query(query_args: &[String]) {
     let raw = query_args.join(" ");
 
-    // Read cached JSON
-    let json = match std::fs::read_to_string(OUTPUT_PATH) {
-        Ok(j) => j,
-        Err(e) => {
-            eprintln!("Cannot read {OUTPUT_PATH}: {e}");
-            eprintln!("Run extraction first (without --query) to generate the index.");
-            std::process::exit(1);
+    let timeline_data: TimelineFile = read_json("timeline.json");
+    let events: Vec<event::Event> = read_json("events.json");
+
+    // Parse query: "太和", "太和三年", "太和元年-太和六年", "太和1-5"
+    let parsed = parse_time_query(&raw);
+
+    let matching_scopes = match &parsed {
+        TimeQuery::Single { era, year } => {
+            timeline_data.time_index.query(era, *year)
+        }
+        TimeQuery::Range { era, year_from, year_to } => {
+            timeline_data.time_index.query_range(era, *year_from, *year_to)
+        }
+        TimeQuery::Regime { regime } => {
+            timeline_data.time_index.query_regime(regime)
         }
     };
 
-    let output: Output = match serde_json::from_str(&json) {
-        Ok(o) => o,
-        Err(e) => {
-            eprintln!("Cannot parse {OUTPUT_PATH}: {e}");
-            eprintln!("The JSON may be from an older format. Re-run extraction.");
-            std::process::exit(1);
-        }
-    };
-
-    // Parse query: "{era}" or "{era}{year}年" or "{era}{number}"
-    // e.g. "太和", "太和三年", "太和3"
-    let (era, year) = parse_time_query(&raw);
-
-    let matches = output.time_index.query(&era, year);
-
-    if matches.is_empty() {
+    if matching_scopes.is_empty() {
         eprintln!("No time scopes found for: {raw}");
-        eprintln!("  parsed as: era={era}, year={year:?}");
+        eprintln!("  parsed as: {parsed:?}");
         // Show available eras
-        let mut eras: Vec<&str> = output
+        let mut eras: Vec<&str> = timeline_data
             .time_index
             .scopes
             .iter()
@@ -90,49 +146,131 @@ fn run_query(query_args: &[String]) {
         return;
     }
 
+    // Filter events: find events whose time matches the query
+    let matching_events: Vec<&event::Event> = events
+        .iter()
+        .filter(|e| {
+            if let Some(t) = &e.time {
+                match &parsed {
+                    TimeQuery::Single { era, year } => {
+                        t.era == *era && year.map_or(true, |y| t.year == y)
+                    }
+                    TimeQuery::Range { era, year_from, year_to } => {
+                        t.era == *era && t.year >= *year_from && t.year <= *year_to
+                    }
+                    TimeQuery::Regime { regime } => {
+                        t.regime == *regime
+                    }
+                }
+            } else {
+                false
+            }
+        })
+        .collect();
+
     eprintln!(
-        "Found {} time scope(s) for: era={}, year={:?}",
-        matches.len(),
-        era,
-        year
+        "Found {} time scope(s), {} event(s) for: {}",
+        matching_scopes.len(),
+        matching_events.len(),
+        raw
     );
 
-    // Output matching scopes as JSON to stdout
+    // Output to stdout
     #[derive(serde::Serialize)]
     struct QueryResult<'a> {
-        query_era: &'a str,
-        query_year: Option<u8>,
-        match_count: usize,
+        query: String,
+        scope_count: usize,
+        event_count: usize,
         scopes: Vec<&'a event::TimeScope>,
+        events: Vec<&'a event::Event>,
     }
 
     let result = QueryResult {
-        query_era: &era,
-        query_year: year,
-        match_count: matches.len(),
-        scopes: matches,
+        query: raw,
+        scope_count: matching_scopes.len(),
+        event_count: matching_events.len(),
+        scopes: matching_scopes,
+        events: matching_events,
     };
 
     let json = serde_json::to_string_pretty(&result).expect("JSON serialization");
     println!("{json}");
 }
 
-/// Parse a time query like "太和三年", "太和3", "太和" into (era, Option<year>).
-fn parse_time_query(raw: &str) -> (String, Option<u8>) {
-    let raw = raw.trim().trim_end_matches('年');
+// ── Query parsing ───────────────────────────────────────────────────
 
-    // Try to split off a trailing Arabic number: "太和3" → ("太和", Some(3))
-    if let Some(idx) = raw.rfind(|c: char| !c.is_ascii_digit()) {
-        let after = &raw[idx + raw[idx..].chars().next().unwrap().len_utf8()..];
-        if !after.is_empty() {
-            if let Ok(y) = after.parse::<u8>() {
-                return (raw[..idx + raw[idx..].chars().next().unwrap().len_utf8()].to_string(), Some(y));
+#[derive(Debug)]
+enum TimeQuery {
+    /// Single era + optional year: "太和", "太和三年"
+    Single { era: String, year: Option<u8> },
+    /// Year range within one era: "太和元年-太和六年", "太和1-5"
+    Range { era: String, year_from: u8, year_to: u8 },
+    /// All scopes for a regime: "@東晉", "@北魏"
+    Regime { regime: String },
+}
+
+fn parse_time_query(raw: &str) -> TimeQuery {
+    let raw = raw.trim();
+
+    // Regime query: "@東晉"
+    if let Some(r) = raw.strip_prefix('@') {
+        return TimeQuery::Regime {
+            regime: r.to_string(),
+        };
+    }
+
+    // Range with dash: "太和元年-太和六年" or "太和1-5" or "太和元-六"
+    if raw.contains('-') || raw.contains('—') || raw.contains('~') {
+        let sep = if raw.contains('-') {
+            '-'
+        } else if raw.contains('—') {
+            '—'
+        } else {
+            '~'
+        };
+        let parts: Vec<&str> = raw.splitn(2, sep).collect();
+        if parts.len() == 2 {
+            let (era_from, year_from) = parse_era_year(parts[0]);
+            let (era_to, year_to) = parse_era_year(parts[1]);
+
+            if let (Some(yf), Some(yt)) = (year_from, year_to) {
+                // Use the era from the first part (or second if first is just a number)
+                let era = if era_from.is_empty() { era_to } else { era_from };
+                return TimeQuery::Range {
+                    era,
+                    year_from: yf,
+                    year_to: yt,
+                };
             }
         }
     }
 
-    // Try Chinese number suffix: "太和三" → ("太和", Some(3))
-    // Check last 1-3 chars for a Chinese number
+    // Single: "太和三年", "太和3", "太和"
+    let (era, year) = parse_era_year(raw);
+    TimeQuery::Single { era, year }
+}
+
+/// Parse "太和三年" → ("太和", Some(3)), "太和" → ("太和", None), "5" → ("", Some(5))
+fn parse_era_year(raw: &str) -> (String, Option<u8>) {
+    let raw = raw.trim().trim_end_matches('年');
+
+    // Pure Arabic number: "5"
+    if let Ok(y) = raw.parse::<u8>() {
+        return (String::new(), Some(y));
+    }
+
+    // Trailing Arabic number: "太和3"
+    if let Some(idx) = raw.rfind(|c: char| !c.is_ascii_digit()) {
+        let char_end = idx + raw[idx..].chars().next().unwrap().len_utf8();
+        let after = &raw[char_end..];
+        if !after.is_empty() {
+            if let Ok(y) = after.parse::<u8>() {
+                return (raw[..char_end].to_string(), Some(y));
+            }
+        }
+    }
+
+    // Chinese number suffix: "太和三", "太和十二", "太和元"
     let chars: Vec<char> = raw.chars().collect();
     for suffix_len in (1..=3).rev() {
         if chars.len() <= suffix_len {
@@ -178,7 +316,7 @@ fn parse_cn_year(s: &str) -> Option<u8> {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-//  EXTRACT MODE: full corpus processing → output/corpus.json
+//  EXTRACT MODE: full corpus processing → output/*.json
 // ═══════════════════════════════════════════════════════════════════════
 
 fn run_extract(root: &Path) {
@@ -213,7 +351,6 @@ fn run_extract(root: &Path) {
     eprintln!("  CORPUS STATISTICS");
     eprintln!("══════════════════════════════════════════");
 
-    // Count by book
     let mut by_book = std::collections::HashMap::new();
     for p in &persons {
         *by_book.entry(p.source.book.as_chinese()).or_insert(0usize) += 1;
@@ -225,7 +362,6 @@ fn run_extract(root: &Path) {
         eprintln!("  {book}: {count} persons");
     }
 
-    // Count by section
     let mut by_section = std::collections::HashMap::new();
     for p in &persons {
         let sec = match p.source.section {
@@ -242,11 +378,7 @@ fn run_extract(root: &Path) {
         eprintln!("  {sec}: {count} persons");
     }
 
-    // Count by person kind
-    let mut emperors = 0usize;
-    let mut officials = 0usize;
-    let mut deposed = 0usize;
-    let mut rulers = 0usize;
+    let (mut emperors, mut officials, mut deposed, mut rulers) = (0usize, 0, 0, 0);
     for p in &persons {
         match &p.kind {
             types::PersonKind::Emperor { .. } => emperors += 1,
@@ -260,36 +392,6 @@ fn run_extract(root: &Path) {
     eprintln!("  Official: {officials}");
     eprintln!("  Ruler:    {rulers}");
     eprintln!("  Deposed:  {deposed}");
-
-    // Show some examples
-    eprintln!("\n══════════════════════════════════════════");
-    eprintln!("  SAMPLE PERSONS");
-    eprintln!("══════════════════════════════════════════");
-
-    for s in summaries.iter().take(20) {
-        eprintln!(
-            "\n  {} ({} / {})",
-            s.display_name, s.book, s.section
-        );
-        eprintln!("    Kind: {}", s.kind);
-        if let Some(ref c) = s.courtesy_name {
-            eprintln!("    Courtesy name: {c}");
-        }
-        if let Some(ref o) = s.origin {
-            eprintln!("    Origin: {o}");
-        }
-        eprintln!("    Aliases: {:?}", s.aliases);
-        if !s.ref_stats.alias_counts.is_empty() {
-            let mut counts: Vec<_> = s.ref_stats.alias_counts.iter().collect();
-            counts.sort_by_key(|(_, c)| std::cmp::Reverse(**c));
-            let top: Vec<String> = counts
-                .iter()
-                .take(5)
-                .map(|(name, count)| format!("{}×{}", name, count))
-                .collect();
-            eprintln!("    Refs in text: {}", top.join(", "));
-        }
-    }
 
     // ── Print failures ─────────────────────────────────────────────
     if !failed.is_empty() {
@@ -313,7 +415,10 @@ fn run_extract(root: &Path) {
     let in_text_persons = name_scanner.scan_corpus(&bio_files);
 
     let total_mentions: usize = in_text_persons.iter().map(|p| p.mention_count).sum();
-    let unknown_persons: Vec<_> = in_text_persons.iter().filter(|p| !p.has_own_biography).collect();
+    let unknown_persons: Vec<_> = in_text_persons
+        .iter()
+        .filter(|p| !p.has_own_biography)
+        .collect();
 
     eprintln!(
         "\nFound {} unique names with {} total mentions",
@@ -329,18 +434,13 @@ fn run_extract(root: &Path) {
         unknown_persons.len()
     );
 
-    // Show top unknown persons
     eprintln!("\nTop unknown persons (no own biography):");
-    for p in unknown_persons.iter().take(30) {
+    for p in unknown_persons.iter().take(20) {
         let files_short: Vec<&str> = p
             .mentioned_in
             .iter()
             .take(3)
-            .map(|f| {
-                f.rsplit('/')
-                    .next()
-                    .unwrap_or(f)
-            })
+            .map(|f| f.rsplit('/').next().unwrap_or(f))
             .collect();
         let patterns: Vec<String> = p
             .pattern_counts
@@ -356,18 +456,6 @@ fn run_extract(root: &Path) {
         );
     }
 
-    // Show top known persons by cross-reference count
-    let known_persons_list: Vec<_> = in_text_persons.iter().filter(|p| p.has_own_biography).collect();
-    eprintln!("\nTop known persons (most cross-referenced):");
-    for p in known_persons_list.iter().take(20) {
-        eprintln!(
-            "  {} — {}次 across {} files",
-            p.name,
-            p.mention_count,
-            p.mentioned_in.len()
-        );
-    }
-
     // ── Phase 5: Event extraction (time + place + person) ───────────
     eprintln!("\n══════════════════════════════════════════");
     eprintln!("  EVENT EXTRACTION");
@@ -376,18 +464,18 @@ fn run_extract(root: &Path) {
     let event_scanner = event::EventScanner::new(&persons);
     let (events, time_index, event_stats) = event_scanner.scan_corpus(&bio_files);
 
+    // ── Phase 6: Build timeline ─────────────────────────────────────
+    let timeline = event::Timeline::from_scopes(&time_index.scopes);
+
     eprintln!(
-        "\nExtracted {} events, {} time scopes",
+        "\nExtracted {} events, {} time scopes, {} time points",
         event_stats.total_events,
-        time_index.scopes.len()
+        time_index.scopes.len(),
+        timeline.total_time_points
     );
     eprintln!("  Appointments: {}", event_stats.appointments);
     eprintln!("  Battles:      {}", event_stats.battles);
     eprintln!("  Deaths:       {}", event_stats.deaths);
-    eprintln!(
-        "  Unique time refs: {}",
-        event_stats.unique_time_refs
-    );
 
     // Era distribution
     let mut era_counts: Vec<_> = event_stats.era_distribution.iter().collect();
@@ -397,15 +485,17 @@ fn run_extract(root: &Path) {
         eprintln!("  {era}: {count} events");
     }
 
-    // Top places
-    eprintln!("\nTop places:");
-    for (place, count) in event_stats.top_places.iter().take(20) {
-        eprintln!("  {place}: {count} events");
+    // Timeline summary
+    eprintln!("\nTimeline by regime:");
+    for regime in &timeline.regimes {
+        let era_count = regime.eras.len();
+        let year_count: usize = regime.eras.iter().map(|e| e.years.len()).sum();
+        eprintln!("  {}: {} eras, {} distinct years", regime.regime, era_count, year_count);
     }
 
     // Sample events
-    eprintln!("\nSample events (first 15):");
-    for e in events.iter().take(15) {
+    eprintln!("\nSample events (first 10):");
+    for e in events.iter().take(10) {
         let time_str = e
             .time
             .as_ref()
@@ -442,19 +532,49 @@ fn run_extract(root: &Path) {
         eprintln!("  {} {}", time_str, event_str);
     }
 
-    // ── Write JSON to output/corpus.json ────────────────────────────
-    let output = Output {
-        persons: summaries,
-        in_text_mentions: in_text_persons,
-        events,
-        time_index,
-        event_stats,
-    };
+    // ── Write split JSON files ──────────────────────────────────────
+    eprintln!("\n══════════════════════════════════════════");
+    eprintln!("  WRITING OUTPUT FILES");
+    eprintln!("══════════════════════════════════════════\n");
 
-    // Ensure output directory exists
-    std::fs::create_dir_all("output").expect("cannot create output/");
+    std::fs::create_dir_all(OUTPUT_DIR).expect("cannot create output/");
 
-    let json = serde_json::to_string_pretty(&output).expect("JSON serialization failed");
-    std::fs::write(OUTPUT_PATH, &json).expect("cannot write output/corpus.json");
-    eprintln!("\n✓ Wrote {OUTPUT_PATH} ({} bytes)", json.len());
+    // 1. persons.json
+    #[derive(serde::Serialize)]
+    struct PersonsOutput {
+        persons: Vec<extract::PersonSummary>,
+        in_text_mentions: Vec<intext::InTextPerson>,
+    }
+    write_json(
+        "persons.json",
+        &PersonsOutput {
+            persons: summaries,
+            in_text_mentions: in_text_persons,
+        },
+    );
+
+    // 2. events.json — just the event list (queryable by --query)
+    write_json("events.json", &events);
+
+    // 3. timeline.json — timeline + time_index + stats
+    #[derive(serde::Serialize)]
+    struct TimelineOutput {
+        timeline: event::Timeline,
+        time_index: event::TimeIndex,
+        stats: event::EventStats,
+    }
+    write_json(
+        "timeline.json",
+        &TimelineOutput {
+            timeline,
+            time_index,
+            stats: event_stats,
+        },
+    );
+
+    eprintln!("\nDone. Query with:");
+    eprintln!("  cargo run -- --query \"太和三年\"");
+    eprintln!("  cargo run -- --query \"太和元年-太和六年\"");
+    eprintln!("  cargo run -- --query \"@東晉\"");
+    eprintln!("  cargo run -- --timeline");
 }

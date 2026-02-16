@@ -71,12 +71,113 @@ impl TimeIndex {
             .collect()
     }
 
+    /// Query scopes matching a year range within one era.
+    pub fn query_range(&self, era: &str, year_from: u8, year_to: u8) -> Vec<&TimeScope> {
+        self.scopes
+            .iter()
+            .filter(|s| {
+                s.time.era == era && s.time.year >= year_from && s.time.year <= year_to
+            })
+            .collect()
+    }
+
     /// Query scopes matching a regime name.
     pub fn query_regime(&self, regime: &str) -> Vec<&TimeScope> {
         self.scopes
             .iter()
             .filter(|s| s.time.regime == regime)
             .collect()
+    }
+}
+
+// ── Timeline: full era-year inventory ───────────────────────────────
+
+/// A single observed time point (era+year) in the corpus.
+#[derive(Debug, Clone, Serialize, serde::Deserialize)]
+pub struct TimePoint {
+    pub era: String,
+    pub year: u8,
+    pub occurrence_count: usize,
+    /// Source files where this time point appears.
+    pub files: Vec<String>,
+}
+
+/// All observed years for one era name under one regime.
+#[derive(Debug, Clone, Serialize, serde::Deserialize)]
+pub struct EraTimeline {
+    pub era: String,
+    /// Years sorted ascending, each with occurrence counts.
+    pub years: Vec<TimePoint>,
+}
+
+/// All eras observed for one regime.
+#[derive(Debug, Clone, Serialize, serde::Deserialize)]
+pub struct RegimeTimeline {
+    pub regime: String,
+    pub eras: Vec<EraTimeline>,
+}
+
+/// Full corpus chronological inventory.
+#[derive(Debug, Clone, Serialize, serde::Deserialize)]
+pub struct Timeline {
+    pub regimes: Vec<RegimeTimeline>,
+    /// Total distinct (regime, era, year) triples.
+    pub total_time_points: usize,
+}
+
+impl Timeline {
+    /// Build a timeline from all collected time scopes.
+    pub fn from_scopes(scopes: &[TimeScope]) -> Self {
+        // Collect: (regime, era, year) → set of files
+        let mut map: HashMap<(String, String, u8), Vec<String>> = HashMap::new();
+        for s in scopes {
+            let key = (
+                s.time.regime.clone(),
+                s.time.era.clone(),
+                s.time.year,
+            );
+            let files = map.entry(key).or_default();
+            let f = &s.span.file;
+            if !files.contains(f) {
+                files.push(f.clone());
+            }
+        }
+
+        // Group by regime → era → years
+        let mut regime_map: HashMap<String, HashMap<String, Vec<TimePoint>>> = HashMap::new();
+        for ((regime, era, year), files) in &map {
+            let era_map = regime_map.entry(regime.clone()).or_default();
+            let years = era_map.entry(era.clone()).or_default();
+            years.push(TimePoint {
+                era: era.clone(),
+                year: *year,
+                occurrence_count: files.len(),
+                files: files.clone(),
+            });
+        }
+
+        let mut regimes: Vec<RegimeTimeline> = regime_map
+            .into_iter()
+            .map(|(regime, era_map)| {
+                let mut eras: Vec<EraTimeline> = era_map
+                    .into_iter()
+                    .map(|(era, mut years)| {
+                        years.sort_by_key(|tp| tp.year);
+                        EraTimeline { era, years }
+                    })
+                    .collect();
+                // Sort eras by their earliest year's first appearance
+                eras.sort_by_key(|e| e.years.first().map(|tp| tp.year).unwrap_or(0));
+                RegimeTimeline { regime, eras }
+            })
+            .collect();
+        regimes.sort_by_key(|r| r.regime.clone());
+
+        let total = map.len();
+        Timeline {
+            regimes,
+            total_time_points: total,
+        }
     }
 }
 
