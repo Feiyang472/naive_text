@@ -8,24 +8,184 @@ mod surname;
 mod titles;
 mod types;
 
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use extract::PersonSummary;
 use types::Section;
 
+const OUTPUT_PATH: &str = "output/corpus.json";
+
 fn main() {
-    let root = Path::new(".");
+    let args: Vec<String> = std::env::args().collect();
 
-    // Check if a corpus root was passed as argument
-    let root = std::env::args()
-        .nth(1)
-        .map(|s| std::path::PathBuf::from(s))
-        .unwrap_or_else(|| root.to_path_buf());
+    // --query MODE: read cached JSON, return matching time scopes
+    if args.len() >= 3 && args[1] == "--query" {
+        run_query(&args[2..]);
+        return;
+    }
 
+    // Default: full extraction
+    let root = args
+        .get(1)
+        .map(PathBuf::from)
+        .unwrap_or_else(|| Path::new(".").to_path_buf());
+
+    run_extract(&root);
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  QUERY MODE: read output/corpus.json and return matching time scopes
+// ═══════════════════════════════════════════════════════════════════════
+
+#[derive(serde::Deserialize, serde::Serialize)]
+struct Output {
+    persons: Vec<extract::PersonSummary>,
+    in_text_mentions: Vec<intext::InTextPerson>,
+    events: Vec<event::Event>,
+    time_index: event::TimeIndex,
+    event_stats: event::EventStats,
+}
+
+fn run_query(query_args: &[String]) {
+    let raw = query_args.join(" ");
+
+    // Read cached JSON
+    let json = match std::fs::read_to_string(OUTPUT_PATH) {
+        Ok(j) => j,
+        Err(e) => {
+            eprintln!("Cannot read {OUTPUT_PATH}: {e}");
+            eprintln!("Run extraction first (without --query) to generate the index.");
+            std::process::exit(1);
+        }
+    };
+
+    let output: Output = match serde_json::from_str(&json) {
+        Ok(o) => o,
+        Err(e) => {
+            eprintln!("Cannot parse {OUTPUT_PATH}: {e}");
+            eprintln!("The JSON may be from an older format. Re-run extraction.");
+            std::process::exit(1);
+        }
+    };
+
+    // Parse query: "{era}" or "{era}{year}年" or "{era}{number}"
+    // e.g. "太和", "太和三年", "太和3"
+    let (era, year) = parse_time_query(&raw);
+
+    let matches = output.time_index.query(&era, year);
+
+    if matches.is_empty() {
+        eprintln!("No time scopes found for: {raw}");
+        eprintln!("  parsed as: era={era}, year={year:?}");
+        // Show available eras
+        let mut eras: Vec<&str> = output
+            .time_index
+            .scopes
+            .iter()
+            .map(|s| s.time.era.as_str())
+            .collect();
+        eras.sort();
+        eras.dedup();
+        eprintln!("  available eras: {}", eras.join(", "));
+        return;
+    }
+
+    eprintln!(
+        "Found {} time scope(s) for: era={}, year={:?}",
+        matches.len(),
+        era,
+        year
+    );
+
+    // Output matching scopes as JSON to stdout
+    #[derive(serde::Serialize)]
+    struct QueryResult<'a> {
+        query_era: &'a str,
+        query_year: Option<u8>,
+        match_count: usize,
+        scopes: Vec<&'a event::TimeScope>,
+    }
+
+    let result = QueryResult {
+        query_era: &era,
+        query_year: year,
+        match_count: matches.len(),
+        scopes: matches,
+    };
+
+    let json = serde_json::to_string_pretty(&result).expect("JSON serialization");
+    println!("{json}");
+}
+
+/// Parse a time query like "太和三年", "太和3", "太和" into (era, Option<year>).
+fn parse_time_query(raw: &str) -> (String, Option<u8>) {
+    let raw = raw.trim().trim_end_matches('年');
+
+    // Try to split off a trailing Arabic number: "太和3" → ("太和", Some(3))
+    if let Some(idx) = raw.rfind(|c: char| !c.is_ascii_digit()) {
+        let after = &raw[idx + raw[idx..].chars().next().unwrap().len_utf8()..];
+        if !after.is_empty() {
+            if let Ok(y) = after.parse::<u8>() {
+                return (raw[..idx + raw[idx..].chars().next().unwrap().len_utf8()].to_string(), Some(y));
+            }
+        }
+    }
+
+    // Try Chinese number suffix: "太和三" → ("太和", Some(3))
+    // Check last 1-3 chars for a Chinese number
+    let chars: Vec<char> = raw.chars().collect();
+    for suffix_len in (1..=3).rev() {
+        if chars.len() <= suffix_len {
+            continue;
+        }
+        let suffix: String = chars[chars.len() - suffix_len..].iter().collect();
+        if let Some(y) = parse_cn_year(&suffix) {
+            let era: String = chars[..chars.len() - suffix_len].iter().collect();
+            if !era.is_empty() {
+                return (era, Some(y));
+            }
+        }
+    }
+
+    (raw.to_string(), None)
+}
+
+fn parse_cn_year(s: &str) -> Option<u8> {
+    match s {
+        "元" => Some(1),
+        "一" => Some(1),
+        "二" => Some(2),
+        "三" => Some(3),
+        "四" => Some(4),
+        "五" => Some(5),
+        "六" => Some(6),
+        "七" => Some(7),
+        "八" => Some(8),
+        "九" => Some(9),
+        "十" => Some(10),
+        "十一" => Some(11),
+        "十二" => Some(12),
+        "十三" => Some(13),
+        "十四" => Some(14),
+        "十五" => Some(15),
+        "十六" => Some(16),
+        "十七" => Some(17),
+        "十八" => Some(18),
+        "十九" => Some(19),
+        "二十" => Some(20),
+        _ => None,
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  EXTRACT MODE: full corpus processing → output/corpus.json
+// ═══════════════════════════════════════════════════════════════════════
+
+fn run_extract(root: &Path) {
     eprintln!("Scanning corpus at: {}", root.display());
 
     // Phase 1: discover all biography files
-    let bio_files = scanner::scan_corpus(&root);
+    let bio_files = scanner::scan_corpus(root);
     eprintln!("Found {} biography/annals files", bio_files.len());
 
     // Phase 2: parse person info from each file
@@ -149,8 +309,8 @@ fn main() {
     eprintln!("  IN-TEXT PERSON NAME RECOGNITION");
     eprintln!("══════════════════════════════════════════");
 
-    let scanner = intext::InTextScanner::new(&persons);
-    let in_text_persons = scanner.scan_corpus(&bio_files);
+    let name_scanner = intext::InTextScanner::new(&persons);
+    let in_text_persons = name_scanner.scan_corpus(&bio_files);
 
     let total_mentions: usize = in_text_persons.iter().map(|p| p.mention_count).sum();
     let unknown_persons: Vec<_> = in_text_persons.iter().filter(|p| !p.has_own_biography).collect();
@@ -214,11 +374,12 @@ fn main() {
     eprintln!("══════════════════════════════════════════");
 
     let event_scanner = event::EventScanner::new(&persons);
-    let (events, event_stats) = event_scanner.scan_corpus(&bio_files);
+    let (events, time_index, event_stats) = event_scanner.scan_corpus(&bio_files);
 
     eprintln!(
-        "\nExtracted {} events",
-        event_stats.total_events
+        "\nExtracted {} events, {} time scopes",
+        event_stats.total_events,
+        time_index.scopes.len()
     );
     eprintln!("  Appointments: {}", event_stats.appointments);
     eprintln!("  Battles:      {}", event_stats.battles);
@@ -281,22 +442,19 @@ fn main() {
         eprintln!("  {} {}", time_str, event_str);
     }
 
-    // ── JSON output to stdout ──────────────────────────────────────
-    #[derive(serde::Serialize)]
-    struct Output {
-        persons: Vec<extract::PersonSummary>,
-        in_text_mentions: Vec<intext::InTextPerson>,
-        events: Vec<event::Event>,
-        event_stats: event::EventStats,
-    }
-
+    // ── Write JSON to output/corpus.json ────────────────────────────
     let output = Output {
         persons: summaries,
         in_text_mentions: in_text_persons,
         events,
+        time_index,
         event_stats,
     };
 
+    // Ensure output directory exists
+    std::fs::create_dir_all("output").expect("cannot create output/");
+
     let json = serde_json::to_string_pretty(&output).expect("JSON serialization failed");
-    println!("{json}");
+    std::fs::write(OUTPUT_PATH, &json).expect("cannot write output/corpus.json");
+    eprintln!("\n✓ Wrote {OUTPUT_PATH} ({} bytes)", json.len());
 }

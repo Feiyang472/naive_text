@@ -15,10 +15,20 @@ use crate::surname::build_name_regex;
 use crate::titles::build_title_regex;
 use crate::types::{Book, Person, PersonKind};
 
+// ── Byte span in a source file ───────────────────────────────────────
+
+/// A byte range within a source file, for precise relocation.
+#[derive(Debug, Clone, Serialize, serde::Deserialize)]
+pub struct TextSpan {
+    pub file: String,
+    pub byte_start: usize,
+    pub byte_end: usize,
+}
+
 // ── Time reference ───────────────────────────────────────────────────
 
 /// A time reference extracted from text, scoped to a regime.
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, serde::Deserialize)]
 pub struct TimeRef {
     pub era: String,
     pub regime: String,
@@ -29,12 +39,51 @@ pub struct TimeRef {
     pub day_ganzhi: Option<String>,
     /// Raw matched text
     pub raw: String,
+    /// Byte offset where this time reference appears in the source file
+    pub byte_offset: usize,
+}
+
+// ── Time scope ───────────────────────────────────────────────────────
+
+/// The region of text governed by a single time reference.
+/// Extends from the TimeRef's position to the next TimeRef (or EOF).
+/// Querying a time period returns these scopes as file pointers.
+#[derive(Debug, Clone, Serialize, serde::Deserialize)]
+pub struct TimeScope {
+    pub time: TimeRef,
+    pub span: TextSpan,
+}
+
+// ── Time index (queryable) ──────────────────────────────────────────
+
+/// Corpus-wide index mapping time periods to file locations.
+#[derive(Debug, Clone, Serialize, serde::Deserialize)]
+pub struct TimeIndex {
+    pub scopes: Vec<TimeScope>,
+}
+
+impl TimeIndex {
+    /// Query scopes matching a specific era name and optional year.
+    pub fn query(&self, era: &str, year: Option<u8>) -> Vec<&TimeScope> {
+        self.scopes
+            .iter()
+            .filter(|s| s.time.era == era && year.map_or(true, |y| s.time.year == y))
+            .collect()
+    }
+
+    /// Query scopes matching a regime name.
+    pub fn query_regime(&self, regime: &str) -> Vec<&TimeScope> {
+        self.scopes
+            .iter()
+            .filter(|s| s.time.regime == regime)
+            .collect()
+    }
 }
 
 // ── Place reference ──────────────────────────────────────────────────
 
 /// A place name extracted from appointment or military context.
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, serde::Deserialize)]
 pub struct PlaceRef {
     pub name: String,
     pub is_qiao: bool,
@@ -44,7 +93,7 @@ pub struct PlaceRef {
 
 // ── Event types ──────────────────────────────────────────────────────
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, serde::Deserialize)]
 #[serde(tag = "type")]
 pub enum EventKind {
     /// 以X為Y — person appointed to a position (possibly at a place)
@@ -68,18 +117,20 @@ pub enum EventKind {
 }
 
 /// A single extracted event with optional time context.
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, serde::Deserialize)]
 pub struct Event {
     pub kind: EventKind,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub time: Option<TimeRef>,
     pub source_file: String,
+    /// Byte offset of the event match in the source file
+    pub byte_offset: usize,
     pub context: String,
 }
 
 // ── Aggregated output ────────────────────────────────────────────────
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, serde::Deserialize)]
 pub struct EventStats {
     pub total_events: usize,
     pub appointments: usize,
@@ -260,6 +311,7 @@ impl EventScanner {
                     month,
                     day_ganzhi,
                     raw: full_match.as_str().to_string(),
+                    byte_offset: full_match.start(),
                 },
             ));
         }
@@ -301,15 +353,43 @@ impl EventScanner {
             .map(|(_, t)| t.clone())
     }
 
-    /// Scan a single file for events.
+    /// Build time scopes from extracted time references.
+    /// Each scope extends from one TimeRef to the next (or EOF).
+    fn build_time_scopes(
+        times: &[(usize, TimeRef)],
+        content_len: usize,
+        source_file: &str,
+    ) -> Vec<TimeScope> {
+        let mut scopes = Vec::new();
+        for i in 0..times.len() {
+            let (start, ref time) = times[i];
+            let end = if i + 1 < times.len() {
+                times[i + 1].0
+            } else {
+                content_len
+            };
+            scopes.push(TimeScope {
+                time: time.clone(),
+                span: TextSpan {
+                    file: source_file.to_string(),
+                    byte_start: start,
+                    byte_end: end,
+                },
+            });
+        }
+        scopes
+    }
+
+    /// Scan a single file for events and time scopes.
     pub fn scan_file(
         &self,
         content: &str,
         book: Book,
         source_file: &str,
-    ) -> Vec<Event> {
+    ) -> (Vec<Event>, Vec<TimeScope>) {
         let mut events = Vec::new();
         let times = self.extract_times(content, book);
+        let scopes = Self::build_time_scopes(&times, content.len(), source_file);
 
         // Appointments
         for caps in self.re_appointment.captures_iter(content) {
@@ -333,6 +413,7 @@ impl EventScanner {
                 },
                 time,
                 source_file: source_file.to_string(),
+                byte_offset: full.start(),
                 context,
             });
         }
@@ -359,6 +440,7 @@ impl EventScanner {
                 },
                 time,
                 source_file: source_file.to_string(),
+                byte_offset: full.start(),
                 context,
             });
         }
@@ -383,16 +465,21 @@ impl EventScanner {
                 },
                 time,
                 source_file: source_file.to_string(),
+                byte_offset: full.start(),
                 context,
             });
         }
 
-        events
+        (events, scopes)
     }
 
     /// Scan the entire corpus.
-    pub fn scan_corpus(&self, bio_files: &[BiographyFile]) -> (Vec<Event>, EventStats) {
+    pub fn scan_corpus(
+        &self,
+        bio_files: &[BiographyFile],
+    ) -> (Vec<Event>, TimeIndex, EventStats) {
         let mut all_events = Vec::new();
+        let mut all_scopes = Vec::new();
         let mut era_dist: HashMap<String, usize> = HashMap::new();
         let mut place_counts: HashMap<String, usize> = HashMap::new();
         let mut time_set = std::collections::HashSet::new();
@@ -406,7 +493,7 @@ impl EventScanner {
                 Err(_) => continue,
             };
 
-            let events = self.scan_file(
+            let (events, scopes) = self.scan_file(
                 &content,
                 bio.source.book,
                 &bio.path.display().to_string(),
@@ -437,6 +524,7 @@ impl EventScanner {
             }
 
             all_events.extend(events);
+            all_scopes.extend(scopes);
         }
 
         let mut top_places: Vec<(String, usize)> = place_counts.into_iter().collect();
@@ -454,7 +542,11 @@ impl EventScanner {
             top_places,
         };
 
-        (all_events, stats)
+        let time_index = TimeIndex {
+            scopes: all_scopes,
+        };
+
+        (all_events, time_index, stats)
     }
 }
 

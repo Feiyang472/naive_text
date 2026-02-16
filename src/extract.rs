@@ -4,7 +4,7 @@ use std::fs;
 use crate::types::*;
 
 /// Statistics about how a person is referred to in their own biography.
-#[derive(Debug, Default, serde::Serialize)]
+#[derive(Debug, Default, serde::Serialize, serde::Deserialize)]
 pub struct RefStats {
     /// How many times each alias appears in the text
     pub alias_counts: HashMap<String, usize>,
@@ -41,7 +41,7 @@ pub fn count_refs_in_biography(person: &Person) -> RefStats {
 }
 
 /// A summary of a person and how they're referred to.
-#[derive(Debug, serde::Serialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct PersonSummary {
     pub display_name: String,
     pub book: String,

@@ -48,7 +48,7 @@ pub struct InTextMention {
 }
 
 /// Aggregated info about a person found via in-text mentions.
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, serde::Deserialize)]
 pub struct InTextPerson {
     pub name: String,
     pub surname: String,
