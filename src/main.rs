@@ -1,6 +1,8 @@
+mod event;
 mod extract;
 mod intext;
 mod parser;
+mod regime;
 mod scanner;
 mod surname;
 mod titles;
@@ -206,16 +208,93 @@ fn main() {
         );
     }
 
+    // ── Phase 5: Event extraction (time + place + person) ───────────
+    eprintln!("\n══════════════════════════════════════════");
+    eprintln!("  EVENT EXTRACTION");
+    eprintln!("══════════════════════════════════════════");
+
+    let event_scanner = event::EventScanner::new(&persons);
+    let (events, event_stats) = event_scanner.scan_corpus(&bio_files);
+
+    eprintln!(
+        "\nExtracted {} events",
+        event_stats.total_events
+    );
+    eprintln!("  Appointments: {}", event_stats.appointments);
+    eprintln!("  Battles:      {}", event_stats.battles);
+    eprintln!("  Deaths:       {}", event_stats.deaths);
+    eprintln!(
+        "  Unique time refs: {}",
+        event_stats.unique_time_refs
+    );
+
+    // Era distribution
+    let mut era_counts: Vec<_> = event_stats.era_distribution.iter().collect();
+    era_counts.sort_by_key(|(_, c)| std::cmp::Reverse(**c));
+    eprintln!("\nEra distribution (top 15):");
+    for (era, count) in era_counts.iter().take(15) {
+        eprintln!("  {era}: {count} events");
+    }
+
+    // Top places
+    eprintln!("\nTop places:");
+    for (place, count) in event_stats.top_places.iter().take(20) {
+        eprintln!("  {place}: {count} events");
+    }
+
+    // Sample events
+    eprintln!("\nSample events (first 15):");
+    for e in events.iter().take(15) {
+        let time_str = e
+            .time
+            .as_ref()
+            .map(|t| format!("[{}/{}{}年]", t.regime, t.era, t.year))
+            .unwrap_or_default();
+
+        let event_str = match &e.kind {
+            event::EventKind::Appointment {
+                person,
+                new_title,
+                place,
+            } => {
+                let place_str = place
+                    .as_ref()
+                    .map(|p| {
+                        if p.is_qiao {
+                            format!(" @{}(僑)", p.name)
+                        } else {
+                            format!(" @{}", p.name)
+                        }
+                    })
+                    .unwrap_or_default();
+                format!("任命 {}→{}{}", person, new_title, place_str)
+            }
+            event::EventKind::Battle {
+                person,
+                verb,
+                target,
+            } => format!("戰事 {}{}{}", person, verb, target),
+            event::EventKind::Death { person, verb } => {
+                format!("死亡 {}{}", person, verb)
+            }
+        };
+        eprintln!("  {} {}", time_str, event_str);
+    }
+
     // ── JSON output to stdout ──────────────────────────────────────
     #[derive(serde::Serialize)]
     struct Output {
         persons: Vec<extract::PersonSummary>,
         in_text_mentions: Vec<intext::InTextPerson>,
+        events: Vec<event::Event>,
+        event_stats: event::EventStats,
     }
 
     let output = Output {
         persons: summaries,
         in_text_mentions: in_text_persons,
+        events,
+        event_stats,
     };
 
     let json = serde_json::to_string_pretty(&output).expect("JSON serialization failed");

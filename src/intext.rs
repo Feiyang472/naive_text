@@ -84,7 +84,8 @@ const BLACKLIST: &[&str] = &[
 ];
 
 /// Check if the captured name is a false positive.
-fn is_false_positive(name: &str) -> bool {
+/// Public so event.rs can reuse the same filter.
+pub fn is_false_positive_name(name: &str) -> bool {
     // Explicit blacklist
     if BLACKLIST.contains(&name) {
         return true;
@@ -299,7 +300,7 @@ impl InTextScanner {
         source_file: &str,
     ) -> Option<InTextMention> {
         // False positive filter
-        if is_false_positive(matched) {
+        if is_false_positive_name(matched) {
             return None;
         }
 
