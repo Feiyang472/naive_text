@@ -160,12 +160,19 @@ impl Timeline {
                         EraTimeline { era, years }
                     })
                     .collect();
-                // Sort eras by their earliest year's first appearance
-                eras.sort_by_key(|e| e.years.first().map(|tp| tp.year).unwrap_or(0));
+                // Sort eras by position in ERA_NAMES (chronological within regime)
+                eras.sort_by_key(|e| era_sort_key(&regime, &e.era));
                 RegimeTimeline { regime, eras }
             })
             .collect();
-        regimes.sort_by_key(|r| r.regime.clone());
+        // Sort regimes by historical start year
+        regimes.sort_by_key(|r| {
+            regime::ERA_NAMES
+                .iter()
+                .find(|e| e.regime.as_chinese() == r.regime)
+                .map(|e| e.regime.start_ad_year())
+                .unwrap_or(9999)
+        });
 
         let total = map.len();
         Timeline {
@@ -203,6 +210,8 @@ pub enum EventKind {
         person: String,
         verb: String,
         target: String,
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        target_place: Option<PlaceRef>,
     },
     /// X薨/卒/崩 — death
     Death { person: String, verb: String },
@@ -218,6 +227,9 @@ pub struct Event {
     /// Byte offset of the event match in the source file
     pub byte_offset: usize,
     pub context: String,
+    /// All place references found in the event's context window.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub locations: Vec<PlaceRef>,
 }
 
 // ── Aggregated output ────────────────────────────────────────────────
@@ -403,6 +415,25 @@ impl EventScanner {
         times
     }
 
+    /// Extract all place references from a context string.
+    fn extract_places_from_context(&self, context: &str) -> Vec<PlaceRef> {
+        let mut places = Vec::new();
+        for caps in self.re_place_title.captures_iter(context) {
+            if let Some(m) = caps.get(1) {
+                let name = m.as_str().to_string();
+                let suffix = caps.get(2).map(|m| m.as_str().to_string());
+                let is_qiao =
+                    name.starts_with('南') && name.ends_with('州') && name.chars().count() >= 3;
+                places.push(PlaceRef {
+                    name,
+                    is_qiao,
+                    role_suffix: suffix,
+                });
+            }
+        }
+        places
+    }
+
     /// Extract a place reference from a title string like "郢州刺史".
     fn extract_place_from_title(&self, title_str: &str) -> Option<PlaceRef> {
         if let Some(caps) = self.re_place_title.captures(title_str) {
@@ -418,6 +449,26 @@ impl EventScanner {
                 name: place_name,
                 is_qiao,
                 role_suffix: suffix,
+            })
+        } else {
+            None
+        }
+    }
+
+    /// Detect if a battle target string is a place name.
+    fn detect_place_target(target: &str) -> Option<PlaceRef> {
+        let geo_suffixes: &[char] = &[
+            '州', '郡', '縣', '城', '關', '塞', '鎮', '壁', '山', '水', '河', '江', '池', '谷',
+            '嶺', '津', '渡', '橋', '亭', '營', '壘',
+        ];
+        let last = target.chars().last()?;
+        if geo_suffixes.contains(&last) {
+            Some(PlaceRef {
+                name: target.to_string(),
+                is_qiao: target.starts_with('南')
+                    && target.ends_with('州')
+                    && target.chars().count() >= 3,
+                role_suffix: None,
             })
         } else {
             None
@@ -485,6 +536,7 @@ impl EventScanner {
             let place = self.extract_place_from_title(new_title);
             let time = Self::find_time_context(&times, full.start());
             let context = extract_context(content, full.start(), 30);
+            let locations = self.extract_places_from_context(&context);
 
             events.push(Event {
                 kind: EventKind::Appointment {
@@ -496,6 +548,7 @@ impl EventScanner {
                 source_file: source_file.to_string(),
                 byte_offset: full.start(),
                 context,
+                locations,
             });
         }
 
@@ -510,19 +563,23 @@ impl EventScanner {
                 continue;
             }
 
+            let target_place = Self::detect_place_target(target);
             let time = Self::find_time_context(&times, full.start());
             let context = extract_context(content, full.start(), 30);
+            let locations = self.extract_places_from_context(&context);
 
             events.push(Event {
                 kind: EventKind::Battle {
                     person: person.to_string(),
                     verb: verb.to_string(),
                     target: target.to_string(),
+                    target_place,
                 },
                 time,
                 source_file: source_file.to_string(),
                 byte_offset: full.start(),
                 context,
+                locations,
             });
         }
 
@@ -538,6 +595,7 @@ impl EventScanner {
 
             let time = Self::find_time_context(&times, full.start());
             let context = extract_context(content, full.start(), 30);
+            let locations = self.extract_places_from_context(&context);
 
             events.push(Event {
                 kind: EventKind::Death {
@@ -548,6 +606,7 @@ impl EventScanner {
                 source_file: source_file.to_string(),
                 byte_offset: full.start(),
                 context,
+                locations,
             });
         }
 
@@ -582,9 +641,11 @@ impl EventScanner {
                             *place_counts.entry(p.name.clone()).or_insert(0) += 1;
                         }
                     }
-                    EventKind::Battle { target, .. } => {
+                    EventKind::Battle { target_place, .. } => {
                         battles += 1;
-                        *place_counts.entry(target.clone()).or_insert(0) += 1;
+                        if let Some(p) = target_place {
+                            *place_counts.entry(p.name.clone()).or_insert(0) += 1;
+                        }
                     }
                     EventKind::Death { .. } => {
                         deaths += 1;
@@ -621,6 +682,17 @@ impl EventScanner {
 
         (all_events, time_index, stats)
     }
+}
+
+/// Return the index of an era name within ERA_NAMES for a given regime.
+/// Used to sort eras chronologically within a regime.
+fn era_sort_key(regime_chinese: &str, era_name: &str) -> usize {
+    regime::ERA_NAMES
+        .iter()
+        .enumerate()
+        .find(|(_, e)| e.name == era_name && e.regime.as_chinese() == regime_chinese)
+        .map(|(i, _)| i)
+        .unwrap_or(usize::MAX)
 }
 
 fn collect_extra_surnames(persons: &[Person]) -> Vec<String> {

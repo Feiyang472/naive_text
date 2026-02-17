@@ -105,6 +105,13 @@ const BLACKLIST: &[&str] = &[
     // Fixed expressions
     "左氏",
     "左傳",
+    // Number-based false positives
+    "萬人",
+    "萬戶",
+    "萬餘",
+    "百餘",
+    "千餘",
+    "國才",
 ];
 
 /// Check if the captured name is a false positive.
@@ -148,6 +155,26 @@ pub fn is_false_positive_name(name: &str) -> bool {
         return true;
     }
 
+    // 3-char names ending in directional characters — usually truncated
+    // phrases like "高祖北伐" → "高祖北" or "司馬南渡" → "司馬南"
+    let directional = ['北', '南', '東', '西', '上', '下', '中', '外', '內'];
+    if chars.len() >= 3
+        && let Some(&last) = chars.last()
+        && directional.contains(&last)
+    {
+        return true;
+    }
+
+    // Names ending in temporal/misc chars captured from running text
+    let temporal_endings = [
+        '早', '夜', '日', '月', '年', '時', '後', '前', '初', '末', '間',
+    ];
+    if let Some(&last) = chars.last()
+        && temporal_endings.contains(&last)
+    {
+        return true;
+    }
+
     // If the last character is a classical Chinese function word or verb,
     // it was captured from running text, not a real name ending.
     // (Note: 之 is NOT filtered here — it's a common real name suffix
@@ -158,7 +185,7 @@ pub fn is_false_positive_name(name: &str) -> bool {
         '又', '且', '而', '所', '於', '自', '從', '至', '向', '在', '由', '如', '若', '或', '因',
         '等', '曰', '諸', // Common action verbs that follow names and get captured
         '走', '出', '害', '救', '殺', '敗', '收', '攻', '破', '降', '反', '叛', '奔', '歸', '入',
-        '克', '圍', '據', '討', '拒', '聞', '送', '屯', '還', '還', // numbers
+        '克', '圍', '據', '討', '拒', '聞', '送', '屯', '還', // numbers
         '二', '三', '四', '五', '六', '七', '八', '九', '十', '百', '千', '萬',
     ];
     if let Some(&last) = chars.last()

@@ -41,6 +41,16 @@ enum Command {
     },
     /// Print the full era-year timeline inventory
     Timeline,
+    /// Extract source text for a time period
+    Text {
+        /// Time query, e.g. "太和三年", "太和元年-太和六年", "@東晉"
+        query: Vec<String>,
+    },
+    /// Map persons to locations for a time period
+    Locate {
+        /// Time query, e.g. "太和三年", "元嘉", "@東晉"
+        query: Vec<String>,
+    },
 }
 
 fn main() {
@@ -50,6 +60,8 @@ fn main() {
         Some(Command::Extract { corpus }) => run_extract(&corpus),
         Some(Command::Query { query }) => run_query(&query),
         Some(Command::Timeline) => run_timeline(),
+        Some(Command::Text { query }) => run_text(&query),
+        Some(Command::Locate { query }) => run_locate(&query),
         // Default: extract from current directory
         None => run_extract(Path::new(".")),
     }
@@ -100,28 +112,146 @@ struct TimelineFile {
 fn run_timeline() {
     let data: TimelineFile = read_json("timeline.json");
 
-    for regime in &data.timeline.regimes {
-        println!("{}:", regime.regime);
-        for era in &regime.eras {
-            let years: Vec<String> = era
-                .years
-                .iter()
-                .map(|tp| {
-                    if tp.occurrence_count > 1 {
-                        format!("{}年(×{})", tp.year, tp.occurrence_count)
-                    } else {
-                        format!("{}年", tp.year)
-                    }
-                })
-                .collect();
-            println!("  {}: {}", era.era, years.join(", "));
-        }
-        println!();
-    }
+    // Build lookup: regime Chinese name → RegimeTimeline
+    let regime_map: std::collections::HashMap<&str, &event::RegimeTimeline> = data
+        .timeline
+        .regimes
+        .iter()
+        .map(|r| (r.regime.as_str(), r))
+        .collect();
+
+    let tree = regime::regime_display_tree();
+    render_tree(&tree, &regime_map, "");
+
     eprintln!(
-        "Total: {} distinct (regime, era, year) triples",
+        "\nTotal: {} distinct (regime, era, year) triples",
         data.timeline.total_time_points
     );
+}
+
+/// Format a regime line: "name (start_year): era1, era2, ..."
+/// Returns None if the regime has no observed data in the corpus.
+fn format_regime_line(
+    r: regime::Regime,
+    regime_map: &std::collections::HashMap<&str, &event::RegimeTimeline>,
+) -> Option<String> {
+    let name = r.as_chinese();
+    let rt = regime_map.get(name)?;
+    let eras: Vec<&str> = rt.eras.iter().map(|e| e.era.as_str()).collect();
+    Some(format!(
+        "{} ({}): {}",
+        name,
+        r.start_ad_year(),
+        eras.join(", ")
+    ))
+}
+
+/// Recursively render the display tree with box-drawing characters.
+///
+/// `prefix` is the accumulated line-drawing prefix for the current depth.
+fn render_tree(
+    node: &regime::DisplayTree,
+    regime_map: &std::collections::HashMap<&str, &event::RegimeTimeline>,
+    prefix: &str,
+) {
+    let (regime, concurrent, sequence) = match node {
+        regime::DisplayTree::Leaf(r) => (*r, &[][..], &[][..]),
+        regime::DisplayTree::Branch {
+            regime,
+            concurrent,
+            sequence,
+        } => (*regime, concurrent.as_slice(), sequence.as_slice()),
+    };
+
+    // Print this node's regime
+    if format_regime_line(regime, regime_map).is_none() {
+        return;
+    }
+    println!(
+        "{}{}",
+        prefix,
+        format_regime_line(regime, regime_map).unwrap()
+    );
+
+    // Collect children: concurrent first (with [並立] markers), then sequential
+    let has_seq = !sequence.is_empty();
+    let total_conc = concurrent.len();
+
+    for (i, child) in concurrent.iter().enumerate() {
+        let is_last = i == total_conc - 1 && !has_seq;
+        let connector = if is_last { "└─ " } else { "├─ " };
+        let continuation = if is_last { "   " } else { "│  " };
+
+        let child_regime = match child {
+            regime::DisplayTree::Leaf(r) | regime::DisplayTree::Branch { regime: r, .. } => *r,
+        };
+        if let Some(line) = format_regime_line(child_regime, regime_map) {
+            println!("{}{}[並立] {}", prefix, connector, line);
+        } else {
+            continue;
+        }
+
+        // Recurse into sub-children if this child is a Branch
+        if let regime::DisplayTree::Branch {
+            concurrent: sub_conc,
+            sequence: sub_seq,
+            ..
+        } = child
+        {
+            let sub_prefix = format!("{}{}", prefix, continuation);
+            render_children(sub_conc, sub_seq, &sub_prefix, regime_map);
+        }
+    }
+
+    // Sequential successors continue on the same vertical line
+    if has_seq {
+        let seq_prefix = if prefix.is_empty() {
+            String::new()
+        } else {
+            format!("{}│  ", prefix)
+        };
+        render_children(&[], sequence, &seq_prefix, regime_map);
+    }
+}
+
+/// Render a list of concurrent branches + sequential children at a given prefix.
+fn render_children(
+    concurrent: &[regime::DisplayTree],
+    sequence: &[regime::DisplayTree],
+    prefix: &str,
+    regime_map: &std::collections::HashMap<&str, &event::RegimeTimeline>,
+) {
+    let has_seq = !sequence.is_empty();
+    let total_conc = concurrent.len();
+
+    for (i, child) in concurrent.iter().enumerate() {
+        let is_last = i == total_conc - 1 && !has_seq;
+        let connector = if is_last { "└─ " } else { "├─ " };
+        let continuation = if is_last { "   " } else { "│  " };
+
+        let child_regime = match child {
+            regime::DisplayTree::Leaf(r) | regime::DisplayTree::Branch { regime: r, .. } => *r,
+        };
+        if let Some(line) = format_regime_line(child_regime, regime_map) {
+            println!("{}{}[並立] {}", prefix, connector, line);
+        } else {
+            continue;
+        }
+
+        if let regime::DisplayTree::Branch {
+            concurrent: sub_conc,
+            sequence: sub_seq,
+            ..
+        } = child
+        {
+            let sub_prefix = format!("{}{}", prefix, continuation);
+            render_children(sub_conc, sub_seq, &sub_prefix, regime_map);
+        }
+    }
+
+    for child in sequence {
+        render_tree(child, regime_map, prefix);
+    }
 }
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -343,6 +473,197 @@ fn parse_cn_year(s: &str) -> Option<u8> {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
+//  TEXT MODE: extract source text for a time period
+// ═══════════════════════════════════════════════════════════════════════
+
+fn run_text(query_args: &[String]) {
+    let raw = query_args.join(" ");
+    let timeline_data: TimelineFile = read_json("timeline.json");
+    let parsed = parse_time_query(&raw);
+
+    let matching_scopes = match &parsed {
+        TimeQuery::Single { era, year } => timeline_data.time_index.query(era, *year),
+        TimeQuery::Range {
+            era,
+            year_from,
+            year_to,
+        } => timeline_data
+            .time_index
+            .query_range(era, *year_from, *year_to),
+        TimeQuery::Regime { regime } => timeline_data.time_index.query_regime(regime),
+    };
+
+    if matching_scopes.is_empty() {
+        eprintln!("No time scopes found for: {raw}");
+        return;
+    }
+
+    eprintln!("Found {} text scope(s) for: {}", matching_scopes.len(), raw);
+
+    // Group scopes by file to avoid re-reading
+    let mut by_file: std::collections::HashMap<&str, Vec<&event::TimeScope>> =
+        std::collections::HashMap::new();
+    for scope in &matching_scopes {
+        by_file
+            .entry(scope.span.file.as_str())
+            .or_default()
+            .push(scope);
+    }
+
+    for (file, scopes) in &by_file {
+        let content = match std::fs::read_to_string(file) {
+            Ok(c) => c,
+            Err(e) => {
+                eprintln!("Cannot read {}: {}", file, e);
+                continue;
+            }
+        };
+
+        for scope in scopes {
+            let start = scope.span.byte_start.min(content.len());
+            let end = scope.span.byte_end.min(content.len());
+            let text = &content[start..end];
+            if text.trim().is_empty() {
+                continue;
+            }
+
+            println!(
+                "── [{}/{}{}年] {} ──",
+                scope.time.regime, scope.time.era, scope.time.year, file
+            );
+            println!("{}", text.trim());
+            println!();
+        }
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  LOCATE MODE: map persons to locations for a time period
+// ═══════════════════════════════════════════════════════════════════════
+
+fn run_locate(query_args: &[String]) {
+    let raw = query_args.join(" ");
+    let events: Vec<event::Event> = read_json("events.json");
+    let parsed = parse_time_query(&raw);
+
+    // Filter events matching the time query
+    let matching_events: Vec<&event::Event> = events
+        .iter()
+        .filter(|e| {
+            if let Some(t) = &e.time {
+                match &parsed {
+                    TimeQuery::Single { era, year } => {
+                        t.era == *era && year.is_none_or(|y| t.year == y)
+                    }
+                    TimeQuery::Range {
+                        era,
+                        year_from,
+                        year_to,
+                    } => t.era == *era && t.year >= *year_from && t.year <= *year_to,
+                    TimeQuery::Regime { regime } => t.regime == *regime,
+                }
+            } else {
+                false
+            }
+        })
+        .collect();
+
+    // Collect person → locations
+    let mut person_locations: std::collections::HashMap<String, Vec<PersonLocation>> =
+        std::collections::HashMap::new();
+
+    for e in &matching_events {
+        let time_label = e
+            .time
+            .as_ref()
+            .map(|t| format!("{}/{}{}年", t.regime, t.era, t.year))
+            .unwrap_or_default();
+
+        match &e.kind {
+            event::EventKind::Appointment {
+                person,
+                place: Some(place),
+                new_title,
+            } => {
+                person_locations
+                    .entry(person.clone())
+                    .or_default()
+                    .push(PersonLocation {
+                        place: place.name.clone(),
+                        role: Some(new_title.clone()),
+                        source: "appointment".to_string(),
+                        time: time_label.clone(),
+                    });
+            }
+            event::EventKind::Battle {
+                person,
+                target_place: Some(place),
+                ..
+            } => {
+                person_locations
+                    .entry(person.clone())
+                    .or_default()
+                    .push(PersonLocation {
+                        place: place.name.clone(),
+                        role: None,
+                        source: "battle".to_string(),
+                        time: time_label.clone(),
+                    });
+            }
+            _ => {}
+        }
+
+        // Also check context-level locations
+        if !e.locations.is_empty() {
+            let person = match &e.kind {
+                event::EventKind::Appointment { person, .. }
+                | event::EventKind::Battle { person, .. }
+                | event::EventKind::Death { person, .. } => person,
+            };
+            for loc in &e.locations {
+                // Skip if already recorded from the structured place field
+                let entry = person_locations.entry(person.clone()).or_default();
+                if !entry
+                    .iter()
+                    .any(|l| l.place == loc.name && l.time == time_label)
+                {
+                    entry.push(PersonLocation {
+                        place: loc.name.clone(),
+                        role: loc.role_suffix.clone(),
+                        source: "context".to_string(),
+                        time: time_label.clone(),
+                    });
+                }
+            }
+        }
+    }
+
+    if person_locations.is_empty() {
+        eprintln!("No person-location mappings found for: {raw}");
+        return;
+    }
+
+    eprintln!(
+        "Found {} persons with location data for: {}",
+        person_locations.len(),
+        raw
+    );
+
+    // Output as JSON
+    let json = serde_json::to_string_pretty(&person_locations).expect("JSON serialization");
+    println!("{json}");
+}
+
+#[derive(serde::Serialize)]
+struct PersonLocation {
+    place: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    role: Option<String>,
+    source: String,
+    time: String,
+}
+
+// ═══════════════════════════════════════════════════════════════════════
 //  EXTRACT MODE: full corpus processing → output/*.json
 // ═══════════════════════════════════════════════════════════════════════
 
@@ -551,7 +872,14 @@ fn run_extract(root: &Path) {
                 person,
                 verb,
                 target,
-            } => format!("戰事 {}{}{}", person, verb, target),
+                target_place,
+            } => {
+                let place_str = target_place
+                    .as_ref()
+                    .map(|p| format!(" @{}", p.name))
+                    .unwrap_or_default();
+                format!("戰事 {}{}{}{}", person, verb, target, place_str)
+            }
             event::EventKind::Death { person, verb } => {
                 format!("死亡 {}{}", person, verb)
             }

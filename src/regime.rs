@@ -69,6 +69,103 @@ impl Regime {
             Self::NorthernYan => "北燕",
         }
     }
+
+    /// Approximate AD start year, for sorting concurrent regimes.
+    pub fn start_ad_year(&self) -> u16 {
+        match self {
+            Self::WesternJin => 265,
+            Self::EasternJin => 317,
+            Self::LiuSong => 420,
+            Self::SouthernQi => 479,
+            Self::Liang => 502,
+            Self::Chen => 557,
+            Self::NorthernWei => 386,
+            Self::HanZhao => 304,
+            Self::LaterZhao => 319,
+            Self::ChengHan => 304,
+            Self::FormerLiang => 314,
+            Self::FormerYan => 337,
+            Self::FormerQin => 351,
+            Self::LaterQin => 384,
+            Self::LaterYan => 384,
+            Self::WesternQin => 385,
+            Self::LaterLiang => 386,
+            Self::SouthernLiang => 397,
+            Self::SouthernYan => 398,
+            Self::WesternLiang => 400,
+            Self::NorthernLiang => 397,
+            Self::XiaState => 407,
+            Self::NorthernYan => 407,
+        }
+    }
+}
+
+// ── Display tree for timeline command ────────────────────────────────
+
+/// A node in the regime display DAG for the `timeline` command.
+pub enum DisplayTree {
+    /// A single regime with no sub-branches.
+    Leaf(Regime),
+    /// A regime followed by sequential successors and concurrent branches.
+    Branch {
+        regime: Regime,
+        /// Sequential successors on the same political line.
+        sequence: Vec<DisplayTree>,
+        /// Concurrent regimes (shown as branching off).
+        concurrent: Vec<DisplayTree>,
+    },
+}
+
+/// Build the canonical display tree for Six Dynasties regimes.
+///
+/// Structure:
+///   Western Jin
+///   ├─ Eastern Jin (+ Sixteen Kingdoms as concurrent branches)
+///   │  → Liu Song → Southern Qi → Liang → Chen
+///   └─ Northern Wei
+pub fn regime_display_tree() -> DisplayTree {
+    use Regime::*;
+
+    // Sixteen Kingdoms — concurrent with Eastern Jin, sorted by start year
+    let mut sixteen_kingdoms: Vec<DisplayTree> = vec![
+        DisplayTree::Leaf(HanZhao),
+        DisplayTree::Leaf(ChengHan),
+        DisplayTree::Leaf(FormerLiang),
+        DisplayTree::Leaf(LaterZhao),
+        DisplayTree::Leaf(FormerYan),
+        DisplayTree::Leaf(FormerQin),
+        DisplayTree::Leaf(LaterQin),
+        DisplayTree::Leaf(LaterYan),
+        DisplayTree::Leaf(WesternQin),
+        DisplayTree::Leaf(LaterLiang),
+        DisplayTree::Leaf(SouthernLiang),
+        DisplayTree::Leaf(NorthernLiang),
+        DisplayTree::Leaf(SouthernYan),
+        DisplayTree::Leaf(WesternLiang),
+        DisplayTree::Leaf(XiaState),
+        DisplayTree::Leaf(NorthernYan),
+    ];
+    sixteen_kingdoms.sort_by_key(|n| match n {
+        DisplayTree::Leaf(r) | DisplayTree::Branch { regime: r, .. } => r.start_ad_year(),
+    });
+
+    DisplayTree::Branch {
+        regime: WesternJin,
+        sequence: vec![],
+        concurrent: vec![
+            DisplayTree::Branch {
+                regime: EasternJin,
+                sequence: vec![
+                    DisplayTree::Leaf(LiuSong),
+                    DisplayTree::Leaf(SouthernQi),
+                    DisplayTree::Leaf(Liang),
+                    DisplayTree::Leaf(Chen),
+                ],
+                concurrent: sixteen_kingdoms,
+            },
+            DisplayTree::Leaf(NorthernWei),
+        ],
+    }
 }
 
 // ── Era name entry ───────────────────────────────────────────────────
