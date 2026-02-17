@@ -541,126 +541,215 @@ fn run_text(query_args: &[String]) {
 //  LOCATE MODE: map persons to locations for a time period
 // ═══════════════════════════════════════════════════════════════════════
 
+/// Chronological sort key for an event's time reference.
+/// Returns (era_index_in_ERA_NAMES, year) for total ordering within a regime.
+fn time_sort_key(t: &event::TimeRef) -> (usize, u8) {
+    (event::era_sort_key(&t.regime, &t.era), t.year)
+}
+
+/// Check whether a time point matches the parsed query.
+fn time_matches_query(t: &event::TimeRef, parsed: &TimeQuery) -> bool {
+    match parsed {
+        TimeQuery::Single { era, year } => t.era == *era && year.is_none_or(|y| t.year == y),
+        TimeQuery::Range {
+            era,
+            year_from,
+            year_to,
+        } => t.era == *era && t.year >= *year_from && t.year <= *year_to,
+        TimeQuery::Regime { regime } => t.regime == *regime,
+    }
+}
+
+/// Check if a person is "stale" — last seen more than 5 era-years ago.
+/// Across era boundaries, we treat any gap of ≥2 different eras as >5 years.
+fn is_stale(last_seen: (usize, u8), query_time: (usize, u8)) -> bool {
+    let (last_era, last_year) = last_seen;
+    let (query_era, query_year) = query_time;
+    if last_era == query_era {
+        query_year.saturating_sub(last_year) > 5
+    } else if query_era > last_era + 1 {
+        // Skipped at least one full era — definitely stale
+        true
+    } else {
+        // Adjacent eras — conservatively treat as not stale
+        // (the last year of one era is close to the first year of the next)
+        false
+    }
+}
+
 fn run_locate(query_args: &[String]) {
     let raw = query_args.join(" ");
     let events: Vec<event::Event> = read_json("events.json");
     let parsed = parse_time_query(&raw);
 
-    // Filter events matching the time query
-    let matching_events: Vec<&event::Event> = events
-        .iter()
-        .filter(|e| {
-            if let Some(t) = &e.time {
-                match &parsed {
-                    TimeQuery::Single { era, year } => {
-                        t.era == *era && year.is_none_or(|y| t.year == y)
-                    }
-                    TimeQuery::Range {
-                        era,
-                        year_from,
-                        year_to,
-                    } => t.era == *era && t.year >= *year_from && t.year <= *year_to,
-                    TimeQuery::Regime { regime } => t.regime == *regime,
-                }
-            } else {
-                false
-            }
-        })
-        .collect();
+    // Only process events that have time references
+    let mut timed_events: Vec<&event::Event> = events.iter().filter(|e| e.time.is_some()).collect();
 
-    // Collect person → locations
-    let mut person_locations: std::collections::HashMap<String, Vec<PersonLocation>> =
+    // Sort all events chronologically
+    timed_events.sort_by_key(|e| time_sort_key(e.time.as_ref().unwrap()));
+
+    // Determine the query time range for filtering output
+    // We need the latest time point in the query range as the "as of" cutoff
+    let query_max_key: Option<(usize, u8)> = timed_events
+        .iter()
+        .filter(|e| time_matches_query(e.time.as_ref().unwrap(), &parsed))
+        .map(|e| time_sort_key(e.time.as_ref().unwrap()))
+        .max();
+
+    let query_max_key = match query_max_key {
+        Some(k) => k,
+        None => {
+            eprintln!("No events found for: {raw}");
+            return;
+        }
+    };
+
+    // Walk events in chronological order, building per-person state
+    struct PersonState {
+        location: Option<LocRecord>,
+        last_seen: (usize, u8), // (era_sort_key, year)
+        dead_at: Option<(usize, u8)>,
+    }
+
+    struct LocRecord {
+        place: String,
+        role: Option<String>,
+        as_of: String, // "regime/era N年"
+    }
+
+    let mut state: std::collections::HashMap<String, PersonState> =
         std::collections::HashMap::new();
 
-    for e in &matching_events {
-        let time_label = e
-            .time
-            .as_ref()
-            .map(|t| format!("{}/{}{}年", t.regime, t.era, t.year))
-            .unwrap_or_default();
+    for e in &timed_events {
+        let t = e.time.as_ref().unwrap();
+        let key = time_sort_key(t);
 
+        // Stop processing events beyond the query cutoff
+        if key > query_max_key {
+            break;
+        }
+
+        let time_label = format!("{}/{}{}年", t.regime, t.era, t.year);
+
+        // Extract person name from event
+        let person = match &e.kind {
+            event::EventKind::Appointment { person, .. }
+            | event::EventKind::Battle { person, .. }
+            | event::EventKind::Death { person, .. } => person.clone(),
+        };
+
+        let ps = state.entry(person).or_insert(PersonState {
+            location: None,
+            last_seen: key,
+            dead_at: None,
+        });
+
+        // Update last seen
+        ps.last_seen = key;
+
+        // Update location from structured place fields
         match &e.kind {
             event::EventKind::Appointment {
-                person,
                 place: Some(place),
                 new_title,
+                ..
             } => {
-                person_locations
-                    .entry(person.clone())
-                    .or_default()
-                    .push(PersonLocation {
-                        place: place.name.clone(),
-                        role: Some(new_title.clone()),
-                        source: "appointment".to_string(),
-                        time: time_label.clone(),
-                    });
+                ps.location = Some(LocRecord {
+                    place: place.name.clone(),
+                    role: Some(new_title.clone()),
+                    as_of: time_label.clone(),
+                });
             }
             event::EventKind::Battle {
-                person,
                 target_place: Some(place),
                 ..
             } => {
-                person_locations
-                    .entry(person.clone())
-                    .or_default()
-                    .push(PersonLocation {
-                        place: place.name.clone(),
-                        role: None,
-                        source: "battle".to_string(),
-                        time: time_label.clone(),
-                    });
+                ps.location = Some(LocRecord {
+                    place: place.name.clone(),
+                    role: None,
+                    as_of: time_label.clone(),
+                });
+            }
+            event::EventKind::Death { .. } => {
+                ps.dead_at = Some(key);
             }
             _ => {}
         }
-
-        // Also check context-level locations
-        if !e.locations.is_empty() {
-            let person = match &e.kind {
-                event::EventKind::Appointment { person, .. }
-                | event::EventKind::Battle { person, .. }
-                | event::EventKind::Death { person, .. } => person,
-            };
-            for loc in &e.locations {
-                // Skip if already recorded from the structured place field
-                let entry = person_locations.entry(person.clone()).or_default();
-                if !entry
-                    .iter()
-                    .any(|l| l.place == loc.name && l.time == time_label)
-                {
-                    entry.push(PersonLocation {
-                        place: loc.name.clone(),
-                        role: loc.role_suffix.clone(),
-                        source: "context".to_string(),
-                        time: time_label.clone(),
-                    });
-                }
-            }
-        }
     }
 
-    if person_locations.is_empty() {
+    // Build output: filter to persons with known location, not dead, not stale
+    let mut result: std::collections::HashMap<String, PersonLocation> =
+        std::collections::HashMap::new();
+
+    for (person, ps) in &state {
+        // Skip dead persons
+        if let Some(dead_at) = ps.dead_at
+            && dead_at <= query_max_key
+        {
+            continue;
+        }
+
+        // Skip persons with no known location
+        let loc = match &ps.location {
+            Some(l) => l,
+            None => continue,
+        };
+
+        // Skip stale persons (not seen in 5+ era-years)
+        if is_stale(ps.last_seen, query_max_key) {
+            continue;
+        }
+
+        // Determine status
+        let loc_key = event::era_sort_key(
+            loc.as_of.split('/').next().unwrap_or(""),
+            loc.as_of
+                .split('/')
+                .nth(1)
+                .and_then(|s| s.strip_suffix(|c: char| c.is_ascii_digit() || c == '年'))
+                .unwrap_or(""),
+        );
+        let status = if loc_key == query_max_key.0
+            && loc.as_of.ends_with(&format!("{}年", query_max_key.1))
+        {
+            "current"
+        } else {
+            "last_known"
+        };
+
+        result.insert(
+            person.clone(),
+            PersonLocation {
+                location: loc.place.clone(),
+                role: loc.role.clone(),
+                as_of: loc.as_of.clone(),
+                status: status.to_string(),
+            },
+        );
+    }
+
+    if result.is_empty() {
         eprintln!("No person-location mappings found for: {raw}");
         return;
     }
 
     eprintln!(
         "Found {} persons with location data for: {}",
-        person_locations.len(),
+        result.len(),
         raw
     );
 
-    // Output as JSON
-    let json = serde_json::to_string_pretty(&person_locations).expect("JSON serialization");
+    let json = serde_json::to_string_pretty(&result).expect("JSON serialization");
     println!("{json}");
 }
 
 #[derive(serde::Serialize)]
 struct PersonLocation {
-    place: String,
+    location: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     role: Option<String>,
-    source: String,
-    time: String,
+    as_of: String,
+    status: String,
 }
 
 // ═══════════════════════════════════════════════════════════════════════

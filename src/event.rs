@@ -686,7 +686,7 @@ impl EventScanner {
 
 /// Return the index of an era name within ERA_NAMES for a given regime.
 /// Used to sort eras chronologically within a regime.
-fn era_sort_key(regime_chinese: &str, era_name: &str) -> usize {
+pub fn era_sort_key(regime_chinese: &str, era_name: &str) -> usize {
     regime::ERA_NAMES
         .iter()
         .enumerate()
