@@ -112,6 +112,13 @@ const BLACKLIST: &[&str] = &[
     "百餘",
     "千餘",
     "國才",
+    // Derogatory ethnic terms used as collective nouns, not person names
+    "索虜",
+    "虜寇",
+    "虜眾",
+    "虜軍",
+    // "{X}之眾/之師/之兵" — collective, not person
+    "梁之眾",
 ];
 
 /// Check if the captured name is a false positive.
@@ -151,6 +158,15 @@ pub fn is_false_positive_name(name: &str) -> bool {
     let geo_suffixes = ['州', '郡', '縣', '國'];
     if let Some(&last) = chars.last()
         && geo_suffixes.contains(&last)
+    {
+        return true;
+    }
+
+    // Collective nouns: X之眾, X之師, X之兵, X之軍
+    if name.ends_with("之眾")
+        || name.ends_with("之師")
+        || name.ends_with("之兵")
+        || name.ends_with("之軍")
     {
         return true;
     }

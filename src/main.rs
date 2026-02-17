@@ -673,7 +673,18 @@ fn run_locate(query_args: &[String]) {
             event::EventKind::Death { .. } => {
                 ps.dead_at = Some(key);
             }
-            _ => {}
+            _ => {
+                // Fall back to context locations if no structured place
+                if ps.location.is_none()
+                    && let Some(loc) = e.locations.first()
+                {
+                    ps.location = Some(LocRecord {
+                        place: loc.name.clone(),
+                        role: loc.role_suffix.clone(),
+                        as_of: time_label.clone(),
+                    });
+                }
+            }
         }
     }
 

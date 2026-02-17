@@ -256,8 +256,10 @@ pub struct EventScanner {
     re_appointment: Regex,
     re_battle: Regex,
     re_death: Regex,
-    // Place extraction from titles
+    // Place extraction from titles (used on structured title strings)
     re_place_title: Regex,
+    // Place extraction from context windows (stricter: requires delimiter before place)
+    re_place_ctx: Regex,
 }
 
 /// Chinese number word → digit
@@ -343,8 +345,10 @@ impl EventScanner {
             .expect("appointment regex");
 
         // Battle: {name}{verb}{target}
+        // Stop target at function words (於/于 = "at", 以 = "with") to avoid
+        // capturing trailing place/person phrases as part of the target.
         let re_battle = Regex::new(&format!(
-            "({name_re})(攻|伐|討|克|陷|寇|圍|襲)([^，。]{{2,8}})"
+            "({name_re})(攻|伐|討|克|陷|寇|圍|襲)([^，。於于以]{{2,8}})"
         ))
         .expect("battle regex");
 
@@ -353,8 +357,17 @@ impl EventScanner {
             Regex::new(&format!("(?:{title_re})?({name_re})(薨|卒|崩)")).expect("death regex");
 
         // Place in title: {place}(刺史|太守|...)
+        // Exclude enumeration comma (、) and common punctuation to avoid matching
+        // across title boundaries like "振威將軍、刺史"
         let re_place_title =
-            Regex::new(r"(南?[^\s，。以為]{1,4})(刺史|太守|內史)").expect("place_title regex");
+            Regex::new(r"(南?[^\s，。、以為]{2,4})(刺史|太守|內史)").expect("place_title regex");
+
+        // Stricter context regex for place extraction from prose.
+        // Place must follow a delimiter or start of string directly.
+        // This prevents capturing preceding prose as part of the place name.
+        let re_place_ctx =
+            Regex::new(r"(?:^|[，。、；：\s])(南?[^\s，。、以為]{2,4})(刺史|太守|內史)")
+                .expect("place_ctx regex");
 
         EventScanner {
             re_time,
@@ -363,6 +376,7 @@ impl EventScanner {
             re_battle,
             re_death,
             re_place_title,
+            re_place_ctx,
         }
     }
 
@@ -416,11 +430,16 @@ impl EventScanner {
     }
 
     /// Extract all place references from a context string.
+    /// Uses stricter validation than `extract_place_from_title` because context
+    /// windows contain arbitrary prose that can produce false place matches.
     fn extract_places_from_context(&self, context: &str) -> Vec<PlaceRef> {
         let mut places = Vec::new();
-        for caps in self.re_place_title.captures_iter(context) {
+        for caps in self.re_place_ctx.captures_iter(context) {
             if let Some(m) = caps.get(1) {
                 let name = m.as_str().to_string();
+                if !is_plausible_place(&name) {
+                    continue;
+                }
                 let suffix = caps.get(2).map(|m| m.as_str().to_string());
                 let is_qiao =
                     name.starts_with('南') && name.ends_with('州') && name.chars().count() >= 3;
@@ -711,6 +730,51 @@ fn collect_extra_surnames(persons: &[Person]) -> Vec<String> {
         }
     }
     surnames.into_iter().collect()
+}
+
+/// Check whether a string looks like a plausible administrative place name.
+/// Used to filter context-extracted place names (before 刺史/太守/內史).
+/// In Six Dynasties texts, administrative places before these role titles
+/// virtually always end with 州/郡/縣/國. Names that don't match this
+/// pattern are likely junk captured from surrounding prose.
+fn is_plausible_place(name: &str) -> bool {
+    let last = match name.chars().last() {
+        Some(c) => c,
+        None => return false,
+    };
+    // Administrative division suffixes — the reliable signal.
+    // 刺史 governs 州, 太守 governs 郡, 內史 governs 國.
+    // Some 太守 titles use place names without 郡 suffix (e.g., "鬱林太守"),
+    // but these are the 郡 name itself — we accept them since they won't
+    // have junk prefixes (short, real names).
+    let admin_suffixes: &[char] = &['州', '郡', '縣', '國'];
+    if admin_suffixes.contains(&last) {
+        // Extra check: reject if the name contains bracket/annotation artifacts
+        if name.contains('[') || name.contains(']') {
+            return false;
+        }
+        // Reject names > 4 chars even with suffix (likely junk-prefixed)
+        if name.chars().count() > 4 {
+            return false;
+        }
+        return true;
+    }
+    // For 太守 —郡 names often don't end in 郡 (e.g., 鬱林, 廬江, 會稽).
+    // Accept 2-3 char names that don't start with known bad characters.
+    let char_count = name.chars().count();
+    if (2..=3).contains(&char_count) {
+        let first = name.chars().next().unwrap();
+        let bad_starts: &[char] = &[
+            '殺', '攻', '伐', '克', '陷', '討', '破', '逐', '執', '使', '令', '遣', '命', '除',
+            '拜', '遷', '轉', '授', '乃', '又', '則', '其', '先', '亦', '再', '俄', '仍', '兄',
+            '弟', '父', '母', '子', '叔', '偽', '僞', '故', '舊', '前', '後', '世', '加', '領',
+            '兼', '行', '代', '署', '出', '入', '功', '允', '元', '與', '隨', '自', '累', '左',
+            '右', '號', '詔', '贈', '走', '率', '擒', '獲', '盜', '斬', '是', '更', '結', '遙',
+            '重', '衆', ']', '」', ')',
+        ];
+        return !bad_starts.contains(&first);
+    }
+    false
 }
 
 fn extract_context(text: &str, byte_offset: usize, char_radius: usize) -> String {
