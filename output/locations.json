@@ -537,147 +537,6 @@
     ]
   },
   {
-    "name": "江州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 28,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/02_列傳第三　徐羨之 傅亮 檀道濟/04_檀道濟.txt",
-        "byte_offset": 3071,
-        "time": "劉宋/元嘉8年"
-      },
-      {
-        "source_file": "./宋書/02_列傳/31_列傳第三十二 文九王/04_劉昶(第九子).txt",
-        "byte_offset": 3391,
-        "time": "劉宋/元徽1年"
-      },
-      {
-        "source_file": "./宋書/02_列傳/31_列傳第三十二 文九王/04_劉昶(第九子).txt",
-        "byte_offset": 3520,
-        "time": "劉宋/元徽1年"
-      },
-      {
-        "source_file": "./宋書/00_本紀/00_本紀第一　武帝上/02_武帝上.txt",
-        "byte_offset": 28266,
-        "time": "東晉/義熙1年"
-      },
-      {
-        "source_file": "./宋書/00_本紀/00_本紀第一　武帝上/02_武帝上.txt",
-        "byte_offset": 29043,
-        "time": "東晉/義熙1年"
-      },
-      {
-        "source_file": "./梁書/01_列傳/37_列傳第三十八 太宗十一王 世祖二子/02_太宗十一王.txt",
-        "byte_offset": 896,
-        "time": "梁/太清1年"
-      },
-      {
-        "source_file": "./梁書/01_列傳/39_列傳第四十 胡僧祐 徐文盛 杜崱/04_杜崱.txt",
-        "byte_offset": 1259,
-        "time": "梁/太清2年"
-      },
-      {
-        "source_file": "./梁書/01_列傳/34_列傳第三十五 王規/02_王規.txt",
-        "byte_offset": 3004,
-        "time": "梁/大同2年"
-      },
-      {
-        "source_file": "./梁書/01_列傳/11_列傳第十二 張惠紹 馮道根 康絢 昌義之/03_馮道根.txt",
-        "byte_offset": 1469
-      },
-      {
-        "source_file": "./陳書/02_列傳/02_列傳第三: 侯瑱 歐陽頠 吳明徹 裴子烈/04_吳明徹.txt",
-        "byte_offset": 1751,
-        "time": "陳/天嘉3年"
-      },
-      {
-        "source_file": "./晉書/02_列傳/68_列傳第六十九　桓玄 卞范之 殷仲文/02_桓玄.txt",
-        "byte_offset": 6950
-      },
-      {
-        "source_file": "./晉書/02_列傳/68_列傳第六十九　桓玄 卞范之 殷仲文/02_桓玄.txt",
-        "byte_offset": 6950
-      },
-      {
-        "source_file": "./晉書/02_列傳/68_列傳第六十九　桓玄 卞范之 殷仲文/02_桓玄.txt",
-        "byte_offset": 28239,
-        "time": "東晉/元興3年"
-      },
-      {
-        "source_file": "./晉書/02_列傳/53_列傳第五十四　王恭 庾楷 劉牢之 殷仲堪 楊佺期/02_王恭.txt",
-        "byte_offset": 3496
-      },
-      {
-        "source_file": "./晉書/02_列傳/53_列傳第五十四　王恭 庾楷 劉牢之 殷仲堪 楊佺期/02_王恭.txt",
-        "byte_offset": 3496
-      },
-      {
-        "source_file": "./晉書/02_列傳/49_列傳第五十　　王羲之/02_王羲之.txt",
-        "byte_offset": 14593,
-        "time": "東晉/永和11年"
-      },
-      {
-        "source_file": "./晉書/02_列傳/33_列傳第三十四　武十三王 元四王 簡文三子/04_簡文三子.txt",
-        "byte_offset": 7828
-      },
-      {
-        "source_file": "./晉書/02_列傳/33_列傳第三十四　武十三王 元四王 簡文三子/04_簡文三子.txt",
-        "byte_offset": 7828
-      },
-      {
-        "source_file": "./晉書/00_紀/08_帝紀第九　太宗簡文帝 孝武帝/03_孝武帝.txt",
-        "byte_offset": 1257,
-        "time": "東晉/寧康1年"
-      },
-      {
-        "source_file": "./晉書/00_紀/05_帝紀第六　中宗元帝 肅祖明帝/02_元帝.txt",
-        "byte_offset": 1688,
-        "time": "西晉/元康2年"
-      },
-      {
-        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
-        "byte_offset": 1414,
-        "time": "東晉/咸和1年"
-      },
-      {
-        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
-        "byte_offset": 1271,
-        "time": "東晉/咸和1年"
-      },
-      {
-        "source_file": "./晉書/00_紀/07_帝紀第八　孝宗穆帝 哀帝 廢帝海西公/03_哀帝.txt",
-        "byte_offset": 3812,
-        "time": "東晉/興寧1年"
-      },
-      {
-        "source_file": "./晉書/00_紀/07_帝紀第八　孝宗穆帝 哀帝 廢帝海西公/03_哀帝.txt",
-        "byte_offset": 3855,
-        "time": "東晉/興寧1年"
-      },
-      {
-        "source_file": "./晉書/00_紀/07_帝紀第八　孝宗穆帝 哀帝 廢帝海西公/02_穆帝.txt",
-        "byte_offset": 832,
-        "time": "東晉/永和1年"
-      },
-      {
-        "source_file": "./魏書/01_列傳/75_司馬叡列傳 賨李雄列傳/02_司馬叡.txt",
-        "byte_offset": 4746,
-        "time": "東晉/大興1年"
-      },
-      {
-        "source_file": "./魏書/01_列傳/75_司馬叡列傳 賨李雄列傳/02_司馬叡.txt",
-        "byte_offset": 23086,
-        "time": "北魏/皇始1年"
-      },
-      {
-        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
-        "byte_offset": 1633,
-        "time": "北魏/正始1年"
-      }
-    ]
-  },
-  {
     "name": "梁州",
     "is_qiao": false,
     "role_suffix": "刺史",
@@ -817,6 +676,147 @@
       {
         "source_file": "./魏書/01_列傳/69_成淹 範紹 劉桃符 劉道斌 董紹 馮元興 鹿悆 張熠/06_董紹.txt",
         "byte_offset": 2428
+      }
+    ]
+  },
+  {
+    "name": "江州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 28,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/02_列傳第三　徐羨之 傅亮 檀道濟/04_檀道濟.txt",
+        "byte_offset": 3071,
+        "time": "劉宋/元嘉8年"
+      },
+      {
+        "source_file": "./宋書/02_列傳/31_列傳第三十二 文九王/04_劉昶(第九子).txt",
+        "byte_offset": 3391,
+        "time": "劉宋/元徽1年"
+      },
+      {
+        "source_file": "./宋書/02_列傳/31_列傳第三十二 文九王/04_劉昶(第九子).txt",
+        "byte_offset": 3520,
+        "time": "劉宋/元徽1年"
+      },
+      {
+        "source_file": "./宋書/00_本紀/00_本紀第一　武帝上/02_武帝上.txt",
+        "byte_offset": 28266,
+        "time": "東晉/義熙1年"
+      },
+      {
+        "source_file": "./宋書/00_本紀/00_本紀第一　武帝上/02_武帝上.txt",
+        "byte_offset": 29043,
+        "time": "東晉/義熙1年"
+      },
+      {
+        "source_file": "./梁書/01_列傳/37_列傳第三十八 太宗十一王 世祖二子/02_太宗十一王.txt",
+        "byte_offset": 896,
+        "time": "梁/太清1年"
+      },
+      {
+        "source_file": "./梁書/01_列傳/39_列傳第四十 胡僧祐 徐文盛 杜崱/04_杜崱.txt",
+        "byte_offset": 1259,
+        "time": "梁/太清2年"
+      },
+      {
+        "source_file": "./梁書/01_列傳/34_列傳第三十五 王規/02_王規.txt",
+        "byte_offset": 3004,
+        "time": "梁/大同2年"
+      },
+      {
+        "source_file": "./梁書/01_列傳/11_列傳第十二 張惠紹 馮道根 康絢 昌義之/03_馮道根.txt",
+        "byte_offset": 1469
+      },
+      {
+        "source_file": "./陳書/02_列傳/02_列傳第三: 侯瑱 歐陽頠 吳明徹 裴子烈/04_吳明徹.txt",
+        "byte_offset": 1751,
+        "time": "陳/天嘉3年"
+      },
+      {
+        "source_file": "./晉書/02_列傳/68_列傳第六十九　桓玄 卞范之 殷仲文/02_桓玄.txt",
+        "byte_offset": 6950
+      },
+      {
+        "source_file": "./晉書/02_列傳/68_列傳第六十九　桓玄 卞范之 殷仲文/02_桓玄.txt",
+        "byte_offset": 6950
+      },
+      {
+        "source_file": "./晉書/02_列傳/68_列傳第六十九　桓玄 卞范之 殷仲文/02_桓玄.txt",
+        "byte_offset": 28239,
+        "time": "東晉/元興3年"
+      },
+      {
+        "source_file": "./晉書/02_列傳/53_列傳第五十四　王恭 庾楷 劉牢之 殷仲堪 楊佺期/02_王恭.txt",
+        "byte_offset": 3496
+      },
+      {
+        "source_file": "./晉書/02_列傳/53_列傳第五十四　王恭 庾楷 劉牢之 殷仲堪 楊佺期/02_王恭.txt",
+        "byte_offset": 3496
+      },
+      {
+        "source_file": "./晉書/02_列傳/49_列傳第五十　　王羲之/02_王羲之.txt",
+        "byte_offset": 14593,
+        "time": "東晉/永和11年"
+      },
+      {
+        "source_file": "./晉書/02_列傳/33_列傳第三十四　武十三王 元四王 簡文三子/04_簡文三子.txt",
+        "byte_offset": 7828
+      },
+      {
+        "source_file": "./晉書/02_列傳/33_列傳第三十四　武十三王 元四王 簡文三子/04_簡文三子.txt",
+        "byte_offset": 7828
+      },
+      {
+        "source_file": "./晉書/00_紀/08_帝紀第九　太宗簡文帝 孝武帝/03_孝武帝.txt",
+        "byte_offset": 1257,
+        "time": "東晉/寧康1年"
+      },
+      {
+        "source_file": "./晉書/00_紀/05_帝紀第六　中宗元帝 肅祖明帝/02_元帝.txt",
+        "byte_offset": 1688,
+        "time": "西晉/元康2年"
+      },
+      {
+        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
+        "byte_offset": 1414,
+        "time": "東晉/咸和1年"
+      },
+      {
+        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
+        "byte_offset": 1271,
+        "time": "東晉/咸和1年"
+      },
+      {
+        "source_file": "./晉書/00_紀/07_帝紀第八　孝宗穆帝 哀帝 廢帝海西公/03_哀帝.txt",
+        "byte_offset": 3812,
+        "time": "東晉/興寧1年"
+      },
+      {
+        "source_file": "./晉書/00_紀/07_帝紀第八　孝宗穆帝 哀帝 廢帝海西公/03_哀帝.txt",
+        "byte_offset": 3855,
+        "time": "東晉/興寧1年"
+      },
+      {
+        "source_file": "./晉書/00_紀/07_帝紀第八　孝宗穆帝 哀帝 廢帝海西公/02_穆帝.txt",
+        "byte_offset": 832,
+        "time": "東晉/永和1年"
+      },
+      {
+        "source_file": "./魏書/01_列傳/75_司馬叡列傳 賨李雄列傳/02_司馬叡.txt",
+        "byte_offset": 4746,
+        "time": "東晉/大興1年"
+      },
+      {
+        "source_file": "./魏書/01_列傳/75_司馬叡列傳 賨李雄列傳/02_司馬叡.txt",
+        "byte_offset": 23086,
+        "time": "北魏/皇始1年"
+      },
+      {
+        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
+        "byte_offset": 1633,
+        "time": "北魏/正始1年"
       }
     ]
   },
@@ -1417,101 +1417,6 @@
     ]
   },
   {
-    "name": "涼州",
-    "is_qiao": false,
-    "event_count": 18,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/57_列傳第五十八 氐胡/03_胡.txt",
-        "byte_offset": 2106,
-        "time": "西涼/庚子1年"
-      },
-      {
-        "source_file": "./宋書/02_列傳/57_列傳第五十八 氐胡/03_胡.txt",
-        "byte_offset": 2259,
-        "time": "西涼/庚子1年"
-      },
-      {
-        "source_file": "./宋書/02_列傳/57_列傳第五十八 氐胡/03_胡.txt",
-        "byte_offset": 7552,
-        "time": "劉宋/元嘉1年"
-      },
-      {
-        "source_file": "./晉書/02_列傳/43_列傳第四十四　桓彝/03_子孫.txt",
-        "byte_offset": 12245,
-        "time": "東晉/太元13年"
-      },
-      {
-        "source_file": "./晉書/02_列傳/64_列傳第六十五/22_郭黁.txt",
-        "byte_offset": 1690
-      },
-      {
-        "source_file": "./晉書/02_列傳/64_列傳第六十五/22_郭黁.txt",
-        "byte_offset": 1690
-      },
-      {
-        "source_file": "./晉書/00_紀/08_帝紀第九　太宗簡文帝 孝武帝/03_孝武帝.txt",
-        "byte_offset": 4249,
-        "time": "東晉/太元1年"
-      },
-      {
-        "source_file": "./晉書/00_紀/04_帝紀第五　孝懷帝 孝愍帝/03_愍帝.txt",
-        "byte_offset": 4172,
-        "time": "西晉/建興2年"
-      },
-      {
-        "source_file": "./晉書/00_紀/04_帝紀第五　孝懷帝 孝愍帝/03_愍帝.txt",
-        "byte_offset": 6000,
-        "time": "西晉/建興4年"
-      },
-      {
-        "source_file": "./晉書/00_紀/07_帝紀第八　孝宗穆帝 哀帝 廢帝海西公/04_海西公.txt",
-        "byte_offset": 2296,
-        "time": "東晉/太和2年"
-      },
-      {
-        "source_file": "./晉書/01_志/01_志第二　天文中/04_史傳事驗.txt",
-        "byte_offset": 24287,
-        "time": "東晉/太元1年"
-      },
-      {
-        "source_file": "./晉書/01_志/02_志第三　天文下/02_月五星犯列舍經星變附見.txt",
-        "byte_offset": 21064,
-        "time": "東晉/永和1年"
-      },
-      {
-        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
-        "byte_offset": 11485,
-        "time": "東晉/興寧3年"
-      },
-      {
-        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
-        "byte_offset": 11485,
-        "time": "東晉/興寧3年"
-      },
-      {
-        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
-        "byte_offset": 25468,
-        "time": "東晉/太和5年"
-      },
-      {
-        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
-        "byte_offset": 25468,
-        "time": "東晉/太和5年"
-      },
-      {
-        "source_file": "./魏書/01_列傳/78_私署凉州牧張實 鮮卑乞伏國仁 鮮卑秃發烏孤 私署凉王李暠 盧水胡沮渠蒙遜/02_張寔.txt",
-        "byte_offset": 847,
-        "time": "西晉/永嘉5年"
-      },
-      {
-        "source_file": "./魏書/01_列傳/78_私署凉州牧張實 鮮卑乞伏國仁 鮮卑秃發烏孤 私署凉王李暠 盧水胡沮渠蒙遜/02_張寔.txt",
-        "byte_offset": 7464,
-        "time": "北魏/和平1年"
-      }
-    ]
-  },
-  {
     "name": "兗州",
     "is_qiao": false,
     "role_suffix": "刺史",
@@ -1604,6 +1509,101 @@
         "source_file": "./魏書/01_列傳/76_島夷桓玄 海夷馮跋 島夷劉裕/04_劉裕.txt",
         "byte_offset": 32192,
         "time": "北魏/皇興1年"
+      }
+    ]
+  },
+  {
+    "name": "涼州",
+    "is_qiao": false,
+    "event_count": 18,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/57_列傳第五十八 氐胡/03_胡.txt",
+        "byte_offset": 2106,
+        "time": "西涼/庚子1年"
+      },
+      {
+        "source_file": "./宋書/02_列傳/57_列傳第五十八 氐胡/03_胡.txt",
+        "byte_offset": 2259,
+        "time": "西涼/庚子1年"
+      },
+      {
+        "source_file": "./宋書/02_列傳/57_列傳第五十八 氐胡/03_胡.txt",
+        "byte_offset": 7552,
+        "time": "劉宋/元嘉1年"
+      },
+      {
+        "source_file": "./晉書/02_列傳/43_列傳第四十四　桓彝/03_子孫.txt",
+        "byte_offset": 12245,
+        "time": "東晉/太元13年"
+      },
+      {
+        "source_file": "./晉書/02_列傳/64_列傳第六十五/22_郭黁.txt",
+        "byte_offset": 1690
+      },
+      {
+        "source_file": "./晉書/02_列傳/64_列傳第六十五/22_郭黁.txt",
+        "byte_offset": 1690
+      },
+      {
+        "source_file": "./晉書/00_紀/08_帝紀第九　太宗簡文帝 孝武帝/03_孝武帝.txt",
+        "byte_offset": 4249,
+        "time": "東晉/太元1年"
+      },
+      {
+        "source_file": "./晉書/00_紀/04_帝紀第五　孝懷帝 孝愍帝/03_愍帝.txt",
+        "byte_offset": 4172,
+        "time": "西晉/建興2年"
+      },
+      {
+        "source_file": "./晉書/00_紀/04_帝紀第五　孝懷帝 孝愍帝/03_愍帝.txt",
+        "byte_offset": 6000,
+        "time": "西晉/建興4年"
+      },
+      {
+        "source_file": "./晉書/00_紀/07_帝紀第八　孝宗穆帝 哀帝 廢帝海西公/04_海西公.txt",
+        "byte_offset": 2296,
+        "time": "東晉/太和2年"
+      },
+      {
+        "source_file": "./晉書/01_志/01_志第二　天文中/04_史傳事驗.txt",
+        "byte_offset": 24287,
+        "time": "東晉/太元1年"
+      },
+      {
+        "source_file": "./晉書/01_志/02_志第三　天文下/02_月五星犯列舍經星變附見.txt",
+        "byte_offset": 21064,
+        "time": "東晉/永和1年"
+      },
+      {
+        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
+        "byte_offset": 11485,
+        "time": "東晉/興寧3年"
+      },
+      {
+        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
+        "byte_offset": 11485,
+        "time": "東晉/興寧3年"
+      },
+      {
+        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
+        "byte_offset": 25468,
+        "time": "東晉/太和5年"
+      },
+      {
+        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
+        "byte_offset": 25468,
+        "time": "東晉/太和5年"
+      },
+      {
+        "source_file": "./魏書/01_列傳/78_私署凉州牧張實 鮮卑乞伏國仁 鮮卑秃發烏孤 私署凉王李暠 盧水胡沮渠蒙遜/02_張寔.txt",
+        "byte_offset": 847,
+        "time": "西晉/永嘉5年"
+      },
+      {
+        "source_file": "./魏書/01_列傳/78_私署凉州牧張實 鮮卑乞伏國仁 鮮卑秃發烏孤 私署凉王李暠 盧水胡沮渠蒙遜/02_張寔.txt",
+        "byte_offset": 7464,
+        "time": "北魏/和平1年"
       }
     ]
   },
@@ -2013,6 +2013,52 @@
     ]
   },
   {
+    "name": "京城",
+    "is_qiao": false,
+    "event_count": 9,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/07_列傳第八　朱齡石 毛脩之 傅弘之/02_朱齡石.txt",
+        "byte_offset": 959
+      },
+      {
+        "source_file": "./宋書/02_列傳/01_列傳第二　劉穆之 王弘/02_劉穆之.txt",
+        "byte_offset": 376
+      },
+      {
+        "source_file": "./宋書/02_列傳/40_列傳第四十一 劉秀之 顧琛 顧覬之/02_劉秀之.txt",
+        "byte_offset": 132
+      },
+      {
+        "source_file": "./宋書/02_列傳/04_列傳第五　王鎮惡 檀韶 向靖 劉懷慎 劉粹/06_劉粹.txt",
+        "byte_offset": 138
+      },
+      {
+        "source_file": "./宋書/02_列傳/09_列傳第十 胡藩 劉康祖 垣護之 張興世/03_劉康祖.txt",
+        "byte_offset": 288
+      },
+      {
+        "source_file": "./宋書/02_列傳/06_列傳第七　劉懷肅 孟懷玉 劉敬宣 檀祗/05_檀祗.txt",
+        "byte_offset": 166
+      },
+      {
+        "source_file": "./梁書/01_列傳/37_列傳第三十八 太宗十一王 世祖二子/02_太宗十一王.txt",
+        "byte_offset": 6460,
+        "time": "梁/大寶1年"
+      },
+      {
+        "source_file": "./梁書/01_列傳/36_列傳第三十七 韋粲 江子一/04_張嵊.txt",
+        "byte_offset": 448,
+        "time": "梁/太清2年"
+      },
+      {
+        "source_file": "./梁書/01_列傳/34_列傳第三十五 王規/02_王規.txt",
+        "byte_offset": 3004,
+        "time": "梁/大同2年"
+      }
+    ]
+  },
+  {
     "name": "秦州",
     "is_qiao": false,
     "role_suffix": "刺史",
@@ -2061,52 +2107,6 @@
         "source_file": "./魏書/00_帝紀/12_廢出三帝紀 前廢帝廣陵王/04_出帝.txt",
         "byte_offset": 11147,
         "time": "北魏/永熙1年"
-      }
-    ]
-  },
-  {
-    "name": "京城",
-    "is_qiao": false,
-    "event_count": 9,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/07_列傳第八　朱齡石 毛脩之 傅弘之/02_朱齡石.txt",
-        "byte_offset": 959
-      },
-      {
-        "source_file": "./宋書/02_列傳/01_列傳第二　劉穆之 王弘/02_劉穆之.txt",
-        "byte_offset": 376
-      },
-      {
-        "source_file": "./宋書/02_列傳/40_列傳第四十一 劉秀之 顧琛 顧覬之/02_劉秀之.txt",
-        "byte_offset": 132
-      },
-      {
-        "source_file": "./宋書/02_列傳/04_列傳第五　王鎮惡 檀韶 向靖 劉懷慎 劉粹/06_劉粹.txt",
-        "byte_offset": 138
-      },
-      {
-        "source_file": "./宋書/02_列傳/09_列傳第十 胡藩 劉康祖 垣護之 張興世/03_劉康祖.txt",
-        "byte_offset": 288
-      },
-      {
-        "source_file": "./宋書/02_列傳/06_列傳第七　劉懷肅 孟懷玉 劉敬宣 檀祗/05_檀祗.txt",
-        "byte_offset": 166
-      },
-      {
-        "source_file": "./梁書/01_列傳/37_列傳第三十八 太宗十一王 世祖二子/02_太宗十一王.txt",
-        "byte_offset": 6460,
-        "time": "梁/大寶1年"
-      },
-      {
-        "source_file": "./梁書/01_列傳/36_列傳第三十七 韋粲 江子一/04_張嵊.txt",
-        "byte_offset": 448,
-        "time": "梁/太清2年"
-      },
-      {
-        "source_file": "./梁書/01_列傳/34_列傳第三十五 王規/02_王規.txt",
-        "byte_offset": 3004,
-        "time": "梁/大同2年"
       }
     ]
   },
@@ -2285,36 +2285,39 @@
     ]
   },
   {
-    "name": "中山",
+    "name": "彭城",
     "is_qiao": false,
     "event_count": 6,
     "sources": [
       {
-        "source_file": "./晉書/03_載記/23_載記第二十四　慕容寶 慕容盛 慕容熙 慕容雲/02_慕容寶.txt",
-        "byte_offset": 2819
+        "source_file": "./宋書/02_列傳/27_列傳第二十八 武二王/03_南郡王.txt",
+        "byte_offset": 11342,
+        "time": "劉宋/孝建1年"
       },
       {
-        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
-        "byte_offset": 29220,
-        "time": "西晉/建興1年"
+        "source_file": "./梁書/01_列傳/35_列傳第三十六 臧盾/03_傅岐.txt",
+        "byte_offset": 1394,
+        "time": "梁/太清1年"
       },
       {
-        "source_file": "./魏書/01_列傳/02_昭成子孫/02_昭成子孫.txt",
-        "byte_offset": 7735,
-        "time": "北魏/天賜6年"
+        "source_file": "./梁書/01_列傳/32_列傳第三十三 元法僧 元樹 元願達 王神念/04_羊侃.txt",
+        "byte_offset": 3659,
+        "time": "梁/太清1年"
       },
       {
-        "source_file": "./魏書/01_列傳/64_尒朱榮/02_尒朱榮.txt",
-        "byte_offset": 3868
+        "source_file": "./魏書/01_列傳/76_島夷桓玄 海夷馮跋 島夷劉裕/04_劉裕.txt",
+        "byte_offset": 32192,
+        "time": "北魏/皇興1年"
       },
       {
-        "source_file": "./魏書/01_列傳/16_長孫肥 尉古真/02_長孫肥.txt",
-        "byte_offset": 644
+        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
+        "byte_offset": 7840,
+        "time": "北魏/孝昌1年"
       },
       {
-        "source_file": "./魏書/01_列傳/82_蠕蠕 匈奴宇文莫槐 徒何段就六眷 高車/05_高車.txt",
-        "byte_offset": 9347,
-        "time": "北魏/皇始2年"
+        "source_file": "./魏書/01_列傳/62_陽尼 賈思伯 李叔虎 路恃慶 房亮 曹世表 潘永基 朱元旭/04_李叔虎.txt",
+        "byte_offset": 1126,
+        "time": "北魏/永平4年"
       }
     ]
   },
@@ -2355,39 +2358,128 @@
     ]
   },
   {
-    "name": "彭城",
+    "name": "中山",
     "is_qiao": false,
     "event_count": 6,
     "sources": [
       {
-        "source_file": "./宋書/02_列傳/27_列傳第二十八 武二王/03_南郡王.txt",
-        "byte_offset": 11342,
-        "time": "劉宋/孝建1年"
+        "source_file": "./晉書/03_載記/23_載記第二十四　慕容寶 慕容盛 慕容熙 慕容雲/02_慕容寶.txt",
+        "byte_offset": 2819
       },
       {
-        "source_file": "./梁書/01_列傳/35_列傳第三十六 臧盾/03_傅岐.txt",
-        "byte_offset": 1394,
-        "time": "梁/太清1年"
+        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
+        "byte_offset": 29220,
+        "time": "西晉/建興1年"
       },
       {
-        "source_file": "./梁書/01_列傳/32_列傳第三十三 元法僧 元樹 元願達 王神念/04_羊侃.txt",
-        "byte_offset": 3659,
-        "time": "梁/太清1年"
+        "source_file": "./魏書/01_列傳/02_昭成子孫/02_昭成子孫.txt",
+        "byte_offset": 7735,
+        "time": "北魏/天賜6年"
       },
       {
-        "source_file": "./魏書/01_列傳/76_島夷桓玄 海夷馮跋 島夷劉裕/04_劉裕.txt",
-        "byte_offset": 32192,
-        "time": "北魏/皇興1年"
+        "source_file": "./魏書/01_列傳/64_尒朱榮/02_尒朱榮.txt",
+        "byte_offset": 3868
       },
       {
-        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
-        "byte_offset": 7840,
-        "time": "北魏/孝昌1年"
+        "source_file": "./魏書/01_列傳/16_長孫肥 尉古真/02_長孫肥.txt",
+        "byte_offset": 644
       },
       {
-        "source_file": "./魏書/01_列傳/62_陽尼 賈思伯 李叔虎 路恃慶 房亮 曹世表 潘永基 朱元旭/04_李叔虎.txt",
-        "byte_offset": 1126,
-        "time": "北魏/永平4年"
+        "source_file": "./魏書/01_列傳/82_蠕蠕 匈奴宇文莫槐 徒何段就六眷 高車/05_高車.txt",
+        "byte_offset": 9347,
+        "time": "北魏/皇始2年"
+      }
+    ]
+  },
+  {
+    "name": "并州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 5,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/29_載記第三十　　赫連勃勃/02_赫連勃勃.txt",
+        "byte_offset": 13718,
+        "time": "東晉/義熙3年"
+      },
+      {
+        "source_file": "./晉書/03_載記/29_載記第三十　　赫連勃勃/02_赫連勃勃.txt",
+        "byte_offset": 13718,
+        "time": "東晉/義熙3年"
+      },
+      {
+        "source_file": "./晉書/03_載記/15_載記第十六　姚弋仲 姚襄 姚萇/03_姚襄.txt",
+        "byte_offset": 424
+      },
+      {
+        "source_file": "./魏書/01_列傳/74_匈奴劉聰 羯胡石勒 鐵弗劉虎 徒何慕容廆 臨渭氐苻健 羌姚萇 略陽氐吕光/04_石勒.txt",
+        "byte_offset": 1349
+      },
+      {
+        "source_file": "./魏書/01_列傳/82_蠕蠕 匈奴宇文莫槐 徒何段就六眷 高車/05_高車.txt",
+        "byte_offset": 9476,
+        "time": "北魏/皇始2年"
+      }
+    ]
+  },
+  {
+    "name": "河間",
+    "is_qiao": false,
+    "role_suffix": "內史",
+    "event_count": 5,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/09_帝紀第十　安帝 恭帝/02_安帝.txt",
+        "byte_offset": 15064,
+        "time": "東晉/義熙6年"
+      },
+      {
+        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
+        "byte_offset": 29443,
+        "time": "西晉/建興1年"
+      },
+      {
+        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
+        "byte_offset": 29524,
+        "time": "西晉/建興1年"
+      },
+      {
+        "source_file": "./魏書/01_列傳/22_高湖 崔逞 封懿/04_封懿.txt",
+        "byte_offset": 4804,
+        "time": "北魏/神龜2年"
+      },
+      {
+        "source_file": "./魏書/01_列傳/22_高湖 崔逞 封懿/04_封懿.txt",
+        "byte_offset": 4804,
+        "time": "北魏/神龜2年"
+      }
+    ]
+  },
+  {
+    "name": "衡州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 5,
+    "sources": [
+      {
+        "source_file": "./陳書/02_列傳/02_列傳第三: 侯瑱 歐陽頠 吳明徹 裴子烈/03_歐陽頠.txt",
+        "byte_offset": 1455
+      },
+      {
+        "source_file": "./陳書/02_列傳/02_列傳第三: 侯瑱 歐陽頠 吳明徹 裴子烈/03_歐陽頠.txt",
+        "byte_offset": 1455
+      },
+      {
+        "source_file": "./陳書/02_列傳/02_列傳第三: 侯瑱 歐陽頠 吳明徹 裴子烈/03_歐陽頠.txt",
+        "byte_offset": 1509
+      },
+      {
+        "source_file": "./陳書/02_列傳/28_列傳第二十九: 熊曇朗 周迪 留異 陳寶應/03_周迪.txt",
+        "byte_offset": 607
+      },
+      {
+        "source_file": "./陳書/02_列傳/06_列傳第七: 徐世譜 魯悉達 周敷 荀朗 周炅/02_徐世譜.txt",
+        "byte_offset": 845
       }
     ]
   },
@@ -2421,6 +2513,134 @@
         "source_file": "./魏書/01_列傳/76_島夷桓玄 海夷馮跋 島夷劉裕/04_劉裕.txt",
         "byte_offset": 649,
         "time": "北魏/天興2年"
+      }
+    ]
+  },
+  {
+    "name": "兖州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 5,
+    "sources": [
+      {
+        "source_file": "./南齊書/02_列傳/09_列傳第十 呂安國/03_周山圖.txt",
+        "byte_offset": 111
+      },
+      {
+        "source_file": "./南齊書/00_本紀/04_本紀第五　海陵王/02_海陵王.txt",
+        "byte_offset": 1829,
+        "time": "南齊/延興1年"
+      },
+      {
+        "source_file": "./南齊書/00_本紀/04_本紀第五　海陵王/02_海陵王.txt",
+        "byte_offset": 1913,
+        "time": "南齊/延興1年"
+      },
+      {
+        "source_file": "./南齊書/00_本紀/04_本紀第五　海陵王/02_海陵王.txt",
+        "byte_offset": 1970,
+        "time": "南齊/延興1年"
+      },
+      {
+        "source_file": "./南齊書/00_本紀/03_本紀第四　鬱林王/02_鬱林王.txt",
+        "byte_offset": 3913,
+        "time": "南齊/隆昌1年"
+      }
+    ]
+  },
+  {
+    "name": "河南",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 5,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/12_列傳第十三 張茂度 庾登之 謝方明 江夷/02_張茂度.txt",
+        "byte_offset": 922
+      },
+      {
+        "source_file": "./晉書/02_列傳/36_列傳第三十七　溫嶠 郗鑒/03_郗鑒.txt",
+        "byte_offset": 16012,
+        "time": "東晉/太元9年"
+      },
+      {
+        "source_file": "./晉書/02_列傳/36_列傳第三十七　溫嶠 郗鑒/03_郗鑒.txt",
+        "byte_offset": 16139,
+        "time": "東晉/太元9年"
+      },
+      {
+        "source_file": "./晉書/00_紀/07_帝紀第八　孝宗穆帝 哀帝 廢帝海西公/03_哀帝.txt",
+        "byte_offset": 2104,
+        "time": "東晉/隆和1年"
+      },
+      {
+        "source_file": "./晉書/00_紀/07_帝紀第八　孝宗穆帝 哀帝 廢帝海西公/02_穆帝.txt",
+        "byte_offset": 11201,
+        "time": "東晉/永和12年"
+      }
+    ]
+  },
+  {
+    "name": "寧州",
+    "is_qiao": false,
+    "event_count": 5,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/50_列傳第五十一　王遜 蔡豹 羊鑒 劉胤 桓宣 朱伺 毛寶 劉遐 鄧嶽 朱序/02_王遜.txt",
+        "byte_offset": 2078,
+        "time": "西晉/永嘉4年"
+      },
+      {
+        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
+        "byte_offset": 9824,
+        "time": "東晉/咸和8年"
+      },
+      {
+        "source_file": "./南齊書/00_本紀/04_本紀第五　海陵王/02_海陵王.txt",
+        "byte_offset": 1913,
+        "time": "南齊/延興1年"
+      },
+      {
+        "source_file": "./南齊書/00_本紀/04_本紀第五　海陵王/02_海陵王.txt",
+        "byte_offset": 1913,
+        "time": "南齊/延興1年"
+      },
+      {
+        "source_file": "./南齊書/00_本紀/04_本紀第五　海陵王/02_海陵王.txt",
+        "byte_offset": 1970,
+        "time": "南齊/延興1年"
+      }
+    ]
+  },
+  {
+    "name": "金城",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 5,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/55_列傳第五十六　張軌/03_子孫.txt",
+        "byte_offset": 4905
+      },
+      {
+        "source_file": "./晉書/00_紀/01_帝紀第二　世宗景帝 太祖文帝/03_文帝.txt",
+        "byte_offset": 9563,
+        "time": "前秦/甘露4年"
+      },
+      {
+        "source_file": "./晉書/00_紀/01_帝紀第二　世宗景帝 太祖文帝/03_文帝.txt",
+        "byte_offset": 9680,
+        "time": "前秦/甘露4年"
+      },
+      {
+        "source_file": "./晉書/00_紀/07_帝紀第八　孝宗穆帝 哀帝 廢帝海西公/02_穆帝.txt",
+        "byte_offset": 1928,
+        "time": "東晉/永和2年"
+      },
+      {
+        "source_file": "./晉書/03_載記/21_載記第二十二　呂光 呂纂 呂隆/02_呂光.txt",
+        "byte_offset": 12364,
+        "time": "東晉/太元21年"
       }
     ]
   },
@@ -2487,248 +2707,30 @@
     ]
   },
   {
-    "name": "金城",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 5,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/55_列傳第五十六　張軌/03_子孫.txt",
-        "byte_offset": 4905
-      },
-      {
-        "source_file": "./晉書/00_紀/01_帝紀第二　世宗景帝 太祖文帝/03_文帝.txt",
-        "byte_offset": 9563,
-        "time": "前秦/甘露4年"
-      },
-      {
-        "source_file": "./晉書/00_紀/01_帝紀第二　世宗景帝 太祖文帝/03_文帝.txt",
-        "byte_offset": 9680,
-        "time": "前秦/甘露4年"
-      },
-      {
-        "source_file": "./晉書/00_紀/07_帝紀第八　孝宗穆帝 哀帝 廢帝海西公/02_穆帝.txt",
-        "byte_offset": 1928,
-        "time": "東晉/永和2年"
-      },
-      {
-        "source_file": "./晉書/03_載記/21_載記第二十二　呂光 呂纂 呂隆/02_呂光.txt",
-        "byte_offset": 12364,
-        "time": "東晉/太元21年"
-      }
-    ]
-  },
-  {
-    "name": "兖州",
+    "name": "瀛州",
     "is_qiao": false,
     "role_suffix": "刺史",
-    "event_count": 5,
-    "sources": [
-      {
-        "source_file": "./南齊書/02_列傳/09_列傳第十 呂安國/03_周山圖.txt",
-        "byte_offset": 111
-      },
-      {
-        "source_file": "./南齊書/00_本紀/04_本紀第五　海陵王/02_海陵王.txt",
-        "byte_offset": 1829,
-        "time": "南齊/延興1年"
-      },
-      {
-        "source_file": "./南齊書/00_本紀/04_本紀第五　海陵王/02_海陵王.txt",
-        "byte_offset": 1913,
-        "time": "南齊/延興1年"
-      },
-      {
-        "source_file": "./南齊書/00_本紀/04_本紀第五　海陵王/02_海陵王.txt",
-        "byte_offset": 1970,
-        "time": "南齊/延興1年"
-      },
-      {
-        "source_file": "./南齊書/00_本紀/03_本紀第四　鬱林王/02_鬱林王.txt",
-        "byte_offset": 3913,
-        "time": "南齊/隆昌1年"
-      }
-    ]
-  },
-  {
-    "name": "河間",
-    "is_qiao": false,
-    "role_suffix": "內史",
-    "event_count": 5,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/09_帝紀第十　安帝 恭帝/02_安帝.txt",
-        "byte_offset": 15064,
-        "time": "東晉/義熙6年"
-      },
-      {
-        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
-        "byte_offset": 29443,
-        "time": "西晉/建興1年"
-      },
-      {
-        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
-        "byte_offset": 29524,
-        "time": "西晉/建興1年"
-      },
-      {
-        "source_file": "./魏書/01_列傳/22_高湖 崔逞 封懿/04_封懿.txt",
-        "byte_offset": 4804,
-        "time": "北魏/神龜2年"
-      },
-      {
-        "source_file": "./魏書/01_列傳/22_高湖 崔逞 封懿/04_封懿.txt",
-        "byte_offset": 4804,
-        "time": "北魏/神龜2年"
-      }
-    ]
-  },
-  {
-    "name": "河南",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 5,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/12_列傳第十三 張茂度 庾登之 謝方明 江夷/02_張茂度.txt",
-        "byte_offset": 922
-      },
-      {
-        "source_file": "./晉書/02_列傳/36_列傳第三十七　溫嶠 郗鑒/03_郗鑒.txt",
-        "byte_offset": 16012,
-        "time": "東晉/太元9年"
-      },
-      {
-        "source_file": "./晉書/02_列傳/36_列傳第三十七　溫嶠 郗鑒/03_郗鑒.txt",
-        "byte_offset": 16139,
-        "time": "東晉/太元9年"
-      },
-      {
-        "source_file": "./晉書/00_紀/07_帝紀第八　孝宗穆帝 哀帝 廢帝海西公/03_哀帝.txt",
-        "byte_offset": 2104,
-        "time": "東晉/隆和1年"
-      },
-      {
-        "source_file": "./晉書/00_紀/07_帝紀第八　孝宗穆帝 哀帝 廢帝海西公/02_穆帝.txt",
-        "byte_offset": 11201,
-        "time": "東晉/永和12年"
-      }
-    ]
-  },
-  {
-    "name": "并州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 5,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/29_載記第三十　　赫連勃勃/02_赫連勃勃.txt",
-        "byte_offset": 13718,
-        "time": "東晉/義熙3年"
-      },
-      {
-        "source_file": "./晉書/03_載記/29_載記第三十　　赫連勃勃/02_赫連勃勃.txt",
-        "byte_offset": 13718,
-        "time": "東晉/義熙3年"
-      },
-      {
-        "source_file": "./晉書/03_載記/15_載記第十六　姚弋仲 姚襄 姚萇/03_姚襄.txt",
-        "byte_offset": 424
-      },
-      {
-        "source_file": "./魏書/01_列傳/74_匈奴劉聰 羯胡石勒 鐵弗劉虎 徒何慕容廆 臨渭氐苻健 羌姚萇 略陽氐吕光/04_石勒.txt",
-        "byte_offset": 1349
-      },
-      {
-        "source_file": "./魏書/01_列傳/82_蠕蠕 匈奴宇文莫槐 徒何段就六眷 高車/05_高車.txt",
-        "byte_offset": 9476,
-        "time": "北魏/皇始2年"
-      }
-    ]
-  },
-  {
-    "name": "衡州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 5,
-    "sources": [
-      {
-        "source_file": "./陳書/02_列傳/02_列傳第三: 侯瑱 歐陽頠 吳明徹 裴子烈/03_歐陽頠.txt",
-        "byte_offset": 1455
-      },
-      {
-        "source_file": "./陳書/02_列傳/02_列傳第三: 侯瑱 歐陽頠 吳明徹 裴子烈/03_歐陽頠.txt",
-        "byte_offset": 1455
-      },
-      {
-        "source_file": "./陳書/02_列傳/02_列傳第三: 侯瑱 歐陽頠 吳明徹 裴子烈/03_歐陽頠.txt",
-        "byte_offset": 1509
-      },
-      {
-        "source_file": "./陳書/02_列傳/28_列傳第二十九: 熊曇朗 周迪 留異 陳寶應/03_周迪.txt",
-        "byte_offset": 607
-      },
-      {
-        "source_file": "./陳書/02_列傳/06_列傳第七: 徐世譜 魯悉達 周敷 荀朗 周炅/02_徐世譜.txt",
-        "byte_offset": 845
-      }
-    ]
-  },
-  {
-    "name": "寧州",
-    "is_qiao": false,
-    "event_count": 5,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/50_列傳第五十一　王遜 蔡豹 羊鑒 劉胤 桓宣 朱伺 毛寶 劉遐 鄧嶽 朱序/02_王遜.txt",
-        "byte_offset": 2078,
-        "time": "西晉/永嘉4年"
-      },
-      {
-        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
-        "byte_offset": 9824,
-        "time": "東晉/咸和8年"
-      },
-      {
-        "source_file": "./南齊書/00_本紀/04_本紀第五　海陵王/02_海陵王.txt",
-        "byte_offset": 1913,
-        "time": "南齊/延興1年"
-      },
-      {
-        "source_file": "./南齊書/00_本紀/04_本紀第五　海陵王/02_海陵王.txt",
-        "byte_offset": 1913,
-        "time": "南齊/延興1年"
-      },
-      {
-        "source_file": "./南齊書/00_本紀/04_本紀第五　海陵王/02_海陵王.txt",
-        "byte_offset": 1970,
-        "time": "南齊/延興1年"
-      }
-    ]
-  },
-  {
-    "name": "新城",
-    "is_qiao": false,
     "event_count": 4,
     "sources": [
       {
-        "source_file": "./宋書/01_志/23_志第二十四 五行五/15_疾疫.txt",
-        "byte_offset": 205,
-        "time": "西晉/建興2年"
+        "source_file": "./魏書/01_列傳/51_薛安都 畢衆敬 沈文秀 張讜 田益宗 孟表/03_畢眾敬.txt",
+        "byte_offset": 4912,
+        "time": "北魏/正始3年"
       },
       {
-        "source_file": "./晉書/02_列傳/43_列傳第四十四　桓彝/03_子孫.txt",
-        "byte_offset": 15235,
-        "time": "東晉/太元13年"
+        "source_file": "./魏書/01_列傳/46_鄭羲 崔辯/02_鄭羲.txt",
+        "byte_offset": 13130,
+        "time": "北魏/熙平1年"
       },
       {
-        "source_file": "./晉書/02_列傳/06_列傳第七　宗室/02_安平獻王孚.txt",
-        "byte_offset": 2906
+        "source_file": "./魏書/01_列傳/55_邢巒 李平/02_邢巒.txt",
+        "byte_offset": 14898,
+        "time": "北魏/永安2年"
       },
       {
-        "source_file": "./晉書/00_紀/01_帝紀第二　世宗景帝 太祖文帝/02_景帝.txt",
-        "byte_offset": 1473,
-        "time": "漢趙/嘉平5年"
+        "source_file": "./魏書/01_列傳/37_盧玄/02_盧玄.txt",
+        "byte_offset": 10813,
+        "time": "北魏/神龜2年"
       }
     ]
   },
@@ -2755,33 +2757,6 @@
         "source_file": "./魏書/00_帝紀/12_廢出三帝紀 前廢帝廣陵王/03_後廢帝.txt",
         "byte_offset": 3332,
         "time": "北魏/中興1年"
-      }
-    ]
-  },
-  {
-    "name": "吳興",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 4,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/17_列傳第十八 王惠 謝弘微 王球/02_王惠.txt",
-        "byte_offset": 1067
-      },
-      {
-        "source_file": "./晉書/00_紀/08_帝紀第九　太宗簡文帝 孝武帝/03_孝武帝.txt",
-        "byte_offset": 2916,
-        "time": "東晉/寧康2年"
-      },
-      {
-        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
-        "byte_offset": 4646,
-        "time": "東晉/咸和3年"
-      },
-      {
-        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
-        "byte_offset": 4664,
-        "time": "東晉/咸和3年"
       }
     ]
   },
@@ -2838,34 +2813,6 @@
     ]
   },
   {
-    "name": "蜀郡",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 4,
-    "sources": [
-      {
-        "source_file": "./梁書/01_列傳/34_列傳第三十五 王規/08_劉潛.txt",
-        "byte_offset": 1736,
-        "time": "梁/大寶1年"
-      },
-      {
-        "source_file": "./晉書/03_載記/19_載記第二十　李特 李流/02_李特.txt",
-        "byte_offset": 12238,
-        "time": "西晉/太安1年"
-      },
-      {
-        "source_file": "./晉書/03_載記/19_載記第二十　李特 李流/02_李特.txt",
-        "byte_offset": 12238,
-        "time": "西晉/太安1年"
-      },
-      {
-        "source_file": "./晉書/03_載記/19_載記第二十　李特 李流/02_李特.txt",
-        "byte_offset": 12238,
-        "time": "西晉/太安1年"
-      }
-    ]
-  },
-  {
     "name": "甯州",
     "is_qiao": false,
     "role_suffix": "刺史",
@@ -2889,6 +2836,33 @@
       {
         "source_file": "./晉書/02_列傳/50_列傳第五十一　王遜 蔡豹 羊鑒 劉胤 桓宣 朱伺 毛寶 劉遐 鄧嶽 朱序/02_王遜.txt",
         "byte_offset": 237
+      }
+    ]
+  },
+  {
+    "name": "吳興",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 4,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/17_列傳第十八 王惠 謝弘微 王球/02_王惠.txt",
+        "byte_offset": 1067
+      },
+      {
+        "source_file": "./晉書/00_紀/08_帝紀第九　太宗簡文帝 孝武帝/03_孝武帝.txt",
+        "byte_offset": 2916,
+        "time": "東晉/寧康2年"
+      },
+      {
+        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
+        "byte_offset": 4646,
+        "time": "東晉/咸和3年"
+      },
+      {
+        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
+        "byte_offset": 4664,
+        "time": "東晉/咸和3年"
       }
     ]
   },
@@ -2919,29 +2893,30 @@
     ]
   },
   {
-    "name": "吳國",
+    "name": "蜀郡",
     "is_qiao": false,
-    "role_suffix": "內史",
+    "role_suffix": "太守",
     "event_count": 4,
     "sources": [
       {
-        "source_file": "./晉書/02_列傳/54_列傳第五十五　劉毅 諸葛長民 何無忌 檀憑之 魏詠之/06_魏詠之.txt",
-        "byte_offset": 907
+        "source_file": "./梁書/01_列傳/34_列傳第三十五 王規/08_劉潛.txt",
+        "byte_offset": 1736,
+        "time": "梁/大寶1年"
       },
       {
-        "source_file": "./晉書/00_紀/05_帝紀第六　中宗元帝 肅祖明帝/02_元帝.txt",
-        "byte_offset": 14287,
-        "time": "東晉/永昌1年"
+        "source_file": "./晉書/03_載記/19_載記第二十　李特 李流/02_李特.txt",
+        "byte_offset": 12238,
+        "time": "西晉/太安1年"
       },
       {
-        "source_file": "./晉書/00_紀/05_帝紀第六　中宗元帝 肅祖明帝/02_元帝.txt",
-        "byte_offset": 14305,
-        "time": "東晉/永昌1年"
+        "source_file": "./晉書/03_載記/19_載記第二十　李特 李流/02_李特.txt",
+        "byte_offset": 12238,
+        "time": "西晉/太安1年"
       },
       {
-        "source_file": "./晉書/00_紀/07_帝紀第八　孝宗穆帝 哀帝 廢帝海西公/02_穆帝.txt",
-        "byte_offset": 4914,
-        "time": "東晉/永和5年"
+        "source_file": "./晉書/03_載記/19_載記第二十　李特 李流/02_李特.txt",
+        "byte_offset": 12238,
+        "time": "西晉/太安1年"
       }
     ]
   },
@@ -2973,119 +2948,77 @@
     ]
   },
   {
-    "name": "瀛州",
+    "name": "吳國",
     "is_qiao": false,
-    "role_suffix": "刺史",
+    "role_suffix": "內史",
     "event_count": 4,
     "sources": [
       {
-        "source_file": "./魏書/01_列傳/51_薛安都 畢衆敬 沈文秀 張讜 田益宗 孟表/03_畢眾敬.txt",
-        "byte_offset": 4912,
-        "time": "北魏/正始3年"
+        "source_file": "./晉書/02_列傳/54_列傳第五十五　劉毅 諸葛長民 何無忌 檀憑之 魏詠之/06_魏詠之.txt",
+        "byte_offset": 907
       },
       {
-        "source_file": "./魏書/01_列傳/46_鄭羲 崔辯/02_鄭羲.txt",
-        "byte_offset": 13130,
-        "time": "北魏/熙平1年"
+        "source_file": "./晉書/00_紀/05_帝紀第六　中宗元帝 肅祖明帝/02_元帝.txt",
+        "byte_offset": 14287,
+        "time": "東晉/永昌1年"
       },
       {
-        "source_file": "./魏書/01_列傳/55_邢巒 李平/02_邢巒.txt",
-        "byte_offset": 14898,
-        "time": "北魏/永安2年"
+        "source_file": "./晉書/00_紀/05_帝紀第六　中宗元帝 肅祖明帝/02_元帝.txt",
+        "byte_offset": 14305,
+        "time": "東晉/永昌1年"
       },
       {
-        "source_file": "./魏書/01_列傳/37_盧玄/02_盧玄.txt",
-        "byte_offset": 10813,
-        "time": "北魏/神龜2年"
+        "source_file": "./晉書/00_紀/07_帝紀第八　孝宗穆帝 哀帝 廢帝海西公/02_穆帝.txt",
+        "byte_offset": 4914,
+        "time": "東晉/永和5年"
       }
     ]
   },
   {
-    "name": "南青州",
-    "is_qiao": true,
-    "role_suffix": "刺史",
-    "event_count": 3,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/61_裴叔業 夏侯道遷 李元護 席法友 王世弼 江悦之 淳于誕 李苗/02_裴叔業.txt",
-        "byte_offset": 5438,
-        "time": "北魏/景明2年"
-      },
-      {
-        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/02_蕭道成.txt",
-        "byte_offset": 12434,
-        "time": "北魏/太和18年"
-      },
-      {
-        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
-        "byte_offset": 9668,
-        "time": "北魏/永熙1年"
-      }
-    ]
-  },
-  {
-    "name": "北秦州",
+    "name": "新城",
     "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 3,
+    "event_count": 4,
     "sources": [
       {
-        "source_file": "./宋書/02_列傳/57_列傳第五十八 氐胡/02_氐.txt",
-        "byte_offset": 12401,
-        "time": "劉宋/元徽4年"
+        "source_file": "./宋書/01_志/23_志第二十四 五行五/15_疾疫.txt",
+        "byte_offset": 205,
+        "time": "西晉/建興2年"
       },
       {
-        "source_file": "./南齊書/02_列傳/39_列傳第四十 芮芮虜 河南 氐 羌/04_氐.txt",
-        "byte_offset": 1912,
-        "time": "南齊/建元1年"
+        "source_file": "./晉書/02_列傳/43_列傳第四十四　桓彝/03_子孫.txt",
+        "byte_offset": 15235,
+        "time": "東晉/太元13年"
       },
       {
-        "source_file": "./南齊書/02_列傳/39_列傳第四十 芮芮虜 河南 氐 羌/04_氐.txt",
-        "byte_offset": 1912,
-        "time": "南齊/建元1年"
+        "source_file": "./晉書/02_列傳/06_列傳第七　宗室/02_安平獻王孚.txt",
+        "byte_offset": 2906
+      },
+      {
+        "source_file": "./晉書/00_紀/01_帝紀第二　世宗景帝 太祖文帝/02_景帝.txt",
+        "byte_offset": 1473,
+        "time": "漢趙/嘉平5年"
       }
     ]
   },
   {
-    "name": "洛州",
+    "name": "馮翊",
     "is_qiao": false,
-    "role_suffix": "刺史",
+    "role_suffix": "太守",
     "event_count": 3,
     "sources": [
-      {
-        "source_file": "./晉書/03_載記/10_載記第十一　慕容暐/02_慕容暐.txt",
-        "byte_offset": 3514,
-        "time": "東晉/升平4年"
-      },
-      {
-        "source_file": "./晉書/03_載記/10_載記第十一　慕容暐/02_慕容暐.txt",
-        "byte_offset": 3514,
-        "time": "東晉/升平4年"
-      },
-      {
-        "source_file": "./魏書/01_列傳/34_羅結 伊馛 乙瑰 和其奴 苟頽 薛野𧗠者 宇文福 費于 孟威/03_伊馛.txt",
-        "byte_offset": 1846,
-        "time": "北魏/神龜2年"
-      }
-    ]
-  },
-  {
-    "name": "臺城",
-    "is_qiao": false,
-    "event_count": 3,
-    "sources": [
-      {
-        "source_file": "./梁書/01_列傳/16_列傳第十七 長沙嗣王業 永陽嗣王伯游 衡陽嗣王元簡 桂陽嗣王象/02_長沙元王.txt",
-        "byte_offset": 954,
-        "time": "南齊/永元2年"
-      },
-      {
-        "source_file": "./陳書/02_列傳/05_列傳第六: 胡穎 徐度 杜稜 沈恪/05_沈恪.txt",
-        "byte_offset": 448
-      },
       {
         "source_file": "./陳書/02_列傳/02_列傳第三: 侯瑱 歐陽頠 吳明徹 裴子烈/02_侯瑱.txt",
         "byte_offset": 472
+      },
+      {
+        "source_file": "./晉書/03_載記/13_載記第十四　苻堅下/02_苻堅.txt",
+        "byte_offset": 31206,
+        "time": "東晉/建元17年"
+      },
+      {
+        "source_file": "./晉書/03_載記/13_載記第十四　苻堅下/02_苻堅.txt",
+        "byte_offset": 31206,
+        "time": "東晉/建元17年"
       }
     ]
   },
@@ -3113,22 +3046,110 @@
     ]
   },
   {
-    "name": "義成",
+    "name": "相國",
+    "is_qiao": false,
+    "event_count": 3,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/02_載記第三　劉曜/02_劉曜.txt",
+        "byte_offset": 14835
+      },
+      {
+        "source_file": "./晉書/03_載記/13_載記第十四　苻堅下/02_苻堅.txt",
+        "byte_offset": 20575,
+        "time": "東晉/建元17年"
+      },
+      {
+        "source_file": "./晉書/03_載記/20_載記第二十一　李雄 李班 李期 李壽 李勢/05_李壽.txt",
+        "byte_offset": 1730,
+        "time": "東晉/咸康4年"
+      }
+    ]
+  },
+  {
+    "name": "敦煌",
     "is_qiao": false,
     "role_suffix": "太守",
     "event_count": 3,
     "sources": [
       {
-        "source_file": "./晉書/02_列傳/42_列傳第四十三　庾亮/06_庾翼.txt",
-        "byte_offset": 5789
+        "source_file": "./晉書/03_載記/21_載記第二十二　呂光 呂纂 呂隆/02_呂光.txt",
+        "byte_offset": 9045
       },
       {
-        "source_file": "./晉書/02_列傳/42_列傳第四十三　庾亮/06_庾翼.txt",
-        "byte_offset": 5789
+        "source_file": "./晉書/03_載記/21_載記第二十二　呂光 呂纂 呂隆/02_呂光.txt",
+        "byte_offset": 9045
       },
       {
-        "source_file": "./晉書/02_列傳/42_列傳第四十三　庾亮/06_庾翼.txt",
-        "byte_offset": 5774
+        "source_file": "./魏書/01_列傳/78_私署凉州牧張實 鮮卑乞伏國仁 鮮卑秃發烏孤 私署凉王李暠 盧水胡沮渠蒙遜/05_李暠.txt",
+        "byte_offset": 258
+      }
+    ]
+  },
+  {
+    "name": "恒州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 3,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/30_陸俟/02_子 馛.txt",
+        "byte_offset": 4091,
+        "time": "北魏/延興4年"
+      },
+      {
+        "source_file": "./魏書/01_列傳/64_尒朱榮/02_尒朱榮.txt",
+        "byte_offset": 1873
+      },
+      {
+        "source_file": "./魏書/01_列傳/07_景穆十二王中/02_任城王.txt",
+        "byte_offset": 37558,
+        "time": "北魏/神龜2年"
+      }
+    ]
+  },
+  {
+    "name": "洛州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 3,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/10_載記第十一　慕容暐/02_慕容暐.txt",
+        "byte_offset": 3514,
+        "time": "東晉/升平4年"
+      },
+      {
+        "source_file": "./晉書/03_載記/10_載記第十一　慕容暐/02_慕容暐.txt",
+        "byte_offset": 3514,
+        "time": "東晉/升平4年"
+      },
+      {
+        "source_file": "./魏書/01_列傳/34_羅結 伊馛 乙瑰 和其奴 苟頽 薛野𧗠者 宇文福 費于 孟威/03_伊馛.txt",
+        "byte_offset": 1846,
+        "time": "北魏/神龜2年"
+      }
+    ]
+  },
+  {
+    "name": "淮南",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 3,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/09_列傳第十 胡藩 劉康祖 垣護之 張興世/04_垣護之.txt",
+        "byte_offset": 5326,
+        "time": "劉宋/大明3年"
+      },
+      {
+        "source_file": "./晉書/02_列傳/46_列傳第四十七　陸曄 何充 褚翜 蔡謨 諸葛恢 殷浩/07_殷浩.txt",
+        "byte_offset": 3245
+      },
+      {
+        "source_file": "./晉書/00_紀/04_帝紀第五　孝懷帝 孝愍帝/02_懷帝.txt",
+        "byte_offset": 5397,
+        "time": "西晉/永嘉3年"
       }
     ]
   },
@@ -3156,111 +3177,130 @@
     ]
   },
   {
-    "name": "馮翊",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 3,
-    "sources": [
-      {
-        "source_file": "./陳書/02_列傳/02_列傳第三: 侯瑱 歐陽頠 吳明徹 裴子烈/02_侯瑱.txt",
-        "byte_offset": 472
-      },
-      {
-        "source_file": "./晉書/03_載記/13_載記第十四　苻堅下/02_苻堅.txt",
-        "byte_offset": 31206,
-        "time": "東晉/建元17年"
-      },
-      {
-        "source_file": "./晉書/03_載記/13_載記第十四　苻堅下/02_苻堅.txt",
-        "byte_offset": 31206,
-        "time": "東晉/建元17年"
-      }
-    ]
-  },
-  {
-    "name": "恒州",
+    "name": "衍仁州",
     "is_qiao": false,
     "role_suffix": "刺史",
     "event_count": 3,
     "sources": [
       {
-        "source_file": "./魏書/01_列傳/30_陸俟/02_子 馛.txt",
-        "byte_offset": 4091,
-        "time": "北魏/延興4年"
+        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
+        "byte_offset": 9178,
+        "time": "北魏/永熙1年"
       },
       {
-        "source_file": "./魏書/01_列傳/64_尒朱榮/02_尒朱榮.txt",
-        "byte_offset": 1873
+        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
+        "byte_offset": 9211,
+        "time": "北魏/永熙1年"
       },
       {
-        "source_file": "./魏書/01_列傳/07_景穆十二王中/02_任城王.txt",
-        "byte_offset": 37558,
-        "time": "北魏/神龜2年"
+        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
+        "byte_offset": 9247,
+        "time": "北魏/永熙1年"
       }
     ]
   },
   {
-    "name": "敦煌",
+    "name": "西平",
     "is_qiao": false,
     "role_suffix": "太守",
     "event_count": 3,
     "sources": [
       {
-        "source_file": "./晉書/03_載記/21_載記第二十二　呂光 呂纂 呂隆/02_呂光.txt",
-        "byte_offset": 9045
+        "source_file": "./宋書/02_列傳/57_列傳第五十八 氐胡/03_胡.txt",
+        "byte_offset": 464
       },
       {
-        "source_file": "./晉書/03_載記/21_載記第二十二　呂光 呂纂 呂隆/02_呂光.txt",
-        "byte_offset": 9045
+        "source_file": "./宋書/02_列傳/57_列傳第五十八 氐胡/03_胡.txt",
+        "byte_offset": 464
       },
       {
-        "source_file": "./魏書/01_列傳/78_私署凉州牧張實 鮮卑乞伏國仁 鮮卑秃發烏孤 私署凉王李暠 盧水胡沮渠蒙遜/05_李暠.txt",
-        "byte_offset": 258
+        "source_file": "./宋書/02_列傳/57_列傳第五十八 氐胡/03_胡.txt",
+        "byte_offset": 561,
+        "time": "東晉/隆安3年"
       }
     ]
   },
   {
-    "name": "東揚州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 3,
-    "sources": [
-      {
-        "source_file": "./梁書/01_列傳/39_列傳第四十 胡僧祐 徐文盛 杜崱/04_杜崱.txt",
-        "byte_offset": 4144,
-        "time": "梁/承聖2年"
-      },
-      {
-        "source_file": "./陳書/01_本紀/03_本紀第四: 廢帝/02_廢帝.txt",
-        "byte_offset": 2543,
-        "time": "陳/光大1年"
-      },
-      {
-        "source_file": "./魏書/01_列傳/07_景穆十二王中/02_任城王.txt",
-        "byte_offset": 18461,
-        "time": "北魏/太和5年"
-      }
-    ]
-  },
-  {
-    "name": "淮南",
+    "name": "南郡",
     "is_qiao": false,
     "role_suffix": "太守",
     "event_count": 3,
     "sources": [
       {
-        "source_file": "./宋書/02_列傳/09_列傳第十 胡藩 劉康祖 垣護之 張興世/04_垣護之.txt",
-        "byte_offset": 5326,
-        "time": "劉宋/大明3年"
+        "source_file": "./宋書/02_列傳/07_列傳第八　朱齡石 毛脩之 傅弘之/03_毛脩之.txt",
+        "byte_offset": 3148
       },
       {
-        "source_file": "./晉書/02_列傳/46_列傳第四十七　陸曄 何充 褚翜 蔡謨 諸葛恢 殷浩/07_殷浩.txt",
-        "byte_offset": 3245
+        "source_file": "./梁書/01_列傳/03_列傳第四　蕭穎達 夏侯詳 蔡道恭 楊公則 鄧元起/03_夏侯詳.txt",
+        "byte_offset": 2279
       },
+      {
+        "source_file": "./晉書/02_列傳/42_列傳第四十三　庾亮/02_庾亮.txt",
+        "byte_offset": 12017
+      }
+    ]
+  },
+  {
+    "name": "上黨",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 3,
+    "sources": [
       {
         "source_file": "./晉書/00_紀/04_帝紀第五　孝懷帝 孝愍帝/02_懷帝.txt",
-        "byte_offset": 5397,
+        "byte_offset": 5608,
         "time": "西晉/永嘉3年"
+      },
+      {
+        "source_file": "./晉書/03_載記/04_載記第五　石勒下/02_石勒.txt",
+        "byte_offset": 10474
+      },
+      {
+        "source_file": "./晉書/03_載記/04_載記第五　石勒下/02_石勒.txt",
+        "byte_offset": 10558
+      }
+    ]
+  },
+  {
+    "name": "義成",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 3,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/42_列傳第四十三　庾亮/06_庾翼.txt",
+        "byte_offset": 5789
+      },
+      {
+        "source_file": "./晉書/02_列傳/42_列傳第四十三　庾亮/06_庾翼.txt",
+        "byte_offset": 5789
+      },
+      {
+        "source_file": "./晉書/02_列傳/42_列傳第四十三　庾亮/06_庾翼.txt",
+        "byte_offset": 5774
+      }
+    ]
+  },
+  {
+    "name": "南青州",
+    "is_qiao": true,
+    "role_suffix": "刺史",
+    "event_count": 3,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/61_裴叔業 夏侯道遷 李元護 席法友 王世弼 江悦之 淳于誕 李苗/02_裴叔業.txt",
+        "byte_offset": 5438,
+        "time": "北魏/景明2年"
+      },
+      {
+        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/02_蕭道成.txt",
+        "byte_offset": 12434,
+        "time": "北魏/太和18年"
+      },
+      {
+        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
+        "byte_offset": 9668,
+        "time": "北魏/永熙1年"
       }
     ]
   },
@@ -3288,44 +3328,71 @@
     ]
   },
   {
-    "name": "相國",
+    "name": "平州",
     "is_qiao": false,
+    "role_suffix": "刺史",
     "event_count": 3,
     "sources": [
       {
-        "source_file": "./晉書/03_載記/02_載記第三　劉曜/02_劉曜.txt",
-        "byte_offset": 14835
+        "source_file": "./晉書/03_載記/14_載記第十五　苻丕 苻登/02_苻丕.txt",
+        "byte_offset": 3157,
+        "time": "東晉/太元10年"
       },
       {
-        "source_file": "./晉書/03_載記/13_載記第十四　苻堅下/02_苻堅.txt",
-        "byte_offset": 20575,
-        "time": "東晉/建元17年"
+        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
+        "byte_offset": 34332,
+        "time": "東晉/太元4年"
       },
       {
-        "source_file": "./晉書/03_載記/20_載記第二十一　李雄 李班 李期 李壽 李勢/05_李壽.txt",
-        "byte_offset": 1730,
-        "time": "東晉/咸康4年"
+        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
+        "byte_offset": 34332,
+        "time": "東晉/太元4年"
       }
     ]
   },
   {
-    "name": "西平",
+    "name": "東揚州",
     "is_qiao": false,
-    "role_suffix": "太守",
+    "role_suffix": "刺史",
     "event_count": 3,
     "sources": [
       {
-        "source_file": "./宋書/02_列傳/57_列傳第五十八 氐胡/03_胡.txt",
-        "byte_offset": 464
+        "source_file": "./梁書/01_列傳/39_列傳第四十 胡僧祐 徐文盛 杜崱/04_杜崱.txt",
+        "byte_offset": 4144,
+        "time": "梁/承聖2年"
       },
       {
-        "source_file": "./宋書/02_列傳/57_列傳第五十八 氐胡/03_胡.txt",
-        "byte_offset": 464
+        "source_file": "./陳書/01_本紀/03_本紀第四: 廢帝/02_廢帝.txt",
+        "byte_offset": 2543,
+        "time": "陳/光大1年"
       },
       {
-        "source_file": "./宋書/02_列傳/57_列傳第五十八 氐胡/03_胡.txt",
-        "byte_offset": 561,
-        "time": "東晉/隆安3年"
+        "source_file": "./魏書/01_列傳/07_景穆十二王中/02_任城王.txt",
+        "byte_offset": 18461,
+        "time": "北魏/太和5年"
+      }
+    ]
+  },
+  {
+    "name": "北秦州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 3,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/57_列傳第五十八 氐胡/02_氐.txt",
+        "byte_offset": 12401,
+        "time": "劉宋/元徽4年"
+      },
+      {
+        "source_file": "./南齊書/02_列傳/39_列傳第四十 芮芮虜 河南 氐 羌/04_氐.txt",
+        "byte_offset": 1912,
+        "time": "南齊/建元1年"
+      },
+      {
+        "source_file": "./南齊書/02_列傳/39_列傳第四十 芮芮虜 河南 氐 羌/04_氐.txt",
+        "byte_offset": 1912,
+        "time": "南齊/建元1年"
       }
     ]
   },
@@ -3351,176 +3418,22 @@
     ]
   },
   {
-    "name": "平州",
+    "name": "臺城",
     "is_qiao": false,
-    "role_suffix": "刺史",
     "event_count": 3,
     "sources": [
       {
-        "source_file": "./晉書/03_載記/14_載記第十五　苻丕 苻登/02_苻丕.txt",
-        "byte_offset": 3157,
-        "time": "東晉/太元10年"
+        "source_file": "./梁書/01_列傳/16_列傳第十七 長沙嗣王業 永陽嗣王伯游 衡陽嗣王元簡 桂陽嗣王象/02_長沙元王.txt",
+        "byte_offset": 954,
+        "time": "南齊/永元2年"
       },
       {
-        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
-        "byte_offset": 34332,
-        "time": "東晉/太元4年"
+        "source_file": "./陳書/02_列傳/05_列傳第六: 胡穎 徐度 杜稜 沈恪/05_沈恪.txt",
+        "byte_offset": 448
       },
       {
-        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
-        "byte_offset": 34332,
-        "time": "東晉/太元4年"
-      }
-    ]
-  },
-  {
-    "name": "南郡",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 3,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/07_列傳第八　朱齡石 毛脩之 傅弘之/03_毛脩之.txt",
-        "byte_offset": 3148
-      },
-      {
-        "source_file": "./梁書/01_列傳/03_列傳第四　蕭穎達 夏侯詳 蔡道恭 楊公則 鄧元起/03_夏侯詳.txt",
-        "byte_offset": 2279
-      },
-      {
-        "source_file": "./晉書/02_列傳/42_列傳第四十三　庾亮/02_庾亮.txt",
-        "byte_offset": 12017
-      }
-    ]
-  },
-  {
-    "name": "衍仁州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 3,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
-        "byte_offset": 9178,
-        "time": "北魏/永熙1年"
-      },
-      {
-        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
-        "byte_offset": 9211,
-        "time": "北魏/永熙1年"
-      },
-      {
-        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
-        "byte_offset": 9247,
-        "time": "北魏/永熙1年"
-      }
-    ]
-  },
-  {
-    "name": "上黨",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 3,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/04_帝紀第五　孝懷帝 孝愍帝/02_懷帝.txt",
-        "byte_offset": 5608,
-        "time": "西晉/永嘉3年"
-      },
-      {
-        "source_file": "./晉書/03_載記/04_載記第五　石勒下/02_石勒.txt",
-        "byte_offset": 10474
-      },
-      {
-        "source_file": "./晉書/03_載記/04_載記第五　石勒下/02_石勒.txt",
-        "byte_offset": 10558
-      }
-    ]
-  },
-  {
-    "name": "定州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./陳書/02_列傳/04_列傳第五: 黃法抃 淳于量 章昭達/04_章昭達.txt",
-        "byte_offset": 968
-      },
-      {
-        "source_file": "./魏書/01_列傳/05_太武五王/05_廣陽王.txt",
-        "byte_offset": 2934
-      }
-    ]
-  },
-  {
-    "name": "南海",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./南齊書/02_列傳/38_列傳第三十九 蠻 東南夷/04_南夷.txt",
-        "byte_offset": 7985,
-        "time": "南齊/永明2年"
-      },
-      {
-        "source_file": "./南齊書/02_列傳/38_列傳第三十九 蠻 東南夷/04_南夷.txt",
-        "byte_offset": 8024,
-        "time": "南齊/永明2年"
-      }
-    ]
-  },
-  {
-    "name": "襄城",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/06_列傳第七　宗室/05_譙剛王遜.txt",
-        "byte_offset": 9572,
-        "time": "東晉/太元15年"
-      },
-      {
-        "source_file": "./晉書/00_紀/04_帝紀第五　孝懷帝 孝愍帝/02_懷帝.txt",
-        "byte_offset": 8028,
-        "time": "西晉/永嘉4年"
-      }
-    ]
-  },
-  {
-    "name": "肆州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./魏書/00_帝紀/12_廢出三帝紀 前廢帝廣陵王/04_出帝.txt",
-        "byte_offset": 7757,
-        "time": "北魏/太昌1年"
-      },
-      {
-        "source_file": "./魏書/00_帝紀/12_廢出三帝紀 前廢帝廣陵王/04_出帝.txt",
-        "byte_offset": 7863,
-        "time": "北魏/太昌1年"
-      }
-    ]
-  },
-  {
-    "name": "滎陽",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/07_帝紀第八　孝宗穆帝 哀帝 廢帝海西公/03_哀帝.txt",
-        "byte_offset": 3348,
-        "time": "東晉/興寧1年"
-      },
-      {
-        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
-        "byte_offset": 7366
+        "source_file": "./陳書/02_列傳/02_列傳第三: 侯瑱 歐陽頠 吳明徹 裴子烈/02_侯瑱.txt",
+        "byte_offset": 472
       }
     ]
   },
@@ -3539,95 +3452,6 @@
         "source_file": "./晉書/00_紀/05_帝紀第六　中宗元帝 肅祖明帝/02_元帝.txt",
         "byte_offset": 14536,
         "time": "東晉/永昌1年"
-      }
-    ]
-  },
-  {
-    "name": "梁郡",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/46_列傳第四十七 蕭惠開 殷琰/03_殷琰.txt",
-        "byte_offset": 2554,
-        "time": "劉宋/泰始1年"
-      },
-      {
-        "source_file": "./宋書/02_列傳/46_列傳第四十七 蕭惠開 殷琰/03_殷琰.txt",
-        "byte_offset": 2554,
-        "time": "劉宋/泰始1年"
-      }
-    ]
-  },
-  {
-    "name": "晉陵",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/43_列傳第四十四 鄧琬 袁顗 孔覬/02_鄧琬.txt",
-        "byte_offset": 4034,
-        "time": "劉宋/景和1年"
-      },
-      {
-        "source_file": "./宋書/02_列傳/06_列傳第七　劉懷肅 孟懷玉 劉敬宣 檀祗/04_劉敬宣.txt",
-        "byte_offset": 4356,
-        "time": "東晉/元興3年"
-      }
-    ]
-  },
-  {
-    "name": "西陽",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/43_列傳第四十四　桓彝/03_子孫.txt",
-        "byte_offset": 10210,
-        "time": "東晉/太元13年"
-      },
-      {
-        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
-        "byte_offset": 14392,
-        "time": "東晉/咸康5年"
-      }
-    ]
-  },
-  {
-    "name": "涇州",
-    "is_qiao": false,
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./陳書/02_列傳/03_列傳第四: 周鐵虎 程靈洗/03_程靈洗.txt",
-        "byte_offset": 5005,
-        "time": "陳/太建2年"
-      },
-      {
-        "source_file": "./魏書/00_帝紀/12_廢出三帝紀 前廢帝廣陵王/02_前廢帝.txt",
-        "byte_offset": 4265,
-        "time": "北魏/普泰1年"
-      }
-    ]
-  },
-  {
-    "name": "臨海",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./梁書/01_列傳/26_列傳第二十七 王僧孺 張率 劉孝綽 王筠/05_王筠.txt",
-        "byte_offset": 2815,
-        "time": "梁/中大通2年"
-      },
-      {
-        "source_file": "./陳書/02_列傳/15_列傳第十六: 陸子隆 錢道戢 駱牙/03_錢道戢.txt",
-        "byte_offset": 572,
-        "time": "陳/天嘉1年"
       }
     ]
   },
@@ -3668,332 +3492,6 @@
     ]
   },
   {
-    "name": "常山",
-    "is_qiao": false,
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/04_帝紀第五　孝懷帝 孝愍帝/02_懷帝.txt",
-        "byte_offset": 3623,
-        "time": "西晉/永嘉2年"
-      },
-      {
-        "source_file": "./晉書/00_紀/04_帝紀第五　孝懷帝 孝愍帝/02_懷帝.txt",
-        "byte_offset": 5770,
-        "time": "西晉/永嘉3年"
-      }
-    ]
-  },
-  {
-    "name": "華州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./南齊書/02_列傳/37_列傳第三十八 魏虜/02_魏虜.txt",
-        "byte_offset": 18884,
-        "time": "南齊/建武2年"
-      },
-      {
-        "source_file": "./南齊書/02_列傳/37_列傳第三十八 魏虜/02_魏虜.txt",
-        "byte_offset": 18962,
-        "time": "南齊/建武2年"
-      }
-    ]
-  },
-  {
-    "name": "秦郡",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/04_列傳第五　王鎮惡 檀韶 向靖 劉懷慎 劉粹/05_劉懷慎.txt",
-        "byte_offset": 1487,
-        "time": "劉宋/景平1年"
-      },
-      {
-        "source_file": "./宋書/02_列傳/06_列傳第七　劉懷肅 孟懷玉 劉敬宣 檀祗/05_檀祗.txt",
-        "byte_offset": 1475
-      }
-    ]
-  },
-  {
-    "name": "魏郡",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
-        "byte_offset": 22472,
-        "time": "西晉/建興1年"
-      },
-      {
-        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
-        "byte_offset": 22472,
-        "time": "西晉/建興1年"
-      }
-    ]
-  },
-  {
-    "name": "蔚州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./魏書/00_帝紀/12_廢出三帝紀 前廢帝廣陵王/04_出帝.txt",
-        "byte_offset": 9340,
-        "time": "北魏/永熙1年"
-      },
-      {
-        "source_file": "./魏書/00_帝紀/12_廢出三帝紀 前廢帝廣陵王/04_出帝.txt",
-        "byte_offset": 9394,
-        "time": "北魏/永熙1年"
-      }
-    ]
-  },
-  {
-    "name": "長廣",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/04_載記第五　石勒下/02_石勒.txt",
-        "byte_offset": 7776
-      },
-      {
-        "source_file": "./晉書/03_載記/04_載記第五　石勒下/02_石勒.txt",
-        "byte_offset": 7713
-      }
-    ]
-  },
-  {
-    "name": "義興",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/43_列傳第四十四 鄧琬 袁顗 孔覬/02_鄧琬.txt",
-        "byte_offset": 4034,
-        "time": "劉宋/景和1年"
-      },
-      {
-        "source_file": "./晉書/02_列傳/64_列傳第六十五/02_陳訓.txt",
-        "byte_offset": 1313
-      }
-    ]
-  },
-  {
-    "name": "南汝陰",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/46_列傳第四十七 蕭惠開 殷琰/03_殷琰.txt",
-        "byte_offset": 3050,
-        "time": "劉宋/泰始1年"
-      },
-      {
-        "source_file": "./宋書/02_列傳/46_列傳第四十七 蕭惠開 殷琰/03_殷琰.txt",
-        "byte_offset": 3050,
-        "time": "劉宋/泰始1年"
-      }
-    ]
-  },
-  {
-    "name": "建甯",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./晉書/01_志/04_志第五　地理下/06_交州.txt",
-        "byte_offset": 1567,
-        "time": "西晉/永安7年"
-      },
-      {
-        "source_file": "./晉書/01_志/04_志第五　地理下/06_交州.txt",
-        "byte_offset": 1567,
-        "time": "西晉/永安7年"
-      }
-    ]
-  },
-  {
-    "name": "郢城",
-    "is_qiao": false,
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/14_列傳第十五 臧燾 徐廣 傅隆/02_臧燾.txt",
-        "byte_offset": 6780,
-        "time": "劉宋/元嘉27年"
-      },
-      {
-        "source_file": "./梁書/01_列傳/03_列傳第四　蕭穎達 夏侯詳 蔡道恭 楊公則 鄧元起/02_蕭穎達.txt",
-        "byte_offset": 1387
-      }
-    ]
-  },
-  {
-    "name": "建康",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/56_列傳第五十七　涼武昭王李暠/02_涼武昭王.txt",
-        "byte_offset": 7244,
-        "time": "東晉/義熙1年"
-      },
-      {
-        "source_file": "./晉書/02_列傳/56_列傳第五十七　涼武昭王李暠/02_涼武昭王.txt",
-        "byte_offset": 7244,
-        "time": "東晉/義熙1年"
-      }
-    ]
-  },
-  {
-    "name": "東萊",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/04_載記第五　石勒下/02_石勒.txt",
-        "byte_offset": 7776
-      },
-      {
-        "source_file": "./晉書/03_載記/04_載記第五　石勒下/02_石勒.txt",
-        "byte_offset": 7713
-      }
-    ]
-  },
-  {
-    "name": "衍雍州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
-        "byte_offset": 9247,
-        "time": "北魏/永熙1年"
-      },
-      {
-        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
-        "byte_offset": 9343,
-        "time": "北魏/永熙1年"
-      }
-    ]
-  },
-  {
-    "name": "廬江",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
-        "byte_offset": 4989,
-        "time": "東晉/咸和3年"
-      },
-      {
-        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
-        "byte_offset": 4953,
-        "time": "東晉/咸和3年"
-      }
-    ]
-  },
-  {
-    "name": "武昌",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/14_列傳第十五 臧燾 徐廣 傅隆/02_臧燾.txt",
-        "byte_offset": 6780,
-        "time": "劉宋/元嘉27年"
-      },
-      {
-        "source_file": "./晉書/02_列傳/42_列傳第四十三　庾亮/02_庾亮.txt",
-        "byte_offset": 12017
-      }
-    ]
-  },
-  {
-    "name": "平原",
-    "is_qiao": false,
-    "role_suffix": "內史",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/28_列傳第二十九　汝南王亮 楚王瑋 趙王倫 齊王冏 長沙王乂 成都王潁 河間王顒 東海王越/08_成都王穎.txt",
-        "byte_offset": 3537
-      },
-      {
-        "source_file": "./晉書/02_列傳/28_列傳第二十九　汝南王亮 楚王瑋 趙王倫 齊王冏 長沙王乂 成都王潁 河間王顒 東海王越/08_成都王穎.txt",
-        "byte_offset": 3519
-      }
-    ]
-  },
-  {
-    "name": "五原",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./陳書/02_列傳/05_列傳第六: 胡穎 徐度 杜稜 沈恪/02_胡穎.txt",
-        "byte_offset": 1001
-      },
-      {
-        "source_file": "./陳書/02_列傳/05_列傳第六: 胡穎 徐度 杜稜 沈恪/02_胡穎.txt",
-        "byte_offset": 1151
-      }
-    ]
-  },
-  {
-    "name": "柳城",
-    "is_qiao": false,
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/08_載記第九　慕容皝/02_慕容皝.txt",
-        "byte_offset": 1373,
-        "time": "東晉/咸和9年"
-      },
-      {
-        "source_file": "./晉書/03_載記/08_載記第九　慕容皝/02_慕容皝.txt",
-        "byte_offset": 1712,
-        "time": "東晉/咸和9年"
-      }
-    ]
-  },
-  {
-    "name": "梁城",
-    "is_qiao": false,
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
-        "byte_offset": 2812,
-        "time": "北魏/正始1年"
-      },
-      {
-        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
-        "byte_offset": 3163,
-        "time": "北魏/正始1年"
-      }
-    ]
-  },
-  {
     "name": "掠郡縣",
     "is_qiao": false,
     "event_count": 2,
@@ -4007,38 +3505,6 @@
         "source_file": "./魏書/01_列傳/17_穆崇/02_穆崇.txt",
         "byte_offset": 7421,
         "time": "北魏/和平2年"
-      }
-    ]
-  },
-  {
-    "name": "高州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./陳書/02_列傳/01_列傳第二: 杜僧明 周文育 侯安都/02_杜僧明.txt",
-        "byte_offset": 1861
-      },
-      {
-        "source_file": "./陳書/02_列傳/04_列傳第五: 黃法抃 淳于量 章昭達/02_黃法抃.txt",
-        "byte_offset": 1007,
-        "time": "北燕/太平1年"
-      }
-    ]
-  },
-  {
-    "name": "燕郡",
-    "is_qiao": false,
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/23_載記第二十四　慕容寶 慕容盛 慕容熙 慕容雲/04_慕容熙.txt",
-        "byte_offset": 2173
-      },
-      {
-        "source_file": "./晉書/03_載記/08_載記第九　慕容皝/04_陽裕.txt",
-        "byte_offset": 1521
       }
     ]
   },
@@ -4059,193 +3525,73 @@
     ]
   },
   {
-    "name": "岐州",
+    "name": "虜紀城",
+    "is_qiao": false,
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./南齊書/02_列傳/29_列傳第三十 王奐/03_張沖.txt",
+        "byte_offset": 1409,
+        "time": "南齊/建武2年"
+      },
+      {
+        "source_file": "./南齊書/02_列傳/37_列傳第三十八 魏虜/02_魏虜.txt",
+        "byte_offset": 18884,
+        "time": "南齊/建武2年"
+      }
+    ]
+  },
+  {
+    "name": "晉陵",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/43_列傳第四十四 鄧琬 袁顗 孔覬/02_鄧琬.txt",
+        "byte_offset": 4034,
+        "time": "劉宋/景和1年"
+      },
+      {
+        "source_file": "./宋書/02_列傳/06_列傳第七　劉懷肅 孟懷玉 劉敬宣 檀祗/04_劉敬宣.txt",
+        "byte_offset": 4356,
+        "time": "東晉/元興3年"
+      }
+    ]
+  },
+  {
+    "name": "衍衡州",
     "is_qiao": false,
     "role_suffix": "刺史",
     "event_count": 2,
     "sources": [
       {
-        "source_file": "./魏書/00_帝紀/12_廢出三帝紀 前廢帝廣陵王/02_前廢帝.txt",
-        "byte_offset": 4265,
-        "time": "北魏/普泰1年"
-      },
-      {
-        "source_file": "./魏書/00_帝紀/12_廢出三帝紀 前廢帝廣陵王/02_前廢帝.txt",
-        "byte_offset": 4265,
-        "time": "北魏/普泰1年"
-      }
-    ]
-  },
-  {
-    "name": "南兗州",
-    "is_qiao": true,
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./宋書/01_志/24_志第二十五 州郡一/04_南徐州.txt",
-        "byte_offset": 561,
-        "time": "劉宋/元嘉8年"
+        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
+        "byte_offset": 6078,
+        "time": "北魏/熙平1年"
       },
       {
         "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
-        "byte_offset": 8947,
-        "time": "北魏/永熙1年"
+        "byte_offset": 6135,
+        "time": "北魏/熙平1年"
       }
     ]
   },
   {
-    "name": "吳州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./陳書/02_列傳/24_列傳第二十五: 蕭摩訶 任忠 樊毅 魯廣達/05_魯廣達.txt",
-        "byte_offset": 712
-      },
-      {
-        "source_file": "./陳書/02_列傳/28_列傳第二十九: 熊曇朗 周迪 留異 陳寶應/05_陳寶應.txt",
-        "byte_offset": 4861
-      }
-    ]
-  },
-  {
-    "name": "高平",
+    "name": "襄城",
     "is_qiao": false,
     "role_suffix": "太守",
     "event_count": 2,
     "sources": [
       {
-        "source_file": "./晉書/02_列傳/68_列傳第六十九　桓玄 卞范之 殷仲文/02_桓玄.txt",
-        "byte_offset": 28008,
-        "time": "東晉/元興3年"
+        "source_file": "./晉書/02_列傳/06_列傳第七　宗室/05_譙剛王遜.txt",
+        "byte_offset": 9572,
+        "time": "東晉/太元15年"
       },
       {
-        "source_file": "./晉書/02_列傳/53_列傳第五十四　王恭 庾楷 劉牢之 殷仲堪 楊佺期/04_劉牢之.txt",
-        "byte_offset": 2292
-      }
-    ]
-  },
-  {
-    "name": "竟陵",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/04_列傳第五　王鎮惡 檀韶 向靖 劉懷慎 劉粹/06_劉粹.txt",
-        "byte_offset": 759
-      },
-      {
-        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
-        "byte_offset": 14392,
-        "time": "東晉/咸康5年"
-      }
-    ]
-  },
-  {
-    "name": "尋陽",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/23_列傳第二十四 鄭鮮之 裴松之 何承天/04_何承天.txt",
-        "byte_offset": 1025,
-        "time": "東晉/隆安4年"
-      },
-      {
-        "source_file": "./梁書/01_列傳/36_列傳第三十七 韋粲 江子一/04_張嵊.txt",
-        "byte_offset": 448,
-        "time": "梁/太清2年"
-      }
-    ]
-  },
-  {
-    "name": "廣陵城",
-    "is_qiao": false,
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/50_列傳第五十一 孝義/16_卜天與.txt",
-        "byte_offset": 2002,
-        "time": "劉宋/昇明1年"
-      },
-      {
-        "source_file": "./宋書/02_列傳/42_列傳第四十三 宗越 吳喜 黃回/02_宗越.txt",
-        "byte_offset": 5188,
-        "time": "劉宋/景和1年"
-      }
-    ]
-  },
-  {
-    "name": "略陽",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/57_列傳第五十八 氐胡/02_氐.txt",
-        "byte_offset": 12146,
-        "time": "劉宋/泰始2年"
-      },
-      {
-        "source_file": "./宋書/02_列傳/07_列傳第八　朱齡石 毛脩之 傅弘之/04_傅弘之.txt",
-        "byte_offset": 1748,
-        "time": "西晉/太康3年"
-      }
-    ]
-  },
-  {
-    "name": "湟河",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/28_載記第二十九　沮渠蒙遜/02_沮渠蒙遜.txt",
-        "byte_offset": 10099,
-        "time": "東晉/義熙8年"
-      },
-      {
-        "source_file": "./晉書/03_載記/28_載記第二十九　沮渠蒙遜/02_沮渠蒙遜.txt",
-        "byte_offset": 10099,
-        "time": "東晉/義熙8年"
-      }
-    ]
-  },
-  {
-    "name": "南秦州",
-    "is_qiao": true,
-    "role_suffix": "刺史",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
-        "byte_offset": 18396,
-        "time": "東晉/太和5年"
-      },
-      {
-        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
-        "byte_offset": 18396,
-        "time": "東晉/太和5年"
-      }
-    ]
-  },
-  {
-    "name": "略廣州",
-    "is_qiao": false,
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./宋書/01_志/21_志第二十二 五行三/02_火不炎上.txt",
-        "byte_offset": 6450,
-        "time": "東晉/元興3年"
-      },
-      {
-        "source_file": "./晉書/01_志/16_志第十七　五行上/03_五行.txt",
-        "byte_offset": 10459,
-        "time": "東晉/元興1年"
+        "source_file": "./晉書/00_紀/04_帝紀第五　孝懷帝 孝愍帝/02_懷帝.txt",
+        "byte_offset": 8028,
+        "time": "西晉/永嘉4年"
       }
     ]
   },
@@ -4268,55 +3614,484 @@
     ]
   },
   {
-    "name": "鄱陽",
+    "name": "常山",
+    "is_qiao": false,
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/04_帝紀第五　孝懷帝 孝愍帝/02_懷帝.txt",
+        "byte_offset": 3623,
+        "time": "西晉/永嘉2年"
+      },
+      {
+        "source_file": "./晉書/00_紀/04_帝紀第五　孝懷帝 孝愍帝/02_懷帝.txt",
+        "byte_offset": 5770,
+        "time": "西晉/永嘉3年"
+      }
+    ]
+  },
+  {
+    "name": "東萊",
     "is_qiao": false,
     "role_suffix": "太守",
     "event_count": 2,
     "sources": [
       {
-        "source_file": "./宋書/02_列傳/33_列傳第三十四 臧質 魯爽 沈攸之/04_沈攸之.txt",
-        "byte_offset": 14492,
-        "time": "劉宋/昇明2年"
+        "source_file": "./晉書/03_載記/04_載記第五　石勒下/02_石勒.txt",
+        "byte_offset": 7776
       },
       {
-        "source_file": "./晉書/02_列傳/68_列傳第六十九　桓玄 卞范之 殷仲文/02_桓玄.txt",
-        "byte_offset": 25213,
-        "time": "東晉/元興3年"
+        "source_file": "./晉書/03_載記/04_載記第五　石勒下/02_石勒.txt",
+        "byte_offset": 7713
       }
     ]
   },
   {
-    "name": "虜紀城",
+    "name": "吳州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./陳書/02_列傳/24_列傳第二十五: 蕭摩訶 任忠 樊毅 魯廣達/05_魯廣達.txt",
+        "byte_offset": 712
+      },
+      {
+        "source_file": "./陳書/02_列傳/28_列傳第二十九: 熊曇朗 周迪 留異 陳寶應/05_陳寶應.txt",
+        "byte_offset": 4861
+      }
+    ]
+  },
+  {
+    "name": "酒泉",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/55_列傳第五十六　張軌/03_子孫.txt",
+        "byte_offset": 24339,
+        "time": "東晉/永和2年"
+      },
+      {
+        "source_file": "./晉書/03_載記/28_載記第二十九　沮渠蒙遜/02_沮渠蒙遜.txt",
+        "byte_offset": 2641,
+        "time": "北涼/神璽1年"
+      }
+    ]
+  },
+  {
+    "name": "梁郡",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/46_列傳第四十七 蕭惠開 殷琰/03_殷琰.txt",
+        "byte_offset": 2554,
+        "time": "劉宋/泰始1年"
+      },
+      {
+        "source_file": "./宋書/02_列傳/46_列傳第四十七 蕭惠開 殷琰/03_殷琰.txt",
+        "byte_offset": 2554,
+        "time": "劉宋/泰始1年"
+      }
+    ]
+  },
+  {
+    "name": "梁城",
     "is_qiao": false,
     "event_count": 2,
     "sources": [
       {
-        "source_file": "./南齊書/02_列傳/29_列傳第三十 王奐/03_張沖.txt",
-        "byte_offset": 1409,
-        "time": "南齊/建武2年"
+        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
+        "byte_offset": 2812,
+        "time": "北魏/正始1年"
       },
       {
-        "source_file": "./南齊書/02_列傳/37_列傳第三十八 魏虜/02_魏虜.txt",
-        "byte_offset": 18884,
-        "time": "南齊/建武2年"
+        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
+        "byte_offset": 3163,
+        "time": "北魏/正始1年"
       }
     ]
   },
   {
-    "name": "衍衡州",
+    "name": "衍雍州",
     "is_qiao": false,
     "role_suffix": "刺史",
     "event_count": 2,
     "sources": [
       {
         "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
-        "byte_offset": 6078,
-        "time": "北魏/熙平1年"
+        "byte_offset": 9247,
+        "time": "北魏/永熙1年"
       },
       {
         "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
-        "byte_offset": 6135,
-        "time": "北魏/熙平1年"
+        "byte_offset": 9343,
+        "time": "北魏/永熙1年"
+      }
+    ]
+  },
+  {
+    "name": "南海",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./南齊書/02_列傳/38_列傳第三十九 蠻 東南夷/04_南夷.txt",
+        "byte_offset": 7985,
+        "time": "南齊/永明2年"
+      },
+      {
+        "source_file": "./南齊書/02_列傳/38_列傳第三十九 蠻 東南夷/04_南夷.txt",
+        "byte_offset": 8024,
+        "time": "南齊/永明2年"
+      }
+    ]
+  },
+  {
+    "name": "廬江",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
+        "byte_offset": 4989,
+        "time": "東晉/咸和3年"
+      },
+      {
+        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
+        "byte_offset": 4953,
+        "time": "東晉/咸和3年"
+      }
+    ]
+  },
+  {
+    "name": "南秦州",
+    "is_qiao": true,
+    "role_suffix": "刺史",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
+        "byte_offset": 18396,
+        "time": "東晉/太和5年"
+      },
+      {
+        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
+        "byte_offset": 18396,
+        "time": "東晉/太和5年"
+      }
+    ]
+  },
+  {
+    "name": "高州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./陳書/02_列傳/01_列傳第二: 杜僧明 周文育 侯安都/02_杜僧明.txt",
+        "byte_offset": 1861
+      },
+      {
+        "source_file": "./陳書/02_列傳/04_列傳第五: 黃法抃 淳于量 章昭達/02_黃法抃.txt",
+        "byte_offset": 1007,
+        "time": "北燕/太平1年"
+      }
+    ]
+  },
+  {
+    "name": "秦郡",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/04_列傳第五　王鎮惡 檀韶 向靖 劉懷慎 劉粹/05_劉懷慎.txt",
+        "byte_offset": 1487,
+        "time": "劉宋/景平1年"
+      },
+      {
+        "source_file": "./宋書/02_列傳/06_列傳第七　劉懷肅 孟懷玉 劉敬宣 檀祗/05_檀祗.txt",
+        "byte_offset": 1475
+      }
+    ]
+  },
+  {
+    "name": "義興",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/43_列傳第四十四 鄧琬 袁顗 孔覬/02_鄧琬.txt",
+        "byte_offset": 4034,
+        "time": "劉宋/景和1年"
+      },
+      {
+        "source_file": "./晉書/02_列傳/64_列傳第六十五/02_陳訓.txt",
+        "byte_offset": 1313
+      }
+    ]
+  },
+  {
+    "name": "長廣",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/04_載記第五　石勒下/02_石勒.txt",
+        "byte_offset": 7776
+      },
+      {
+        "source_file": "./晉書/03_載記/04_載記第五　石勒下/02_石勒.txt",
+        "byte_offset": 7713
+      }
+    ]
+  },
+  {
+    "name": "湟河",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/28_載記第二十九　沮渠蒙遜/02_沮渠蒙遜.txt",
+        "byte_offset": 10099,
+        "time": "東晉/義熙8年"
+      },
+      {
+        "source_file": "./晉書/03_載記/28_載記第二十九　沮渠蒙遜/02_沮渠蒙遜.txt",
+        "byte_offset": 10099,
+        "time": "東晉/義熙8年"
+      }
+    ]
+  },
+  {
+    "name": "臨海",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./梁書/01_列傳/26_列傳第二十七 王僧孺 張率 劉孝綽 王筠/05_王筠.txt",
+        "byte_offset": 2815,
+        "time": "梁/中大通2年"
+      },
+      {
+        "source_file": "./陳書/02_列傳/15_列傳第十六: 陸子隆 錢道戢 駱牙/03_錢道戢.txt",
+        "byte_offset": 572,
+        "time": "陳/天嘉1年"
+      }
+    ]
+  },
+  {
+    "name": "涇州",
+    "is_qiao": false,
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./陳書/02_列傳/03_列傳第四: 周鐵虎 程靈洗/03_程靈洗.txt",
+        "byte_offset": 5005,
+        "time": "陳/太建2年"
+      },
+      {
+        "source_file": "./魏書/00_帝紀/12_廢出三帝紀 前廢帝廣陵王/02_前廢帝.txt",
+        "byte_offset": 4265,
+        "time": "北魏/普泰1年"
+      }
+    ]
+  },
+  {
+    "name": "魏郡",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
+        "byte_offset": 22472,
+        "time": "西晉/建興1年"
+      },
+      {
+        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
+        "byte_offset": 22472,
+        "time": "西晉/建興1年"
+      }
+    ]
+  },
+  {
+    "name": "五原",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./陳書/02_列傳/05_列傳第六: 胡穎 徐度 杜稜 沈恪/02_胡穎.txt",
+        "byte_offset": 1001
+      },
+      {
+        "source_file": "./陳書/02_列傳/05_列傳第六: 胡穎 徐度 杜稜 沈恪/02_胡穎.txt",
+        "byte_offset": 1151
+      }
+    ]
+  },
+  {
+    "name": "燕郡",
+    "is_qiao": false,
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/23_載記第二十四　慕容寶 慕容盛 慕容熙 慕容雲/04_慕容熙.txt",
+        "byte_offset": 2173
+      },
+      {
+        "source_file": "./晉書/03_載記/08_載記第九　慕容皝/04_陽裕.txt",
+        "byte_offset": 1521
+      }
+    ]
+  },
+  {
+    "name": "建甯",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./晉書/01_志/04_志第五　地理下/06_交州.txt",
+        "byte_offset": 1567,
+        "time": "西晉/永安7年"
+      },
+      {
+        "source_file": "./晉書/01_志/04_志第五　地理下/06_交州.txt",
+        "byte_offset": 1567,
+        "time": "西晉/永安7年"
+      }
+    ]
+  },
+  {
+    "name": "略廣州",
+    "is_qiao": false,
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./宋書/01_志/21_志第二十二 五行三/02_火不炎上.txt",
+        "byte_offset": 6450,
+        "time": "東晉/元興3年"
+      },
+      {
+        "source_file": "./晉書/01_志/16_志第十七　五行上/03_五行.txt",
+        "byte_offset": 10459,
+        "time": "東晉/元興1年"
+      }
+    ]
+  },
+  {
+    "name": "滎陽",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/07_帝紀第八　孝宗穆帝 哀帝 廢帝海西公/03_哀帝.txt",
+        "byte_offset": 3348,
+        "time": "東晉/興寧1年"
+      },
+      {
+        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
+        "byte_offset": 7366
+      }
+    ]
+  },
+  {
+    "name": "武昌",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/14_列傳第十五 臧燾 徐廣 傅隆/02_臧燾.txt",
+        "byte_offset": 6780,
+        "time": "劉宋/元嘉27年"
+      },
+      {
+        "source_file": "./晉書/02_列傳/42_列傳第四十三　庾亮/02_庾亮.txt",
+        "byte_offset": 12017
+      }
+    ]
+  },
+  {
+    "name": "略陽",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/57_列傳第五十八 氐胡/02_氐.txt",
+        "byte_offset": 12146,
+        "time": "劉宋/泰始2年"
+      },
+      {
+        "source_file": "./宋書/02_列傳/07_列傳第八　朱齡石 毛脩之 傅弘之/04_傅弘之.txt",
+        "byte_offset": 1748,
+        "time": "西晉/太康3年"
+      }
+    ]
+  },
+  {
+    "name": "鄴城",
+    "is_qiao": false,
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/13_載記第十四　苻堅下/02_苻堅.txt",
+        "byte_offset": 26895,
+        "time": "東晉/建元17年"
+      },
+      {
+        "source_file": "./魏書/00_帝紀/12_廢出三帝紀 前廢帝廣陵王/03_後廢帝.txt",
+        "byte_offset": 1469,
+        "time": "北魏/中興1年"
+      }
+    ]
+  },
+  {
+    "name": "岐州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./魏書/00_帝紀/12_廢出三帝紀 前廢帝廣陵王/02_前廢帝.txt",
+        "byte_offset": 4265,
+        "time": "北魏/普泰1年"
+      },
+      {
+        "source_file": "./魏書/00_帝紀/12_廢出三帝紀 前廢帝廣陵王/02_前廢帝.txt",
+        "byte_offset": 4265,
+        "time": "北魏/普泰1年"
+      }
+    ]
+  },
+  {
+    "name": "譙城",
+    "is_qiao": false,
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/08_帝紀第九　太宗簡文帝 孝武帝/03_孝武帝.txt",
+        "byte_offset": 9235,
+        "time": "東晉/太元9年"
+      },
+      {
+        "source_file": "./晉書/00_紀/05_帝紀第六　中宗元帝 肅祖明帝/02_元帝.txt",
+        "byte_offset": 3897,
+        "time": "東晉/建武1年"
       }
     ]
   },
@@ -4353,19 +4128,109 @@
     ]
   },
   {
-    "name": "天水",
+    "name": "建康",
     "is_qiao": false,
+    "role_suffix": "太守",
     "event_count": 2,
     "sources": [
       {
-        "source_file": "./宋書/01_志/20_志第二十一 五行二/04_恒暘.txt",
-        "byte_offset": 679,
-        "time": "東晉/太和5年"
+        "source_file": "./晉書/02_列傳/56_列傳第五十七　涼武昭王李暠/02_涼武昭王.txt",
+        "byte_offset": 7244,
+        "time": "東晉/義熙1年"
       },
       {
-        "source_file": "./晉書/00_紀/00_帝紀第一　高祖宣帝/03_太和.txt",
-        "byte_offset": 2721,
-        "time": "東晉/太和1年"
+        "source_file": "./晉書/02_列傳/56_列傳第五十七　涼武昭王李暠/02_涼武昭王.txt",
+        "byte_offset": 7244,
+        "time": "東晉/義熙1年"
+      }
+    ]
+  },
+  {
+    "name": "南汝陰",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/46_列傳第四十七 蕭惠開 殷琰/03_殷琰.txt",
+        "byte_offset": 3050,
+        "time": "劉宋/泰始1年"
+      },
+      {
+        "source_file": "./宋書/02_列傳/46_列傳第四十七 蕭惠開 殷琰/03_殷琰.txt",
+        "byte_offset": 3050,
+        "time": "劉宋/泰始1年"
+      }
+    ]
+  },
+  {
+    "name": "西陽",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/43_列傳第四十四　桓彝/03_子孫.txt",
+        "byte_offset": 10210,
+        "time": "東晉/太元13年"
+      },
+      {
+        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
+        "byte_offset": 14392,
+        "time": "東晉/咸康5年"
+      }
+    ]
+  },
+  {
+    "name": "南兗州",
+    "is_qiao": true,
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./宋書/01_志/24_志第二十五 州郡一/04_南徐州.txt",
+        "byte_offset": 561,
+        "time": "劉宋/元嘉8年"
+      },
+      {
+        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
+        "byte_offset": 8947,
+        "time": "北魏/永熙1年"
+      }
+    ]
+  },
+  {
+    "name": "鄱陽",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/33_列傳第三十四 臧質 魯爽 沈攸之/04_沈攸之.txt",
+        "byte_offset": 14492,
+        "time": "劉宋/昇明2年"
+      },
+      {
+        "source_file": "./晉書/02_列傳/68_列傳第六十九　桓玄 卞范之 殷仲文/02_桓玄.txt",
+        "byte_offset": 25213,
+        "time": "東晉/元興3年"
+      }
+    ]
+  },
+  {
+    "name": "肆州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./魏書/00_帝紀/12_廢出三帝紀 前廢帝廣陵王/04_出帝.txt",
+        "byte_offset": 7757,
+        "time": "北魏/太昌1年"
+      },
+      {
+        "source_file": "./魏書/00_帝紀/12_廢出三帝紀 前廢帝廣陵王/04_出帝.txt",
+        "byte_offset": 7863,
+        "time": "北魏/太昌1年"
       }
     ]
   },
@@ -4388,184 +4253,189 @@
     ]
   },
   {
-    "name": "鄴城",
-    "is_qiao": false,
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/13_載記第十四　苻堅下/02_苻堅.txt",
-        "byte_offset": 26895,
-        "time": "東晉/建元17年"
-      },
-      {
-        "source_file": "./魏書/00_帝紀/12_廢出三帝紀 前廢帝廣陵王/03_後廢帝.txt",
-        "byte_offset": 1469,
-        "time": "北魏/中興1年"
-      }
-    ]
-  },
-  {
-    "name": "譙城",
-    "is_qiao": false,
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/08_帝紀第九　太宗簡文帝 孝武帝/03_孝武帝.txt",
-        "byte_offset": 9235,
-        "time": "東晉/太元9年"
-      },
-      {
-        "source_file": "./晉書/00_紀/05_帝紀第六　中宗元帝 肅祖明帝/02_元帝.txt",
-        "byte_offset": 3897,
-        "time": "東晉/建武1年"
-      }
-    ]
-  },
-  {
-    "name": "酒泉",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 2,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/55_列傳第五十六　張軌/03_子孫.txt",
-        "byte_offset": 24339,
-        "time": "東晉/永和2年"
-      },
-      {
-        "source_file": "./晉書/03_載記/28_載記第二十九　沮渠蒙遜/02_沮渠蒙遜.txt",
-        "byte_offset": 2641,
-        "time": "北涼/神璽1年"
-      }
-    ]
-  },
-  {
-    "name": "安湘",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./陳書/02_列傳/24_列傳第二十五: 蕭摩訶 任忠 樊毅 魯廣達/03_任忠.txt",
-        "byte_offset": 607
-      }
-    ]
-  },
-  {
-    "name": "區粟城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/35_列傳第三十六 朱脩之 宗愨 王玄謨/03_宗慤.txt",
-        "byte_offset": 761,
-        "time": "劉宋/元嘉22年"
-      }
-    ]
-  },
-  {
-    "name": "北地",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/18_載記第十九　姚泓/02_姚泓.txt",
-        "byte_offset": 2157,
-        "time": "東晉/義熙12年"
-      }
-    ]
-  },
-  {
-    "name": "汝南",
-    "is_qiao": false,
-    "role_suffix": "內史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/42_趙逸 胡方回 胡叟 宋繇 張湛 宗欽 段承根 闞駰 劉昞 趙柔 索敞 陰仲達/02_趙逸.txt",
-        "byte_offset": 4725
-      }
-    ]
-  },
-  {
-    "name": "壺關",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
-        "byte_offset": 5251
-      }
-    ]
-  },
-  {
-    "name": "歷城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/40_尉元 慕容白曜/03_慕容白曜.txt",
-        "byte_offset": 2334
-      }
-    ]
-  },
-  {
-    "name": "懷寧縣",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/33_嚴棱 毛修之 唐和 劉休賓 房法夀/05_劉休賓.txt",
-        "byte_offset": 3274
-      }
-    ]
-  },
-  {
-    "name": "督濟州",
+    "name": "定州",
     "is_qiao": false,
     "role_suffix": "刺史",
-    "event_count": 1,
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./陳書/02_列傳/04_列傳第五: 黃法抃 淳于量 章昭達/04_章昭達.txt",
+        "byte_offset": 968
+      },
+      {
+        "source_file": "./魏書/01_列傳/05_太武五王/05_廣陽王.txt",
+        "byte_offset": 2934
+      }
+    ]
+  },
+  {
+    "name": "郢城",
+    "is_qiao": false,
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/14_列傳第十五 臧燾 徐廣 傅隆/02_臧燾.txt",
+        "byte_offset": 6780,
+        "time": "劉宋/元嘉27年"
+      },
+      {
+        "source_file": "./梁書/01_列傳/03_列傳第四　蕭穎達 夏侯詳 蔡道恭 楊公則 鄧元起/02_蕭穎達.txt",
+        "byte_offset": 1387
+      }
+    ]
+  },
+  {
+    "name": "柳城",
+    "is_qiao": false,
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/08_載記第九　慕容皝/02_慕容皝.txt",
+        "byte_offset": 1373,
+        "time": "東晉/咸和9年"
+      },
+      {
+        "source_file": "./晉書/03_載記/08_載記第九　慕容皝/02_慕容皝.txt",
+        "byte_offset": 1712,
+        "time": "東晉/咸和9年"
+      }
+    ]
+  },
+  {
+    "name": "平原",
+    "is_qiao": false,
+    "role_suffix": "內史",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/28_列傳第二十九　汝南王亮 楚王瑋 趙王倫 齊王冏 長沙王乂 成都王潁 河間王顒 東海王越/08_成都王穎.txt",
+        "byte_offset": 3537
+      },
+      {
+        "source_file": "./晉書/02_列傳/28_列傳第二十九　汝南王亮 楚王瑋 趙王倫 齊王冏 長沙王乂 成都王潁 河間王顒 東海王越/08_成都王穎.txt",
+        "byte_offset": 3519
+      }
+    ]
+  },
+  {
+    "name": "廣陵城",
+    "is_qiao": false,
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/50_列傳第五十一 孝義/16_卜天與.txt",
+        "byte_offset": 2002,
+        "time": "劉宋/昇明1年"
+      },
+      {
+        "source_file": "./宋書/02_列傳/42_列傳第四十三 宗越 吳喜 黃回/02_宗越.txt",
+        "byte_offset": 5188,
+        "time": "劉宋/景和1年"
+      }
+    ]
+  },
+  {
+    "name": "尋陽",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/23_列傳第二十四 鄭鮮之 裴松之 何承天/04_何承天.txt",
+        "byte_offset": 1025,
+        "time": "東晉/隆安4年"
+      },
+      {
+        "source_file": "./梁書/01_列傳/36_列傳第三十七 韋粲 江子一/04_張嵊.txt",
+        "byte_offset": 448,
+        "time": "梁/太清2年"
+      }
+    ]
+  },
+  {
+    "name": "蔚州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 2,
     "sources": [
       {
         "source_file": "./魏書/00_帝紀/12_廢出三帝紀 前廢帝廣陵王/04_出帝.txt",
-        "byte_offset": 10923,
+        "byte_offset": 9340,
+        "time": "北魏/永熙1年"
+      },
+      {
+        "source_file": "./魏書/00_帝紀/12_廢出三帝紀 前廢帝廣陵王/04_出帝.txt",
+        "byte_offset": 9394,
         "time": "北魏/永熙1年"
       }
     ]
   },
   {
-    "name": "汧城",
+    "name": "天水",
     "is_qiao": false,
-    "event_count": 1,
+    "event_count": 2,
     "sources": [
       {
-        "source_file": "./晉書/03_載記/02_載記第三　劉曜/02_劉曜.txt",
-        "byte_offset": 14664
+        "source_file": "./宋書/01_志/20_志第二十一 五行二/04_恒暘.txt",
+        "byte_offset": 679,
+        "time": "東晉/太和5年"
+      },
+      {
+        "source_file": "./晉書/00_紀/00_帝紀第一　高祖宣帝/03_太和.txt",
+        "byte_offset": 2721,
+        "time": "東晉/太和1年"
       }
     ]
   },
   {
-    "name": "為池",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/74_匈奴劉聰 羯胡石勒 鐵弗劉虎 徒何慕容廆 臨渭氐苻健 羌姚萇 略陽氐吕光/03_劉聰.txt",
-        "byte_offset": 3477,
-        "time": "西晉/永嘉2年"
-      }
-    ]
-  },
-  {
-    "name": "梁興",
+    "name": "高平",
     "is_qiao": false,
     "role_suffix": "太守",
-    "event_count": 1,
+    "event_count": 2,
     "sources": [
       {
-        "source_file": "./陳書/02_列傳/24_列傳第二十五: 蕭摩訶 任忠 樊毅 魯廣達/04_樊毅.txt",
-        "byte_offset": 471
+        "source_file": "./晉書/02_列傳/68_列傳第六十九　桓玄 卞范之 殷仲文/02_桓玄.txt",
+        "byte_offset": 28008,
+        "time": "東晉/元興3年"
+      },
+      {
+        "source_file": "./晉書/02_列傳/53_列傳第五十四　王恭 庾楷 劉牢之 殷仲堪 楊佺期/04_劉牢之.txt",
+        "byte_offset": 2292
+      }
+    ]
+  },
+  {
+    "name": "華州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./南齊書/02_列傳/37_列傳第三十八 魏虜/02_魏虜.txt",
+        "byte_offset": 18884,
+        "time": "南齊/建武2年"
+      },
+      {
+        "source_file": "./南齊書/02_列傳/37_列傳第三十八 魏虜/02_魏虜.txt",
+        "byte_offset": 18962,
+        "time": "南齊/建武2年"
+      }
+    ]
+  },
+  {
+    "name": "竟陵",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 2,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/04_列傳第五　王鎮惡 檀韶 向靖 劉懷慎 劉粹/06_劉粹.txt",
+        "byte_offset": 759
+      },
+      {
+        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
+        "byte_offset": 14392,
+        "time": "東晉/咸康5年"
       }
     ]
   },
@@ -4583,833 +4453,6 @@
     ]
   },
   {
-    "name": "至江",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/01_神元平文諸帝子孫/02_神元子孫.txt",
-        "byte_offset": 2951
-      }
-    ]
-  },
-  {
-    "name": "陳郡",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./宋書/01_志/25_志第二十六 州郡二/03_豫州.txt",
-        "byte_offset": 1404,
-        "time": "劉宋/大明1年"
-      }
-    ]
-  },
-  {
-    "name": "秦國",
-    "is_qiao": false,
-    "role_suffix": "內史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/28_列傳第二十九　汝南王亮 楚王瑋 趙王倫 齊王冏 長沙王乂 成都王潁 河間王顒 東海王越/09_河間王顒.txt",
-        "byte_offset": 3638,
-        "time": "西晉/咸寧2年"
-      }
-    ]
-  },
-  {
-    "name": "新昌",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/58_列傳第五十九/21_王諒.txt",
-        "byte_offset": 183
-      }
-    ]
-  },
-  {
-    "name": "廣川",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/09_帝紀第十　安帝 恭帝/02_安帝.txt",
-        "byte_offset": 15064,
-        "time": "東晉/義熙6年"
-      }
-    ]
-  },
-  {
-    "name": "上庸",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/43_列傳第四十四　桓彝/03_子孫.txt",
-        "byte_offset": 15235,
-        "time": "東晉/太元13年"
-      }
-    ]
-  },
-  {
-    "name": "陝城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
-        "byte_offset": 11870,
-        "time": "東晉/興寧3年"
-      }
-    ]
-  },
-  {
-    "name": "廣平",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./梁書/01_列傳/38_列傳第三十九 王僧辯/02_王僧辯.txt",
-        "byte_offset": 252
-      }
-    ]
-  },
-  {
-    "name": "高密",
-    "is_qiao": false,
-    "role_suffix": "內史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
-        "byte_offset": 30652,
-        "time": "東晉/太元4年"
-      }
-    ]
-  },
-  {
-    "name": "晉熙",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./南齊書/02_列傳/36_列傳第三十七 倖臣/02_紀僧真.txt",
-        "byte_offset": 3551,
-        "time": "南齊/永泰1年"
-      }
-    ]
-  },
-  {
-    "name": "東徐州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/70_朱瑞 叱列延慶 斛斯椿 賈顯度 樊子鵠 賀拔勝 侯莫 陳悅 侯淵/04_斛斯椿.txt",
-        "byte_offset": 746
-      }
-    ]
-  },
-  {
-    "name": "會揚州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/67_列傳第六十八　王敦/02_王敦.txt",
-        "byte_offset": 1723
-      }
-    ]
-  },
-  {
-    "name": "武陵",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/26_列傳第二十七　羅憲 滕脩 馬隆 胡奮 陶璜 吾彥 張光 趙誘/08_張光.txt",
-        "byte_offset": 1227
-      }
-    ]
-  },
-  {
-    "name": "三關",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/51_薛安都 畢衆敬 沈文秀 張讜 田益宗 孟表/06_田益宗.txt",
-        "byte_offset": 580,
-        "time": "北魏/太和17年"
-      }
-    ]
-  },
-  {
-    "name": "弘農",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/28_列傳第二十九　汝南王亮 楚王瑋 趙王倫 齊王冏 長沙王乂 成都王潁 河間王顒 東海王越/09_河間王顒.txt",
-        "byte_offset": 3638,
-        "time": "西晉/咸寧2年"
-      }
-    ]
-  },
-  {
-    "name": "徒河",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/08_載記第九　慕容皝/02_慕容皝.txt",
-        "byte_offset": 1316,
-        "time": "東晉/咸和9年"
-      }
-    ]
-  },
-  {
-    "name": "冀州樂陵",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/11_獻文六王下/02_彭城王.txt",
-        "byte_offset": 18462,
-        "time": "北魏/太和9年"
-      }
-    ]
-  },
-  {
-    "name": "南平",
-    "is_qiao": false,
-    "role_suffix": "內史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/33_列傳第三十四 臧質 魯爽 沈攸之/02_臧質.txt",
-        "byte_offset": 2832,
-        "time": "劉宋/元嘉26年"
-      }
-    ]
-  },
-  {
-    "name": "邊城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/56_李崇 崔亮/02_李崇.txt",
-        "byte_offset": 7555
-      }
-    ]
-  },
-  {
-    "name": "廬陵",
-    "is_qiao": false,
-    "role_suffix": "內史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./陳書/02_列傳/24_列傳第二十五: 蕭摩訶 任忠 樊毅 魯廣達/03_任忠.txt",
-        "byte_offset": 781
-      }
-    ]
-  },
-  {
-    "name": "虎牢；又遣其豫州",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/76_島夷桓玄 海夷馮跋 島夷劉裕/04_劉裕.txt",
-        "byte_offset": 11577,
-        "time": "北魏/泰常5年"
-      }
-    ]
-  },
-  {
-    "name": "桂陽",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/42_列傳第四十三 宗越 吳喜 黃回/02_宗越.txt",
-        "byte_offset": 5188,
-        "time": "劉宋/景和1年"
-      }
-    ]
-  },
-  {
-    "name": "朐山",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./南齊書/02_列傳/37_列傳第三十八 魏虜/02_魏虜.txt",
-        "byte_offset": 5884,
-        "time": "東晉/太和3年"
-      }
-    ]
-  },
-  {
-    "name": "滄州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/36_竇瑾 許彦 李欣/03_許彥.txt",
-        "byte_offset": 2716,
-        "time": "北魏/太安2年"
-      }
-    ]
-  },
-  {
-    "name": "南江州",
-    "is_qiao": true,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./陳書/01_本紀/00_本紀第一: 高祖上/02_高祖上.txt",
-        "byte_offset": 18969,
-        "time": "北燕/太平1年"
-      }
-    ]
-  },
-  {
-    "name": "晉原",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/04_列傳第五　王鎮惡 檀韶 向靖 劉懷慎 劉粹/06_劉粹.txt",
-        "byte_offset": 6143,
-        "time": "劉宋/泰始1年"
-      }
-    ]
-  },
-  {
-    "name": "長安外城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/01_載記第二　劉聰/02_劉聰.txt",
-        "byte_offset": 27146,
-        "time": "西晉/永嘉4年"
-      }
-    ]
-  },
-  {
-    "name": "隨郡",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./梁書/00_本紀/00_本紀第一　武帝上/01_目录.txt",
-        "byte_offset": 12313,
-        "time": "南齊/中興1年"
-      }
-    ]
-  },
-  {
-    "name": "隴西",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/01_帝紀第二　世宗景帝 太祖文帝/03_文帝.txt",
-        "byte_offset": 9563,
-        "time": "前秦/甘露4年"
-      }
-    ]
-  },
-  {
-    "name": "據荊州城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/47_高祐 崔挺/03_崔挺.txt",
-        "byte_offset": 7041,
-        "time": "北魏/普泰1年"
-      }
-    ]
-  },
-  {
-    "name": "潼州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./陳書/02_列傳/03_列傳第四: 周鐵虎 程靈洗/02_周鐵虎.txt",
-        "byte_offset": 691
-      }
-    ]
-  },
-  {
-    "name": "新平",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/02_載記第三　劉曜/02_劉曜.txt",
-        "byte_offset": 3115
-      }
-    ]
-  },
-  {
-    "name": "晉隨郡",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/13_載記第十四　苻堅下/02_苻堅.txt",
-        "byte_offset": 16810,
-        "time": "東晉/建元17年"
-      }
-    ]
-  },
-  {
-    "name": "長城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./陳書/02_列傳/04_列傳第五: 黃法抃 淳于量 章昭達/04_章昭達.txt",
-        "byte_offset": 818
-      }
-    ]
-  },
-  {
-    "name": "安豐",
-    "is_qiao": false,
-    "role_suffix": "內史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/40_列傳第四十一　孫惠 熊遠 王鑒 陳頵 高崧/02_孫惠.txt",
-        "byte_offset": 4441
-      }
-    ]
-  },
-  {
-    "name": "定廣州",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./陳書/02_列傳/05_列傳第六: 胡穎 徐度 杜稜 沈恪/03_徐度.txt",
-        "byte_offset": 292
-      }
-    ]
-  },
-  {
-    "name": "淮北、徐州",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/01_志/01_志第二　天文中/04_史傳事驗.txt",
-        "byte_offset": 25530,
-        "time": "東晉/義熙2年"
-      }
-    ]
-  },
-  {
-    "name": "魯陽",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/34_羅結 伊馛 乙瑰 和其奴 苟頽 薛野𧗠者 宇文福 費于 孟威/03_伊馛.txt",
-        "byte_offset": 1846,
-        "time": "北魏/神龜2年"
-      }
-    ]
-  },
-  {
-    "name": "南安",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
-        "byte_offset": 10855,
-        "time": "東晉/興寧3年"
-      }
-    ]
-  },
-  {
-    "name": "陷京城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/31_列傳第三十二 文九王/03_劉宏(第七子).txt",
-        "byte_offset": 5723,
-        "time": "劉宋/元徽4年"
-      }
-    ]
-  },
-  {
-    "name": "赭陽城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./南齊書/02_列傳/37_列傳第三十八 魏虜/02_魏虜.txt",
-        "byte_offset": 18962,
-        "time": "南齊/建武2年"
-      }
-    ]
-  },
-  {
-    "name": "北新蔡、安豐二郡",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./南齊書/02_列傳/37_列傳第三十八 魏虜/02_魏虜.txt",
-        "byte_offset": 26216,
-        "time": "南齊/永元2年"
-      }
-    ]
-  },
-  {
-    "name": "湓城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./陳書/02_列傳/08_列傳第九: 宗室/03_陳詳.txt",
-        "byte_offset": 615,
-        "time": "陳/永定2年"
-      }
-    ]
-  },
-  {
-    "name": "荊城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./梁書/01_列傳/01_列傳第二　昭明太子 哀太子 愍懷太子/04_愍懷太子.txt",
-        "byte_offset": 346,
-        "time": "梁/承聖1年"
-      }
-    ]
-  },
-  {
-    "name": "姚泓秦州",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/09_帝紀第十　安帝 恭帝/02_安帝.txt",
-        "byte_offset": 18610,
-        "time": "東晉/義熙12年"
-      }
-    ]
-  },
-  {
-    "name": "稱秦州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
-        "byte_offset": 10403,
-        "time": "東晉/咸和8年"
-      }
-    ]
-  },
-  {
-    "name": "齊州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/61_裴叔業 夏侯道遷 李元護 席法友 王世弼 江悦之 淳于誕 李苗/04_李元護.txt",
-        "byte_offset": 872
-      }
-    ]
-  },
-  {
-    "name": "交趾",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./梁書/01_列傳/47_列傳第四十八 諸夷/02_海南諸國.txt",
-        "byte_offset": 24435,
-        "time": "梁/普通3年"
-      }
-    ]
-  },
-  {
-    "name": "營州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/23_載記第二十四　慕容寶 慕容盛 慕容熙 慕容雲/04_慕容熙.txt",
-        "byte_offset": 2710
-      }
-    ]
-  },
-  {
-    "name": "虜淮柵外二城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./南齊書/02_列傳/31_列傳第三十二 裴叔業 崔慧景 張欣泰/02_裴叔業.txt",
-        "byte_offset": 1665,
-        "time": "南齊/建武2年"
-      }
-    ]
-  },
-  {
-    "name": "南兖州",
-    "is_qiao": true,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./南齊書/02_列傳/29_列傳第三十 王奐/03_張沖.txt",
-        "byte_offset": 2079,
-        "time": "南齊/永元1年"
-      }
-    ]
-  },
-  {
-    "name": "統徐州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/05_帝紀第六　中宗元帝 肅祖明帝/02_元帝.txt",
-        "byte_offset": 10157,
-        "time": "東晉/大興2年"
-      }
-    ]
-  },
-  {
-    "name": "二城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./南齊書/02_列傳/37_列傳第三十八 魏虜/02_魏虜.txt",
-        "byte_offset": 17925,
-        "time": "南齊/建武2年"
-      }
-    ]
-  },
-  {
-    "name": "魏小峴城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./梁書/01_列傳/05_列傳第六　柳惔/04_韋叡.txt",
-        "byte_offset": 2479,
-        "time": "梁/天監2年"
-      }
-    ]
-  },
-  {
-    "name": "略并州",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/01_志/02_志第三　天文下/04_星流隕.txt",
-        "byte_offset": 1890,
-        "time": "西晉/太安2年"
-      }
-    ]
-  },
-  {
-    "name": "沛二郡",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/45_游明根 劉芳/03_劉芳.txt",
-        "byte_offset": 12179,
-        "time": "北魏/延昌2年"
-      }
-    ]
-  },
-  {
-    "name": "梁秦二州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/61_裴叔業 夏侯道遷 李元護 席法友 王世弼 江悦之 淳于誕 李苗/03_夏侯道遷.txt",
-        "byte_offset": 484
-      }
-    ]
-  },
-  {
-    "name": "東海",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./南齊書/02_列傳/08_列傳第九　崔祖思 劉善明 蘇侃 垣榮祖/05_垣榮祖.txt",
-        "byte_offset": 1329
-      }
-    ]
-  },
-  {
-    "name": "侵郡縣",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/01_志/02_志第三　天文下/02_月五星犯列舍經星變附見.txt",
-        "byte_offset": 34800,
-        "time": "東晉/隆安1年"
-      }
-    ]
-  },
-  {
-    "name": "番禾",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/16_載記第十七　姚興上/02_姚興.txt",
-        "byte_offset": 13070,
-        "time": "東晉/太元19年"
-      }
-    ]
-  },
-  {
-    "name": "平陽",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/13_載記第十四　苻堅下/02_苻堅.txt",
-        "byte_offset": 18730,
-        "time": "東晉/建元17年"
-      }
-    ]
-  },
-  {
-    "name": "虜荊州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/31_列傳第三十二 文九王/02_劉鑠(第四子).txt",
-        "byte_offset": 1855,
-        "time": "劉宋/元嘉17年"
-      }
-    ]
-  },
-  {
-    "name": "蝗幽州",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/13_載記第十四　苻堅下/02_苻堅.txt",
-        "byte_offset": 9359,
-        "time": "東晉/建武4年"
-      }
-    ]
-  },
-  {
-    "name": "豳夏諸州",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/67_宋翻 辛雄 羊深 楊機 高崇/04_羊深.txt",
-        "byte_offset": 523
-      }
-    ]
-  },
-  {
-    "name": "東陽",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./梁書/01_列傳/06_列傳第七　范雲 沈約/03_沈約.txt",
-        "byte_offset": 1490,
-        "time": "南齊/隆昌1年"
-      }
-    ]
-  },
-  {
-    "name": "會司州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./南齊書/02_列傳/29_列傳第三十 王奐/03_張沖.txt",
-        "byte_offset": 2079,
-        "time": "南齊/永元1年"
-      }
-    ]
-  },
-  {
-    "name": "南秦二州",
-    "is_qiao": true,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./南齊書/00_本紀/03_本紀第四　鬱林王/02_鬱林王.txt",
-        "byte_offset": 2582,
-        "time": "南齊/隆昌1年"
-      }
-    ]
-  },
-  {
     "name": "鄄城",
     "is_qiao": false,
     "event_count": 1,
@@ -5422,333 +4465,27 @@
     ]
   },
   {
-    "name": "邾城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/50_列傳第五十一　王遜 蔡豹 羊鑒 劉胤 桓宣 朱伺 毛寶 劉遐 鄧嶽 朱序/08_毛寶.txt",
-        "byte_offset": 3031
-      }
-    ]
-  },
-  {
-    "name": "廣武",
+    "name": "頓丘",
     "is_qiao": false,
     "role_suffix": "太守",
     "event_count": 1,
     "sources": [
       {
-        "source_file": "./晉書/03_載記/28_載記第二十九　沮渠蒙遜/02_沮渠蒙遜.txt",
-        "byte_offset": 10099,
-        "time": "東晉/義熙8年"
+        "source_file": "./晉書/02_列傳/28_列傳第二十九　汝南王亮 楚王瑋 趙王倫 齊王冏 長沙王乂 成都王潁 河間王顒 東海王越/08_成都王穎.txt",
+        "byte_offset": 430
       }
     ]
   },
   {
-    "name": "而廣州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/58_列傳第五十九/03_嵇紹.txt",
-        "byte_offset": 7819,
-        "time": "後趙/青龍2年"
-      }
-    ]
-  },
-  {
-    "name": "馬圈城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/02_蕭道成.txt",
-        "byte_offset": 13397,
-        "time": "北魏/太和18年"
-      }
-    ]
-  },
-  {
-    "name": "黟縣",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/43_列傳第四十四 鄧琬 袁顗 孔覬/04_孔覬.txt",
-        "byte_offset": 14170,
-        "time": "劉宋/泰始2年"
-      }
-    ]
-  },
-  {
-    "name": "圉城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
-        "byte_offset": 9668,
-        "time": "北魏/永熙1年"
-      }
-    ]
-  },
-  {
-    "name": "華山",
+    "name": "南丹陽",
     "is_qiao": false,
     "role_suffix": "太守",
     "event_count": 1,
     "sources": [
       {
-        "source_file": "./晉書/03_載記/16_載記第十七　姚興上/02_姚興.txt",
-        "byte_offset": 4756,
-        "time": "東晉/太元19年"
-      }
-    ]
-  },
-  {
-    "name": "樊城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/00_帝紀第一　高祖宣帝/06_正始.txt",
-        "byte_offset": 392,
-        "time": "北魏/正始1年"
-      }
-    ]
-  },
-  {
-    "name": "建康城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./南齊書/02_列傳/18_列傳第十九 蕭景先 蕭赤斧/03_蕭赤斧.txt",
-        "byte_offset": 9775,
-        "time": "南齊/中興1年"
-      }
-    ]
-  },
-  {
-    "name": "魯城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/68_列傳第六十九　桓玄 卞范之 殷仲文/02_桓玄.txt",
-        "byte_offset": 28386,
-        "time": "東晉/元興3年"
-      }
-    ]
-  },
-  {
-    "name": "杏城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/17_載記第十八　姚興下/02_姚興.txt",
-        "byte_offset": 15535,
-        "time": "東晉/義熙2年"
-      }
-    ]
-  },
-  {
-    "name": "晉熙郡",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./梁書/01_列傳/49_列傳第五十 侯景/02_侯景.txt",
-        "byte_offset": 18427,
-        "time": "梁/大寶1年"
-      }
-    ]
-  },
-  {
-    "name": "清口戍城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/36_列傳第三十七 柳元景 顏師伯 沈慶之/03_顏師伯.txt",
-        "byte_offset": 2923,
-        "time": "劉宋/大明1年"
-      }
-    ]
-  },
-  {
-    "name": "郡城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/26_列傳第二十七　羅憲 滕脩 馬隆 胡奮 陶璜 吾彥 張光 趙誘/07_吾彥.txt",
-        "byte_offset": 2429
-      }
-    ]
-  },
-  {
-    "name": "金山",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/28_載記第二十九　沮渠蒙遜/02_沮渠蒙遜.txt",
-        "byte_offset": 8333,
-        "time": "東晉/隆安5年"
-      }
-    ]
-  },
-  {
-    "name": "熙幽州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/74_匈奴劉聰 羯胡石勒 鐵弗劉虎 徒何慕容廆 臨渭氐苻健 羌姚萇 略陽氐吕光/06_慕容廆.txt",
-        "byte_offset": 18130,
-        "time": "北魏/皇始1年"
-      }
-    ]
-  },
-  {
-    "name": "玄菟",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./梁書/01_列傳/47_列傳第四十八 諸夷/03_東夷諸戎.txt",
-        "byte_offset": 2920
-      }
-    ]
-  },
-  {
-    "name": "安定",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/28_列傳第二十九　汝南王亮 楚王瑋 趙王倫 齊王冏 長沙王乂 成都王潁 河間王顒 東海王越/09_河間王顒.txt",
-        "byte_offset": 3638,
-        "time": "西晉/咸寧2年"
-      }
-    ]
-  },
-  {
-    "name": "湟川",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/28_載記第二十九　沮渠蒙遜/02_沮渠蒙遜.txt",
-        "byte_offset": 10099,
-        "time": "東晉/義熙8年"
-      }
-    ]
-  },
-  {
-    "name": "䐗者圈、苑市二壘",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
-        "byte_offset": 7023
-      }
-    ]
-  },
-  {
-    "name": "北徐州",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./梁書/01_列傳/05_列傳第六　柳惔/04_韋叡.txt",
-        "byte_offset": 4789,
-        "time": "梁/天監2年"
-      }
-    ]
-  },
-  {
-    "name": "萇汧、雍二城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/14_載記第十五　苻丕 苻登/03_苻登.txt",
-        "byte_offset": 4182,
-        "time": "東晉/太元11年"
-      }
-    ]
-  },
-  {
-    "name": "晉盧江",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/06_載記第七　石季龍（石虎）下/06_石閔〈（冉闵）〉.txt",
-        "byte_offset": 1412,
-        "time": "東晉/永和6年"
-      }
-    ]
-  },
-  {
-    "name": "衍豫州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
-        "byte_offset": 6078,
-        "time": "北魏/熙平1年"
-      }
-    ]
-  },
-  {
-    "name": "晉河南",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/16_載記第十七　姚興上/02_姚興.txt",
-        "byte_offset": 4756,
-        "time": "東晉/太元19年"
-      }
-    ]
-  },
-  {
-    "name": "鄧城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/43_列傳第四十四　桓彝/03_子孫.txt",
-        "byte_offset": 14435,
-        "time": "東晉/太元13年"
-      }
-    ]
-  },
-  {
-    "name": "密城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/07_帝紀第八　孝宗穆帝 哀帝 廢帝海西公/03_哀帝.txt",
-        "byte_offset": 3348,
-        "time": "東晉/興寧1年"
+        "source_file": "./陳書/02_列傳/13_列傳第十四: 到仲舉 韓子高 華皎/04_華皎.txt",
+        "byte_offset": 4542,
+        "time": "陳/光大1年"
       }
     ]
   },
@@ -5766,38 +4503,736 @@
     ]
   },
   {
-    "name": "掠河內、汲郡",
+    "name": "區粟城",
     "is_qiao": false,
     "event_count": 1,
     "sources": [
       {
-        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
-        "byte_offset": 33179,
-        "time": "西晉/建興1年"
+        "source_file": "./宋書/02_列傳/35_列傳第三十六 朱脩之 宗愨 王玄謨/03_宗慤.txt",
+        "byte_offset": 761,
+        "time": "劉宋/元嘉22年"
       }
     ]
   },
   {
-    "name": "東關",
+    "name": "克二城",
     "is_qiao": false,
     "event_count": 1,
     "sources": [
       {
-        "source_file": "./梁書/01_列傳/21_列傳第二十二 裴邃/02_裴邃.txt",
-        "byte_offset": 7277,
-        "time": "梁/普通2年"
+        "source_file": "./宋書/02_列傳/09_列傳第十 胡藩 劉康祖 垣護之 張興世/05_張興世.txt",
+        "byte_offset": 949
       }
     ]
   },
   {
-    "name": "潁川",
+    "name": "晉原",
     "is_qiao": false,
     "role_suffix": "太守",
     "event_count": 1,
     "sources": [
       {
-        "source_file": "./魏書/01_列傳/01_神元平文諸帝子孫/03_平文子孫.txt",
-        "byte_offset": 1311
+        "source_file": "./宋書/02_列傳/04_列傳第五　王鎮惡 檀韶 向靖 劉懷慎 劉粹/06_劉粹.txt",
+        "byte_offset": 6143,
+        "time": "劉宋/泰始1年"
+      }
+    ]
+  },
+  {
+    "name": "鄖州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./梁書/01_列傳/39_列傳第四十 胡僧祐 徐文盛 杜崱/04_杜崱.txt",
+        "byte_offset": 3447,
+        "time": "梁/承聖2年"
+      }
+    ]
+  },
+  {
+    "name": "東海",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./南齊書/02_列傳/08_列傳第九　崔祖思 劉善明 蘇侃 垣榮祖/05_垣榮祖.txt",
+        "byte_offset": 1329
+      }
+    ]
+  },
+  {
+    "name": "定廣州",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./陳書/02_列傳/05_列傳第六: 胡穎 徐度 杜稜 沈恪/03_徐度.txt",
+        "byte_offset": 292
+      }
+    ]
+  },
+  {
+    "name": "廬陵",
+    "is_qiao": false,
+    "role_suffix": "內史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./陳書/02_列傳/24_列傳第二十五: 蕭摩訶 任忠 樊毅 魯廣達/03_任忠.txt",
+        "byte_offset": 781
+      }
+    ]
+  },
+  {
+    "name": "天門",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/02_列傳第三　徐羨之 傅亮 檀道濟/04_檀道濟.txt",
+        "byte_offset": 394
+      }
+    ]
+  },
+  {
+    "name": "陷太山",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/05_帝紀第六　中宗元帝 肅祖明帝/02_元帝.txt",
+        "byte_offset": 14694,
+        "time": "東晉/永昌1年"
+      }
+    ]
+  },
+  {
+    "name": "營州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/23_載記第二十四　慕容寶 慕容盛 慕容熙 慕容雲/04_慕容熙.txt",
+        "byte_offset": 2710
+      }
+    ]
+  },
+  {
+    "name": "新平",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/02_載記第三　劉曜/02_劉曜.txt",
+        "byte_offset": 3115
+      }
+    ]
+  },
+  {
+    "name": "隨郡",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./梁書/00_本紀/00_本紀第一　武帝上/01_目录.txt",
+        "byte_offset": 12313,
+        "time": "南齊/中興1年"
+      }
+    ]
+  },
+  {
+    "name": "鼓城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
+        "byte_offset": 28033,
+        "time": "東晉/太和5年"
+      }
+    ]
+  },
+  {
+    "name": "齊國",
+    "is_qiao": false,
+    "role_suffix": "內史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/08_帝紀第九　太宗簡文帝 孝武帝/03_孝武帝.txt",
+        "byte_offset": 15905,
+        "time": "東晉/太元17年"
+      }
+    ]
+  },
+  {
+    "name": "梓潼及梁、益二州",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/08_帝紀第九　太宗簡文帝 孝武帝/03_孝武帝.txt",
+        "byte_offset": 1756,
+        "time": "東晉/寧康1年"
+      }
+    ]
+  },
+  {
+    "name": "順陽",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/32_列傳第三十三　邵續 李矩 段匹磾 魏浚 郭默/05_魏浚.txt",
+        "byte_offset": 2146
+      }
+    ]
+  },
+  {
+    "name": "稱秦州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
+        "byte_offset": 10403,
+        "time": "東晉/咸和8年"
+      }
+    ]
+  },
+  {
+    "name": "蝗幽州",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/13_載記第十四　苻堅下/02_苻堅.txt",
+        "byte_offset": 9359,
+        "time": "東晉/建武4年"
+      }
+    ]
+  },
+  {
+    "name": "廣武",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/28_載記第二十九　沮渠蒙遜/02_沮渠蒙遜.txt",
+        "byte_offset": 10099,
+        "time": "東晉/義熙8年"
+      }
+    ]
+  },
+  {
+    "name": "懷寧縣",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/33_嚴棱 毛修之 唐和 劉休賓 房法夀/05_劉休賓.txt",
+        "byte_offset": 3274
+      }
+    ]
+  },
+  {
+    "name": "郡城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/26_列傳第二十七　羅憲 滕脩 馬隆 胡奮 陶璜 吾彥 張光 趙誘/07_吾彥.txt",
+        "byte_offset": 2429
+      }
+    ]
+  },
+  {
+    "name": "武昌郡",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/33_列傳第三十四 臧質 魯爽 沈攸之/02_臧質.txt",
+        "byte_offset": 12468,
+        "time": "劉宋/孝建1年"
+      }
+    ]
+  },
+  {
+    "name": "許昌、懸瓠、陳城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/10_載記第十一　慕容暐/02_慕容暐.txt",
+        "byte_offset": 3160,
+        "time": "東晉/升平4年"
+      }
+    ]
+  },
+  {
+    "name": "魏小峴城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./梁書/01_列傳/05_列傳第六　柳惔/04_韋叡.txt",
+        "byte_offset": 2479,
+        "time": "梁/天監2年"
+      }
+    ]
+  },
+  {
+    "name": "廣川",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/09_帝紀第十　安帝 恭帝/02_安帝.txt",
+        "byte_offset": 15064,
+        "time": "東晉/義熙6年"
+      }
+    ]
+  },
+  {
+    "name": "南康諸郡",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/01_列傳第二　劉穆之 王弘/03_王弘.txt",
+        "byte_offset": 2152
+      }
+    ]
+  },
+  {
+    "name": "陷青州",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/05_帝紀第六　中宗元帝 肅祖明帝/03_明帝.txt",
+        "byte_offset": 2660,
+        "time": "東晉/太寧1年"
+      }
+    ]
+  },
+  {
+    "name": "陝城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
+        "byte_offset": 11870,
+        "time": "東晉/興寧3年"
+      }
+    ]
+  },
+  {
+    "name": "略并州",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/01_志/02_志第三　天文下/04_星流隕.txt",
+        "byte_offset": 1890,
+        "time": "西晉/太安2年"
+      }
+    ]
+  },
+  {
+    "name": "渤海",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
+        "byte_offset": 29524,
+        "time": "西晉/建興1年"
+      }
+    ]
+  },
+  {
+    "name": "虜淮柵外二城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./南齊書/02_列傳/31_列傳第三十二 裴叔業 崔慧景 張欣泰/02_裴叔業.txt",
+        "byte_offset": 1665,
+        "time": "南齊/建武2年"
+      }
+    ]
+  },
+  {
+    "name": "武寧",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./梁書/01_列傳/38_列傳第三十九 王僧辯/02_王僧辯.txt",
+        "byte_offset": 252
+      }
+    ]
+  },
+  {
+    "name": "圉城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
+        "byte_offset": 9668,
+        "time": "北魏/永熙1年"
+      }
+    ]
+  },
+  {
+    "name": "據白水舊城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/60_劉藻 傅永 傅竪眼 李神/04_傅豎眼.txt",
+        "byte_offset": 6612
+      }
+    ]
+  },
+  {
+    "name": "北新蔡",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./陳書/02_列傳/24_列傳第二十五: 蕭摩訶 任忠 樊毅 魯廣達/05_魯廣達.txt",
+        "byte_offset": 712
+      }
+    ]
+  },
+  {
+    "name": "新昌二郡",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./南齊書/02_列傳/38_列傳第三十九 蠻 東南夷/04_南夷.txt",
+        "byte_offset": 8024,
+        "time": "南齊/永明2年"
+      }
+    ]
+  },
+  {
+    "name": "弘農",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/28_列傳第二十九　汝南王亮 楚王瑋 趙王倫 齊王冏 長沙王乂 成都王潁 河間王顒 東海王越/09_河間王顒.txt",
+        "byte_offset": 3638,
+        "time": "西晉/咸寧2年"
+      }
+    ]
+  },
+  {
+    "name": "平齊",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/14_燕鳳 許謙 張衮 崔玄伯 鄧淵/05_崔玄伯(崔宏).txt",
+        "byte_offset": 16890,
+        "time": "北魏/正光3年"
+      }
+    ]
+  },
+  {
+    "name": "扶風",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/02_載記第三　劉曜/02_劉曜.txt",
+        "byte_offset": 3115
+      }
+    ]
+  },
+  {
+    "name": "新昌",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/58_列傳第五十九/21_王諒.txt",
+        "byte_offset": 183
+      }
+    ]
+  },
+  {
+    "name": "中國",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/44_游雅 高閭/03_高閭.txt",
+        "byte_offset": 11045,
+        "time": "北魏/太和3年"
+      }
+    ]
+  },
+  {
+    "name": "庱亭壘",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/69_列傳第七十　　王彌 張昌 陳敏 王如 杜曾 杜弢 王機 祖約 蘇峻 孫恩 盧循 譙縱/10_蘇峻.txt",
+        "byte_offset": 5128
+      }
+    ]
+  },
+  {
+    "name": "新野",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/43_列傳第四十四　桓彝/03_子孫.txt",
+        "byte_offset": 2510
+      }
+    ]
+  },
+  {
+    "name": "會司州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./南齊書/02_列傳/29_列傳第三十 王奐/03_張沖.txt",
+        "byte_offset": 2079,
+        "time": "南齊/永元1年"
+      }
+    ]
+  },
+  {
+    "name": "番禾",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/16_載記第十七　姚興上/02_姚興.txt",
+        "byte_offset": 13070,
+        "time": "東晉/太元19年"
+      }
+    ]
+  },
+  {
+    "name": "至江",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/01_神元平文諸帝子孫/02_神元子孫.txt",
+        "byte_offset": 2951
+      }
+    ]
+  },
+  {
+    "name": "滄州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/36_竇瑾 許彦 李欣/03_許彥.txt",
+        "byte_offset": 2716,
+        "time": "北魏/太安2年"
+      }
+    ]
+  },
+  {
+    "name": "河湟",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/24_載記第二十五　乞伏國仁 乞伏乾歸 乞伏熾磐 馮跋/04_乞伏熾磐.txt",
+        "byte_offset": 2365,
+        "time": "東晉/義熙9年"
+      }
+    ]
+  },
+  {
+    "name": "湟川",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/28_載記第二十九　沮渠蒙遜/02_沮渠蒙遜.txt",
+        "byte_offset": 10099,
+        "time": "東晉/義熙8年"
+      }
+    ]
+  },
+  {
+    "name": "寧蜀",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/07_列傳第八　朱齡石 毛脩之 傅弘之/02_朱齡石.txt",
+        "byte_offset": 4061,
+        "time": "東晉/義熙8年"
+      }
+    ]
+  },
+  {
+    "name": "陰平",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/04_列傳第五　王鎮惡 檀韶 向靖 劉懷慎 劉粹/06_劉粹.txt",
+        "byte_offset": 3464,
+        "time": "劉宋/元嘉9年"
+      }
+    ]
+  },
+  {
+    "name": "南兖州",
+    "is_qiao": true,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./南齊書/02_列傳/29_列傳第三十 王奐/03_張沖.txt",
+        "byte_offset": 2079,
+        "time": "南齊/永元1年"
+      }
+    ]
+  },
+  {
+    "name": "建康城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./南齊書/02_列傳/18_列傳第十九 蕭景先 蕭赤斧/03_蕭赤斧.txt",
+        "byte_offset": 9775,
+        "time": "南齊/中興1年"
+      }
+    ]
+  },
+  {
+    "name": "魯陽",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/34_羅結 伊馛 乙瑰 和其奴 苟頽 薛野𧗠者 宇文福 費于 孟威/03_伊馛.txt",
+        "byte_offset": 1846,
+        "time": "北魏/神龜2年"
+      }
+    ]
+  },
+  {
+    "name": "萇汧、雍二城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/14_載記第十五　苻丕 苻登/03_苻登.txt",
+        "byte_offset": 4182,
+        "time": "東晉/太元11年"
+      }
+    ]
+  },
+  {
+    "name": "會荊州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/06_列傳第七　宗室/02_安平獻王孚.txt",
+        "byte_offset": 8498,
+        "time": "西晉/泰始3年"
+      }
+    ]
+  },
+  {
+    "name": "東徐州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/70_朱瑞 叱列延慶 斛斯椿 賈顯度 樊子鵠 賀拔勝 侯莫 陳悅 侯淵/04_斛斯椿.txt",
+        "byte_offset": 746
+      }
+    ]
+  },
+  {
+    "name": "蜀建甯",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/01_志/04_志第五　地理下/06_交州.txt",
+        "byte_offset": 1567,
+        "time": "西晉/永安7年"
+      }
+    ]
+  },
+  {
+    "name": "隴西",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/01_帝紀第二　世宗景帝 太祖文帝/03_文帝.txt",
+        "byte_offset": 9563,
+        "time": "前秦/甘露4年"
+      }
+    ]
+  },
+  {
+    "name": "杏城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/17_載記第十八　姚興下/02_姚興.txt",
+        "byte_offset": 15535,
+        "time": "東晉/義熙2年"
       }
     ]
   },
@@ -5814,14 +5249,271 @@
     ]
   },
   {
-    "name": "交阯",
+    "name": "壺關",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
+        "byte_offset": 5251
+      }
+    ]
+  },
+  {
+    "name": "南江州",
+    "is_qiao": true,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./陳書/01_本紀/00_本紀第一: 高祖上/02_高祖上.txt",
+        "byte_offset": 18969,
+        "time": "北燕/太平1年"
+      }
+    ]
+  },
+  {
+    "name": "三關",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/51_薛安都 畢衆敬 沈文秀 張讜 田益宗 孟表/06_田益宗.txt",
+        "byte_offset": 580,
+        "time": "北魏/太和17年"
+      }
+    ]
+  },
+  {
+    "name": "熙幽州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/74_匈奴劉聰 羯胡石勒 鐵弗劉虎 徒何慕容廆 臨渭氐苻健 羌姚萇 略陽氐吕光/06_慕容廆.txt",
+        "byte_offset": 18130,
+        "time": "北魏/皇始1年"
+      }
+    ]
+  },
+  {
+    "name": "淮北、徐州",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/01_志/01_志第二　天文中/04_史傳事驗.txt",
+        "byte_offset": 25530,
+        "time": "東晉/義熙2年"
+      }
+    ]
+  },
+  {
+    "name": "州城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/48_楊播/02_楊播.txt",
+        "byte_offset": 28118,
+        "time": "北魏/神龜2年"
+      }
+    ]
+  },
+  {
+    "name": "其營",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/43_列傳第四十四 鄧琬 袁顗 孔覬/04_孔覬.txt",
+        "byte_offset": 13869,
+        "time": "劉宋/泰始2年"
+      }
+    ]
+  },
+  {
+    "name": "北平原",
     "is_qiao": false,
     "role_suffix": "太守",
     "event_count": 1,
     "sources": [
       {
-        "source_file": "./晉書/02_列傳/26_列傳第二十七　羅憲 滕脩 馬隆 胡奮 陶璜 吾彥 張光 趙誘/06_陶璜.txt",
-        "byte_offset": 2957
+        "source_file": "./晉書/00_紀/08_帝紀第九　太宗簡文帝 孝武帝/03_孝武帝.txt",
+        "byte_offset": 15905,
+        "time": "東晉/太元17年"
+      }
+    ]
+  },
+  {
+    "name": "趙郡",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/04_帝紀第五　孝懷帝 孝愍帝/02_懷帝.txt",
+        "byte_offset": 4093,
+        "time": "西晉/永嘉2年"
+      }
+    ]
+  },
+  {
+    "name": "掠河內、汲郡",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
+        "byte_offset": 33179,
+        "time": "西晉/建興1年"
+      }
+    ]
+  },
+  {
+    "name": "衍豫州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
+        "byte_offset": 6078,
+        "time": "北魏/熙平1年"
+      }
+    ]
+  },
+  {
+    "name": "武陵",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/26_列傳第二十七　羅憲 滕脩 馬隆 胡奮 陶璜 吾彥 張光 趙誘/08_張光.txt",
+        "byte_offset": 1227
+      }
+    ]
+  },
+  {
+    "name": "其小城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/25_崔浩/02_崔浩.txt",
+        "byte_offset": 12009,
+        "time": "北魏/泰常1年"
+      }
+    ]
+  },
+  {
+    "name": "豫章",
+    "is_qiao": false,
+    "role_suffix": "內史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./梁書/01_列傳/34_列傳第三十五 王規/08_劉潛.txt",
+        "byte_offset": 1092,
+        "time": "梁/太清1年"
+      }
+    ]
+  },
+  {
+    "name": "汲郡",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/04_帝紀第五　孝懷帝 孝愍帝/02_懷帝.txt",
+        "byte_offset": 6845,
+        "time": "西晉/永嘉4年"
+      }
+    ]
+  },
+  {
+    "name": "交趾",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./梁書/01_列傳/47_列傳第四十八 諸夷/02_海南諸國.txt",
+        "byte_offset": 24435,
+        "time": "梁/普通3年"
+      }
+    ]
+  },
+  {
+    "name": "晉熙",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./南齊書/02_列傳/36_列傳第三十七 倖臣/02_紀僧真.txt",
+        "byte_offset": 3551,
+        "time": "南齊/永泰1年"
+      }
+    ]
+  },
+  {
+    "name": "暴瀛定二州",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/08_景穆十二王下/04_章武敬王太洛.txt",
+        "byte_offset": 1771,
+        "time": "北魏/太和23年"
+      }
+    ]
+  },
+  {
+    "name": "賊石頭城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/42_列傳第四十三　庾亮/04_庾冰.txt",
+        "byte_offset": 502
+      }
+    ]
+  },
+  {
+    "name": "太山",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/33_嚴棱 毛修之 唐和 劉休賓 房法夀/06_房法壽.txt",
+        "byte_offset": 8919
+      }
+    ]
+  },
+  {
+    "name": "克蒙山",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
+        "byte_offset": 3548,
+        "time": "北魏/正始1年"
+      }
+    ]
+  },
+  {
+    "name": "潼州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./陳書/02_列傳/03_列傳第四: 周鐵虎 程靈洗/02_周鐵虎.txt",
+        "byte_offset": 691
       }
     ]
   },
@@ -5839,31 +5531,779 @@
     ]
   },
   {
-    "name": "日南",
+    "name": "義州",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./梁書/01_列傳/21_列傳第二十二 裴邃/03_夏侯亶.txt",
+        "byte_offset": 3714,
+        "time": "梁/普通1年"
+      }
+    ]
+  },
+  {
+    "name": "鬱林",
     "is_qiao": false,
     "role_suffix": "太守",
     "event_count": 1,
     "sources": [
       {
-        "source_file": "./晉書/02_列傳/26_列傳第二十七　羅憲 滕脩 馬隆 胡奮 陶璜 吾彥 張光 趙誘/06_陶璜.txt",
-        "byte_offset": 2957
+        "source_file": "./宋書/02_列傳/45_列傳第四十六 殷孝祖 劉勔/03_劉勔.txt",
+        "byte_offset": 892,
+        "time": "劉宋/元嘉27年"
       }
     ]
   },
   {
-    "name": "魏興",
+    "name": "焦城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/07_景穆十二王中/02_任城王.txt",
+        "byte_offset": 19289,
+        "time": "北魏/太和5年"
+      }
+    ]
+  },
+  {
+    "name": "南梁州",
+    "is_qiao": true,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/24_載記第二十五　乞伏國仁 乞伏乾歸 乞伏熾磐 馮跋/03_乞伏乾歸.txt",
+        "byte_offset": 252
+      }
+    ]
+  },
+  {
+    "name": "東豫州",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/62_陽尼 賈思伯 李叔虎 路恃慶 房亮 曹世表 潘永基 朱元旭/07_曹世表.txt",
+        "byte_offset": 872,
+        "time": "北魏/太和23年"
+      }
+    ]
+  },
+  {
+    "name": "長城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./陳書/02_列傳/04_列傳第五: 黃法抃 淳于量 章昭達/04_章昭達.txt",
+        "byte_offset": 818
+      }
+    ]
+  },
+  {
+    "name": "南東海",
     "is_qiao": false,
     "role_suffix": "太守",
     "event_count": 1,
     "sources": [
       {
-        "source_file": "./晉書/02_列傳/58_列傳第五十九/20_吉挹.txt",
-        "byte_offset": 228
+        "source_file": "./宋書/02_列傳/18_列傳第十九 殷淳 張暢 何偃 江智淵/05_江智淵.txt",
+        "byte_offset": 1672
       }
     ]
   },
   {
-    "name": "巴陵",
+    "name": "冀州諸郡",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/07_帝紀第八　孝宗穆帝 哀帝 廢帝海西公/02_穆帝.txt",
+        "byte_offset": 12578,
+        "time": "東晉/升平2年"
+      }
+    ]
+  },
+  {
+    "name": "徒河",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/08_載記第九　慕容皝/02_慕容皝.txt",
+        "byte_offset": 1316,
+        "time": "東晉/咸和9年"
+      }
+    ]
+  },
+  {
+    "name": "邾城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/50_列傳第五十一　王遜 蔡豹 羊鑒 劉胤 桓宣 朱伺 毛寶 劉遐 鄧嶽 朱序/08_毛寶.txt",
+        "byte_offset": 3031
+      }
+    ]
+  },
+  {
+    "name": "東關",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./梁書/01_列傳/21_列傳第二十二 裴邃/02_裴邃.txt",
+        "byte_offset": 7277,
+        "time": "梁/普通2年"
+      }
+    ]
+  },
+  {
+    "name": "江陵城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/09_帝紀第十　安帝 恭帝/02_安帝.txt",
+        "byte_offset": 16601,
+        "time": "東晉/義熙8年"
+      }
+    ]
+  },
+  {
+    "name": "朐山",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./南齊書/02_列傳/37_列傳第三十八 魏虜/02_魏虜.txt",
+        "byte_offset": 5884,
+        "time": "東晉/太和3年"
+      }
+    ]
+  },
+  {
+    "name": "衡陽",
+    "is_qiao": false,
+    "role_suffix": "內史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./陳書/02_列傳/24_列傳第二十五: 蕭摩訶 任忠 樊毅 魯廣達/03_任忠.txt",
+        "byte_offset": 607
+      }
+    ]
+  },
+  {
+    "name": "黟縣",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/43_列傳第四十四 鄧琬 袁顗 孔覬/04_孔覬.txt",
+        "byte_offset": 14170,
+        "time": "劉宋/泰始2年"
+      }
+    ]
+  },
+  {
+    "name": "琅邪、鄄城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/44_列傳第四十五　王湛 荀崧 范汪 劉惔 張憑 韓伯/04_荀崧.txt",
+        "byte_offset": 8960,
+        "time": "東晉/升平4年"
+      }
+    ]
+  },
+  {
+    "name": "陷州城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/30_陸俟/06_尼弟 麗.txt",
+        "byte_offset": 12085,
+        "time": "北魏/正光4年"
+      }
+    ]
+  },
+  {
+    "name": "平幽州諸郡",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
+        "byte_offset": 37140,
+        "time": "西晉/建興1年"
+      }
+    ]
+  },
+  {
+    "name": "南鄉",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/00_帝紀第一　高祖宣帝/01_目录.txt",
+        "byte_offset": 2383
+      }
+    ]
+  },
+  {
+    "name": "晉州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./陳書/02_列傳/24_列傳第二十五: 蕭摩訶 任忠 樊毅 魯廣達/05_魯廣達.txt",
+        "byte_offset": 360
+      }
+    ]
+  },
+  {
+    "name": "樂平",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/04_帝紀第五　孝懷帝 孝愍帝/03_愍帝.txt",
+        "byte_offset": 7775,
+        "time": "西晉/建興4年"
+      }
+    ]
+  },
+  {
+    "name": "侵郡縣",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/01_志/02_志第三　天文下/02_月五星犯列舍經星變附見.txt",
+        "byte_offset": 34800,
+        "time": "東晉/隆安1年"
+      }
+    ]
+  },
+  {
+    "name": "南平",
+    "is_qiao": false,
+    "role_suffix": "內史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/33_列傳第三十四 臧質 魯爽 沈攸之/02_臧質.txt",
+        "byte_offset": 2832,
+        "time": "劉宋/元嘉26年"
+      }
+    ]
+  },
+  {
+    "name": "南秦二州",
+    "is_qiao": true,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./南齊書/00_本紀/03_本紀第四　鬱林王/02_鬱林王.txt",
+        "byte_offset": 2582,
+        "time": "南齊/隆昌1年"
+      }
+    ]
+  },
+  {
+    "name": "為池",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/74_匈奴劉聰 羯胡石勒 鐵弗劉虎 徒何慕容廆 臨渭氐苻健 羌姚萇 略陽氐吕光/03_劉聰.txt",
+        "byte_offset": 3477,
+        "time": "西晉/永嘉2年"
+      }
+    ]
+  },
+  {
+    "name": "而廣州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/58_列傳第五十九/03_嵇紹.txt",
+        "byte_offset": 7819,
+        "time": "後趙/青龍2年"
+      }
+    ]
+  },
+  {
+    "name": "冀州樂陵",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/11_獻文六王下/02_彭城王.txt",
+        "byte_offset": 18462,
+        "time": "北魏/太和9年"
+      }
+    ]
+  },
+  {
+    "name": "虜荊州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/31_列傳第三十二 文九王/02_劉鑠(第四子).txt",
+        "byte_offset": 1855,
+        "time": "劉宋/元嘉17年"
+      }
+    ]
+  },
+  {
+    "name": "華山",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/16_載記第十七　姚興上/02_姚興.txt",
+        "byte_offset": 4756,
+        "time": "東晉/太元19年"
+      }
+    ]
+  },
+  {
+    "name": "潁川",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/01_神元平文諸帝子孫/03_平文子孫.txt",
+        "byte_offset": 1311
+      }
+    ]
+  },
+  {
+    "name": "石城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
+        "byte_offset": 14392,
+        "time": "東晉/咸康5年"
+      }
+    ]
+  },
+  {
+    "name": "安定",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/28_列傳第二十九　汝南王亮 楚王瑋 趙王倫 齊王冏 長沙王乂 成都王潁 河間王顒 東海王越/09_河間王顒.txt",
+        "byte_offset": 3638,
+        "time": "西晉/咸寧2年"
+      }
+    ]
+  },
+  {
+    "name": "行幽州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
+        "byte_offset": 27832,
+        "time": "西晉/建興1年"
+      }
+    ]
+  },
+  {
+    "name": "其琅邪費縣",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/05_載記第六　石季龍（石虎）上/02_石季龍.txt",
+        "byte_offset": 3130,
+        "time": "東晉/咸康1年"
+      }
+    ]
+  },
+  {
+    "name": "長樂",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/62_陽尼 賈思伯 李叔虎 路恃慶 房亮 曹世表 潘永基 朱元旭/08_潘永基.txt",
+        "byte_offset": 390
+      }
+    ]
+  },
+  {
+    "name": "陷郢州",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./梁書/01_列傳/39_列傳第四十 胡僧祐 徐文盛 杜崱/04_杜崱.txt",
+        "byte_offset": 3525,
+        "time": "梁/承聖2年"
+      }
+    ]
+  },
+  {
+    "name": "統徐州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/05_帝紀第六　中宗元帝 肅祖明帝/02_元帝.txt",
+        "byte_offset": 10157,
+        "time": "東晉/大興2年"
+      }
+    ]
+  },
+  {
+    "name": "上庸",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/43_列傳第四十四　桓彝/03_子孫.txt",
+        "byte_offset": 15235,
+        "time": "東晉/太元13年"
+      }
+    ]
+  },
+  {
+    "name": "沛郡",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/62_陽尼 賈思伯 李叔虎 路恃慶 房亮 曹世表 潘永基 朱元旭/04_李叔虎.txt",
+        "byte_offset": 1126,
+        "time": "北魏/永平4年"
+      }
+    ]
+  },
+  {
+    "name": "建安",
+    "is_qiao": false,
+    "role_suffix": "內史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./陳書/02_列傳/04_列傳第五: 黃法抃 淳于量 章昭達/04_章昭達.txt",
+        "byte_offset": 4710,
+        "time": "陳/至德3年"
+      }
+    ]
+  },
+  {
+    "name": "平城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/08_帝紀第九　太宗簡文帝 孝武帝/03_孝武帝.txt",
+        "byte_offset": 17775,
+        "time": "東晉/太元20年"
+      }
+    ]
+  },
+  {
+    "name": "吳興郡",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/15_列傳第十六 謝瞻 孔琳之/02_謝瞻.txt",
+        "byte_offset": 1039
+      }
+    ]
+  },
+  {
+    "name": "高密",
+    "is_qiao": false,
+    "role_suffix": "內史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
+        "byte_offset": 30652,
+        "time": "東晉/太元4年"
+      }
+    ]
+  },
+  {
+    "name": "清口戍城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/36_列傳第三十七 柳元景 顏師伯 沈慶之/03_顏師伯.txt",
+        "byte_offset": 2923,
+        "time": "劉宋/大明1年"
+      }
+    ]
+  },
+  {
+    "name": "䐗者圈、苑市二壘",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
+        "byte_offset": 7023
+      }
+    ]
+  },
+  {
+    "name": "二州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/36_列傳第三十七 柳元景 顏師伯 沈慶之/03_顏師伯.txt",
+        "byte_offset": 2322,
+        "time": "劉宋/大明1年"
+      }
+    ]
+  },
+  {
+    "name": "晉熙郡",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./梁書/01_列傳/49_列傳第五十 侯景/02_侯景.txt",
+        "byte_offset": 18427,
+        "time": "梁/大寶1年"
+      }
+    ]
+  },
+  {
+    "name": "梁秦二州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/61_裴叔業 夏侯道遷 李元護 席法友 王世弼 江悦之 淳于誕 李苗/03_夏侯道遷.txt",
+        "byte_offset": 484
+      }
+    ]
+  },
+  {
+    "name": "婁縣",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
+        "byte_offset": 8319,
+        "time": "東晉/咸和6年"
+      }
+    ]
+  },
+  {
+    "name": "河二州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./梁書/01_列傳/47_列傳第四十八 諸夷/04_西北諸戎.txt",
+        "byte_offset": 2587,
+        "time": "梁/大通3年"
+      }
+    ]
+  },
+  {
+    "name": "陷邾城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/05_載記第六　石季龍（石虎）上/02_石季龍.txt",
+        "byte_offset": 13161,
+        "time": "東晉/咸康3年"
+      }
+    ]
+  },
+  {
+    "name": "代郡",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
+        "byte_offset": 31673,
+        "time": "西晉/建興1年"
+      }
+    ]
+  },
+  {
+    "name": "玄菟",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./梁書/01_列傳/47_列傳第四十八 諸夷/03_東夷諸戎.txt",
+        "byte_offset": 2920
+      }
+    ]
+  },
+  {
+    "name": "長安外城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/01_載記第二　劉聰/02_劉聰.txt",
+        "byte_offset": 27146,
+        "time": "西晉/永嘉4年"
+      }
+    ]
+  },
+  {
+    "name": "沛二郡",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/45_游明根 劉芳/03_劉芳.txt",
+        "byte_offset": 12179,
+        "time": "北魏/延昌2年"
+      }
+    ]
+  },
+  {
+    "name": "牂柯",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/26_列傳第二十七　羅憲 滕脩 馬隆 胡奮 陶璜 吾彥 張光 趙誘/02_羅憲.txt",
+        "byte_offset": 1843,
+        "time": "西晉/泰始6年"
+      }
+    ]
+  },
+  {
+    "name": "陷京城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./宋書/02_列傳/31_列傳第三十二 文九王/03_劉宏(第七子).txt",
+        "byte_offset": 5723,
+        "time": "劉宋/元徽4年"
+      }
+    ]
+  },
+  {
+    "name": "荊城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./梁書/01_列傳/01_列傳第二　昭明太子 哀太子 愍懷太子/04_愍懷太子.txt",
+        "byte_offset": 346,
+        "time": "梁/承聖1年"
+      }
+    ]
+  },
+  {
+    "name": "晉河南",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/16_載記第十七　姚興上/02_姚興.txt",
+        "byte_offset": 4756,
+        "time": "東晉/太元19年"
+      }
+    ]
+  },
+  {
+    "name": "羌至彭城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./宋書/00_本紀/04_本紀第五　文帝/01_目录.txt",
+        "byte_offset": 207,
+        "time": "東晉/義熙3年"
+      }
+    ]
+  },
+  {
+    "name": "魯城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/68_列傳第六十九　桓玄 卞范之 殷仲文/02_桓玄.txt",
+        "byte_offset": 28386,
+        "time": "東晉/元興3年"
+      }
+    ]
+  },
+  {
+    "name": "樊城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/00_帝紀第一　高祖宣帝/06_正始.txt",
+        "byte_offset": 392,
+        "time": "北魏/正始1年"
+      }
+    ]
+  },
+  {
+    "name": "湓城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./陳書/02_列傳/08_列傳第九: 宗室/03_陳詳.txt",
+        "byte_offset": 615,
+        "time": "陳/永定2年"
+      }
+    ]
+  },
+  {
+    "name": "安湘",
     "is_qiao": false,
     "role_suffix": "太守",
     "event_count": 1,
@@ -5888,223 +6328,13 @@
     ]
   },
   {
-    "name": "河湟",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/24_載記第二十五　乞伏國仁 乞伏乾歸 乞伏熾磐 馮跋/04_乞伏熾磐.txt",
-        "byte_offset": 2365,
-        "time": "東晉/義熙9年"
-      }
-    ]
-  },
-  {
-    "name": "代郡",
+    "name": "邊城",
     "is_qiao": false,
     "event_count": 1,
     "sources": [
       {
-        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
-        "byte_offset": 31673,
-        "time": "西晉/建興1年"
-      }
-    ]
-  },
-  {
-    "name": "牂柯",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/26_列傳第二十七　羅憲 滕脩 馬隆 胡奮 陶璜 吾彥 張光 趙誘/02_羅憲.txt",
-        "byte_offset": 1843,
-        "time": "西晉/泰始6年"
-      }
-    ]
-  },
-  {
-    "name": "扶風",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/02_載記第三　劉曜/02_劉曜.txt",
-        "byte_offset": 3115
-      }
-    ]
-  },
-  {
-    "name": "琅邪、鄄城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/44_列傳第四十五　王湛 荀崧 范汪 劉惔 張憑 韓伯/04_荀崧.txt",
-        "byte_offset": 8960,
-        "time": "東晉/升平4年"
-      }
-    ]
-  },
-  {
-    "name": "北新蔡",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./陳書/02_列傳/24_列傳第二十五: 蕭摩訶 任忠 樊毅 魯廣達/05_魯廣達.txt",
-        "byte_offset": 712
-      }
-    ]
-  },
-  {
-    "name": "鼓城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
-        "byte_offset": 28033,
-        "time": "東晉/太和5年"
-      }
-    ]
-  },
-  {
-    "name": "梓潼二郡",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/13_載記第十四　苻堅下/02_苻堅.txt",
-        "byte_offset": 2643,
-        "time": "東晉/建武4年"
-      }
-    ]
-  },
-  {
-    "name": "冀州諸郡",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/07_帝紀第八　孝宗穆帝 哀帝 廢帝海西公/02_穆帝.txt",
-        "byte_offset": 12578,
-        "time": "東晉/升平2年"
-      }
-    ]
-  },
-  {
-    "name": "南鄉",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/00_帝紀第一　高祖宣帝/01_目录.txt",
-        "byte_offset": 2383
-      }
-    ]
-  },
-  {
-    "name": "濮陽",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
-        "byte_offset": 3264
-      }
-    ]
-  },
-  {
-    "name": "衡陽",
-    "is_qiao": false,
-    "role_suffix": "內史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./陳書/02_列傳/24_列傳第二十五: 蕭摩訶 任忠 樊毅 魯廣達/03_任忠.txt",
-        "byte_offset": 607
-      }
-    ]
-  },
-  {
-    "name": "南梁州",
-    "is_qiao": true,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/24_載記第二十五　乞伏國仁 乞伏乾歸 乞伏熾磐 馮跋/03_乞伏乾歸.txt",
-        "byte_offset": 252
-      }
-    ]
-  },
-  {
-    "name": "陰平",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/04_列傳第五　王鎮惡 檀韶 向靖 劉懷慎 劉粹/06_劉粹.txt",
-        "byte_offset": 3464,
-        "time": "劉宋/元嘉9年"
-      }
-    ]
-  },
-  {
-    "name": "晉州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./陳書/02_列傳/24_列傳第二十五: 蕭摩訶 任忠 樊毅 魯廣達/05_魯廣達.txt",
-        "byte_offset": 360
-      }
-    ]
-  },
-  {
-    "name": "兗三州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/74_匈奴劉聰 羯胡石勒 鐵弗劉虎 徒何慕容廆 臨渭氐苻健 羌姚萇 略陽氐吕光/08_姚萇.txt",
-        "byte_offset": 766
-      }
-    ]
-  },
-  {
-    "name": "沛郡",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/62_陽尼 賈思伯 李叔虎 路恃慶 房亮 曹世表 潘永基 朱元旭/04_李叔虎.txt",
-        "byte_offset": 1126,
-        "time": "北魏/永平4年"
-      }
-    ]
-  },
-  {
-    "name": "頓丘",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/28_列傳第二十九　汝南王亮 楚王瑋 趙王倫 齊王冏 長沙王乂 成都王潁 河間王顒 東海王越/08_成都王穎.txt",
-        "byte_offset": 430
+        "source_file": "./魏書/01_列傳/56_李崇 崔亮/02_李崇.txt",
+        "byte_offset": 7555
       }
     ]
   },
@@ -6122,136 +6352,15 @@
     ]
   },
   {
-    "name": "東豫州",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/62_陽尼 賈思伯 李叔虎 路恃慶 房亮 曹世表 潘永基 朱元旭/07_曹世表.txt",
-        "byte_offset": 872,
-        "time": "北魏/太和23年"
-      }
-    ]
-  },
-  {
-    "name": "潼關",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/09_帝紀第十　安帝 恭帝/02_安帝.txt",
-        "byte_offset": 19228,
-        "time": "東晉/義熙13年"
-      }
-    ]
-  },
-  {
-    "name": "鬱林",
+    "name": "南安",
     "is_qiao": false,
     "role_suffix": "太守",
     "event_count": 1,
     "sources": [
       {
-        "source_file": "./宋書/02_列傳/45_列傳第四十六 殷孝祖 劉勔/03_劉勔.txt",
-        "byte_offset": 892,
-        "time": "劉宋/元嘉27年"
-      }
-    ]
-  },
-  {
-    "name": "庱亭壘",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/69_列傳第七十　　王彌 張昌 陳敏 王如 杜曾 杜弢 王機 祖約 蘇峻 孫恩 盧循 譙縱/10_蘇峻.txt",
-        "byte_offset": 5128
-      }
-    ]
-  },
-  {
-    "name": "西荊州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./梁書/01_列傳/39_列傳第四十 胡僧祐 徐文盛 杜崱/04_杜崱.txt",
-        "byte_offset": 2695,
-        "time": "梁/承聖2年"
-      }
-    ]
-  },
-  {
-    "name": "泓秦州",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/74_匈奴劉聰 羯胡石勒 鐵弗劉虎 徒何慕容廆 臨渭氐苻健 羌姚萇 略陽氐吕光/08_姚萇.txt",
-        "byte_offset": 5925,
-        "time": "北魏/泰常1年"
-      }
-    ]
-  },
-  {
-    "name": "晉彭城",
-    "is_qiao": false,
-    "role_suffix": "內史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/04_載記第五　石勒下/02_石勒.txt",
-        "byte_offset": 12116
-      }
-    ]
-  },
-  {
-    "name": "行幽州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
-        "byte_offset": 27832,
-        "time": "西晉/建興1年"
-      }
-    ]
-  },
-  {
-    "name": "據白水舊城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/60_劉藻 傅永 傅竪眼 李神/04_傅豎眼.txt",
-        "byte_offset": 6612
-      }
-    ]
-  },
-  {
-    "name": "陷郢州",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./梁書/01_列傳/39_列傳第四十 胡僧祐 徐文盛 杜崱/04_杜崱.txt",
-        "byte_offset": 3525,
-        "time": "梁/承聖2年"
-      }
-    ]
-  },
-  {
-    "name": "平齊",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/14_燕鳳 許謙 張衮 崔玄伯 鄧淵/05_崔玄伯(崔宏).txt",
-        "byte_offset": 16890,
-        "time": "北魏/正光3年"
+        "source_file": "./晉書/03_載記/12_載記第十三　苻堅上/02_苻堅.txt",
+        "byte_offset": 10855,
+        "time": "東晉/興寧3年"
       }
     ]
   },
@@ -6268,238 +6377,26 @@
     ]
   },
   {
-    "name": "克蒙山",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
-        "byte_offset": 3548,
-        "time": "北魏/正始1年"
-      }
-    ]
-  },
-  {
-    "name": "二州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/36_列傳第三十七 柳元景 顏師伯 沈慶之/03_顏師伯.txt",
-        "byte_offset": 2322,
-        "time": "劉宋/大明1年"
-      }
-    ]
-  },
-  {
-    "name": "南丹陽",
+    "name": "廣平",
     "is_qiao": false,
     "role_suffix": "太守",
     "event_count": 1,
     "sources": [
       {
-        "source_file": "./陳書/02_列傳/13_列傳第十四: 到仲舉 韓子高 華皎/04_華皎.txt",
-        "byte_offset": 4542,
-        "time": "陳/光大1年"
+        "source_file": "./梁書/01_列傳/38_列傳第三十九 王僧辯/02_王僧辯.txt",
+        "byte_offset": 252
       }
     ]
   },
   {
-    "name": "陷州城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/30_陸俟/06_尼弟 麗.txt",
-        "byte_offset": 12085,
-        "time": "北魏/正光4年"
-      }
-    ]
-  },
-  {
-    "name": "建安",
-    "is_qiao": false,
-    "role_suffix": "內史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./陳書/02_列傳/04_列傳第五: 黃法抃 淳于量 章昭達/04_章昭達.txt",
-        "byte_offset": 4710,
-        "time": "陳/至德3年"
-      }
-    ]
-  },
-  {
-    "name": "小城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./南齊書/02_列傳/05_列傳第六　垣崇祖 張敬兒/02_垣崇祖.txt",
-        "byte_offset": 5157,
-        "time": "南齊/建元2年"
-      }
-    ]
-  },
-  {
-    "name": "鄖州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./梁書/01_列傳/39_列傳第四十 胡僧祐 徐文盛 杜崱/04_杜崱.txt",
-        "byte_offset": 3447,
-        "time": "梁/承聖2年"
-      }
-    ]
-  },
-  {
-    "name": "慕容皝凡城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/05_載記第六　石季龍（石虎）上/02_石季龍.txt",
-        "byte_offset": 21851,
-        "time": "東晉/咸康3年"
-      }
-    ]
-  },
-  {
-    "name": "中國",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/44_游雅 高閭/03_高閭.txt",
-        "byte_offset": 11045,
-        "time": "北魏/太和3年"
-      }
-    ]
-  },
-  {
-    "name": "樂平",
+    "name": "日南",
     "is_qiao": false,
     "role_suffix": "太守",
     "event_count": 1,
     "sources": [
       {
-        "source_file": "./晉書/00_紀/04_帝紀第五　孝懷帝 孝愍帝/03_愍帝.txt",
-        "byte_offset": 7775,
-        "time": "西晉/建興4年"
-      }
-    ]
-  },
-  {
-    "name": "暴瀛定二州",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/08_景穆十二王下/04_章武敬王太洛.txt",
-        "byte_offset": 1771,
-        "time": "北魏/太和23年"
-      }
-    ]
-  },
-  {
-    "name": "齊國",
-    "is_qiao": false,
-    "role_suffix": "內史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/08_帝紀第九　太宗簡文帝 孝武帝/03_孝武帝.txt",
-        "byte_offset": 15905,
-        "time": "東晉/太元17年"
-      }
-    ]
-  },
-  {
-    "name": "陷仇池",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/28_刁雍 王慧龍 韓延之 袁式/02_刁雍.txt",
-        "byte_offset": 2707,
-        "time": "北魏/太延4年"
-      }
-    ]
-  },
-  {
-    "name": "南康諸郡",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/01_列傳第二　劉穆之 王弘/03_王弘.txt",
-        "byte_offset": 2152
-      }
-    ]
-  },
-  {
-    "name": "新野",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/43_列傳第四十四　桓彝/03_子孫.txt",
-        "byte_offset": 2510
-      }
-    ]
-  },
-  {
-    "name": "北平原",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/08_帝紀第九　太宗簡文帝 孝武帝/03_孝武帝.txt",
-        "byte_offset": 15905,
-        "time": "東晉/太元17年"
-      }
-    ]
-  },
-  {
-    "name": "寧蜀",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/07_列傳第八　朱齡石 毛脩之 傅弘之/02_朱齡石.txt",
-        "byte_offset": 4061,
-        "time": "東晉/義熙8年"
-      }
-    ]
-  },
-  {
-    "name": "衍白苟堆鎮",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
-        "byte_offset": 9491,
-        "time": "北魏/永熙1年"
-      }
-    ]
-  },
-  {
-    "name": "會荊州",
-    "is_qiao": false,
-    "role_suffix": "刺史",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/06_列傳第七　宗室/02_安平獻王孚.txt",
-        "byte_offset": 8498,
-        "time": "西晉/泰始3年"
+        "source_file": "./晉書/02_列傳/26_列傳第二十七　羅憲 滕脩 馬隆 胡奮 陶璜 吾彥 張光 趙誘/06_陶璜.txt",
+        "byte_offset": 2957
       }
     ]
   },
@@ -6517,99 +6414,224 @@
     ]
   },
   {
-    "name": "蜀建甯",
+    "name": "魏興",
     "is_qiao": false,
     "role_suffix": "太守",
     "event_count": 1,
     "sources": [
       {
-        "source_file": "./晉書/01_志/04_志第五　地理下/06_交州.txt",
-        "byte_offset": 1567,
-        "time": "西晉/永安7年"
+        "source_file": "./晉書/02_列傳/58_列傳第五十九/20_吉挹.txt",
+        "byte_offset": 228
       }
     ]
   },
   {
-    "name": "江陵城",
+    "name": "陳郡",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./宋書/01_志/25_志第二十六 州郡二/03_豫州.txt",
+        "byte_offset": 1404,
+        "time": "劉宋/大明1年"
+      }
+    ]
+  },
+  {
+    "name": "晉彭城",
+    "is_qiao": false,
+    "role_suffix": "內史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/04_載記第五　石勒下/02_石勒.txt",
+        "byte_offset": 12116
+      }
+    ]
+  },
+  {
+    "name": "秦國",
+    "is_qiao": false,
+    "role_suffix": "內史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/28_列傳第二十九　汝南王亮 楚王瑋 趙王倫 齊王冏 長沙王乂 成都王潁 河間王顒 東海王越/09_河間王顒.txt",
+        "byte_offset": 3638,
+        "time": "西晉/咸寧2年"
+      }
+    ]
+  },
+  {
+    "name": "晉盧江",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/06_載記第七　石季龍（石虎）下/06_石閔〈（冉闵）〉.txt",
+        "byte_offset": 1412,
+        "time": "東晉/永和6年"
+      }
+    ]
+  },
+  {
+    "name": "巴陵",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./陳書/02_列傳/24_列傳第二十五: 蕭摩訶 任忠 樊毅 魯廣達/03_任忠.txt",
+        "byte_offset": 607
+      }
+    ]
+  },
+  {
+    "name": "交阯",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/26_列傳第二十七　羅憲 滕脩 馬隆 胡奮 陶璜 吾彥 張光 趙誘/06_陶璜.txt",
+        "byte_offset": 2957
+      }
+    ]
+  },
+  {
+    "name": "平陽",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/13_載記第十四　苻堅下/02_苻堅.txt",
+        "byte_offset": 18730,
+        "time": "東晉/建元17年"
+      }
+    ]
+  },
+  {
+    "name": "鄧城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/43_列傳第四十四　桓彝/03_子孫.txt",
+        "byte_offset": 14435,
+        "time": "東晉/太元13年"
+      }
+    ]
+  },
+  {
+    "name": "金山",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/28_載記第二十九　沮渠蒙遜/02_沮渠蒙遜.txt",
+        "byte_offset": 8333,
+        "time": "東晉/隆安5年"
+      }
+    ]
+  },
+  {
+    "name": "鬱口諸鎮",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./陳書/02_列傳/06_列傳第七: 徐世譜 魯悉達 周敷 荀朗 周炅/03_魯悉達.txt",
+        "byte_offset": 1004
+      }
+    ]
+  },
+  {
+    "name": "馬圈城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/02_蕭道成.txt",
+        "byte_offset": 13397,
+        "time": "北魏/太和18年"
+      }
+    ]
+  },
+  {
+    "name": "潼關",
     "is_qiao": false,
     "event_count": 1,
     "sources": [
       {
         "source_file": "./晉書/00_紀/09_帝紀第十　安帝 恭帝/02_安帝.txt",
-        "byte_offset": 16601,
-        "time": "東晉/義熙8年"
+        "byte_offset": 19228,
+        "time": "東晉/義熙13年"
       }
     ]
   },
   {
-    "name": "用諶爲揚州",
+    "name": "維營",
     "is_qiao": false,
     "event_count": 1,
     "sources": [
       {
-        "source_file": "./南齊書/02_列傳/22_列傳第二十三 王晏 蕭諶 蕭坦之 江祏/03_蕭諶.txt",
-        "byte_offset": 1845,
-        "time": "南齊/建武1年"
+        "source_file": "./晉書/00_紀/01_帝紀第二　世宗景帝 太祖文帝/03_文帝.txt",
+        "byte_offset": 9563,
+        "time": "前秦/甘露4年"
       }
     ]
   },
   {
-    "name": "長樂",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/62_陽尼 賈思伯 李叔虎 路恃慶 房亮 曹世表 潘永基 朱元旭/08_潘永基.txt",
-        "byte_offset": 390
-      }
-    ]
-  },
-  {
-    "name": "河二州",
+    "name": "督濟州",
     "is_qiao": false,
     "role_suffix": "刺史",
     "event_count": 1,
     "sources": [
       {
-        "source_file": "./梁書/01_列傳/47_列傳第四十八 諸夷/04_西北諸戎.txt",
-        "byte_offset": 2587,
-        "time": "梁/大通3年"
-      }
-    ]
-  },
-  {
-    "name": "勒常山",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
-        "byte_offset": 28613,
-        "time": "西晉/建興1年"
-      }
-    ]
-  },
-  {
-    "name": "據膠州",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
         "source_file": "./魏書/00_帝紀/12_廢出三帝紀 前廢帝廣陵王/04_出帝.txt",
-        "byte_offset": 10039,
+        "byte_offset": 10923,
         "time": "北魏/永熙1年"
       }
     ]
   },
   {
-    "name": "吳興郡",
+    "name": "小城",
     "is_qiao": false,
     "event_count": 1,
     "sources": [
       {
-        "source_file": "./宋書/02_列傳/15_列傳第十六 謝瞻 孔琳之/02_謝瞻.txt",
-        "byte_offset": 1039
+        "source_file": "./南齊書/02_列傳/05_列傳第六　垣崇祖 張敬兒/02_垣崇祖.txt",
+        "byte_offset": 5157,
+        "time": "南齊/建元2年"
+      }
+    ]
+  },
+  {
+    "name": "虎牢；又遣其豫州",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/76_島夷桓玄 海夷馮跋 島夷劉裕/04_劉裕.txt",
+        "byte_offset": 11577,
+        "time": "北魏/泰常5年"
+      }
+    ]
+  },
+  {
+    "name": "西荊州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./梁書/01_列傳/39_列傳第四十 胡僧祐 徐文盛 杜崱/04_杜崱.txt",
+        "byte_offset": 2695,
+        "time": "梁/承聖2年"
       }
     ]
   },
@@ -6640,325 +6662,50 @@
     ]
   },
   {
-    "name": "焦城",
+    "name": "歷城",
     "is_qiao": false,
     "event_count": 1,
     "sources": [
       {
-        "source_file": "./魏書/01_列傳/07_景穆十二王中/02_任城王.txt",
-        "byte_offset": 19289,
-        "time": "北魏/太和5年"
+        "source_file": "./魏書/01_列傳/40_尉元 慕容白曜/03_慕容白曜.txt",
+        "byte_offset": 2334
       }
     ]
   },
   {
-    "name": "趙郡",
+    "name": "安豐",
     "is_qiao": false,
+    "role_suffix": "內史",
     "event_count": 1,
     "sources": [
       {
-        "source_file": "./晉書/00_紀/04_帝紀第五　孝懷帝 孝愍帝/02_懷帝.txt",
-        "byte_offset": 4093,
-        "time": "西晉/永嘉2年"
+        "source_file": "./晉書/02_列傳/40_列傳第四十一　孫惠 熊遠 王鑒 陳頵 高崧/02_孫惠.txt",
+        "byte_offset": 4441
       }
     ]
   },
   {
-    "name": "賊石頭城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/02_列傳/42_列傳第四十三　庾亮/04_庾冰.txt",
-        "byte_offset": 502
-      }
-    ]
-  },
-  {
-    "name": "太山",
+    "name": "桂陽",
     "is_qiao": false,
     "role_suffix": "太守",
     "event_count": 1,
     "sources": [
       {
-        "source_file": "./魏書/01_列傳/33_嚴棱 毛修之 唐和 劉休賓 房法夀/06_房法壽.txt",
-        "byte_offset": 8919
+        "source_file": "./宋書/02_列傳/42_列傳第四十三 宗越 吳喜 黃回/02_宗越.txt",
+        "byte_offset": 5188,
+        "time": "劉宋/景和1年"
       }
     ]
   },
   {
-    "name": "克二城",
+    "name": "勒常山",
     "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/09_列傳第十 胡藩 劉康祖 垣護之 張興世/05_張興世.txt",
-        "byte_offset": 949
-      }
-    ]
-  },
-  {
-    "name": "石城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
-        "byte_offset": 14392,
-        "time": "東晉/咸康5年"
-      }
-    ]
-  },
-  {
-    "name": "天門",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/02_列傳第三　徐羨之 傅亮 檀道濟/04_檀道濟.txt",
-        "byte_offset": 394
-      }
-    ]
-  },
-  {
-    "name": "汲郡",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/04_帝紀第五　孝懷帝 孝愍帝/02_懷帝.txt",
-        "byte_offset": 6845,
-        "time": "西晉/永嘉4年"
-      }
-    ]
-  },
-  {
-    "name": "許昌、懸瓠、陳城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/10_載記第十一　慕容暐/02_慕容暐.txt",
-        "byte_offset": 3160,
-        "time": "東晉/升平4年"
-      }
-    ]
-  },
-  {
-    "name": "平城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/08_帝紀第九　太宗簡文帝 孝武帝/03_孝武帝.txt",
-        "byte_offset": 17775,
-        "time": "東晉/太元20年"
-      }
-    ]
-  },
-  {
-    "name": "鬱口諸鎮",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./陳書/02_列傳/06_列傳第七: 徐世譜 魯悉達 周敷 荀朗 周炅/03_魯悉達.txt",
-        "byte_offset": 1004
-      }
-    ]
-  },
-  {
-    "name": "陷邾城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/05_載記第六　石季龍（石虎）上/02_石季龍.txt",
-        "byte_offset": 13161,
-        "time": "東晉/咸康3年"
-      }
-    ]
-  },
-  {
-    "name": "義州",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./梁書/01_列傳/21_列傳第二十二 裴邃/03_夏侯亶.txt",
-        "byte_offset": 3714,
-        "time": "梁/普通1年"
-      }
-    ]
-  },
-  {
-    "name": "武寧",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./梁書/01_列傳/38_列傳第三十九 王僧辯/02_王僧辯.txt",
-        "byte_offset": 252
-      }
-    ]
-  },
-  {
-    "name": "羌至彭城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./宋書/00_本紀/04_本紀第五　文帝/01_目录.txt",
-        "byte_offset": 207,
-        "time": "東晉/義熙3年"
-      }
-    ]
-  },
-  {
-    "name": "武昌郡",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/33_列傳第三十四 臧質 魯爽 沈攸之/02_臧質.txt",
-        "byte_offset": 12468,
-        "time": "劉宋/孝建1年"
-      }
-    ]
-  },
-  {
-    "name": "梓潼及梁、益二州",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/08_帝紀第九　太宗簡文帝 孝武帝/03_孝武帝.txt",
-        "byte_offset": 1756,
-        "time": "東晉/寧康1年"
-      }
-    ]
-  },
-  {
-    "name": "陷太山",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/05_帝紀第六　中宗元帝 肅祖明帝/02_元帝.txt",
-        "byte_offset": 14694,
-        "time": "東晉/永昌1年"
-      }
-    ]
-  },
-  {
-    "name": "其琅邪費縣",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/05_載記第六　石季龍（石虎）上/02_石季龍.txt",
-        "byte_offset": 3130,
-        "time": "東晉/咸康1年"
-      }
-    ]
-  },
-  {
-    "name": "新昌二郡",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./南齊書/02_列傳/38_列傳第三十九 蠻 東南夷/04_南夷.txt",
-        "byte_offset": 8024,
-        "time": "南齊/永明2年"
-      }
-    ]
-  },
-  {
-    "name": "其小城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/25_崔浩/02_崔浩.txt",
-        "byte_offset": 12009,
-        "time": "北魏/泰常1年"
-      }
-    ]
-  },
-  {
-    "name": "婁縣",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/06_帝紀第七　顯宗成帝 康帝/02_成帝.txt",
-        "byte_offset": 8319,
-        "time": "東晉/咸和6年"
-      }
-    ]
-  },
-  {
-    "name": "其營",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/43_列傳第四十四 鄧琬 袁顗 孔覬/04_孔覬.txt",
-        "byte_offset": 13869,
-        "time": "劉宋/泰始2年"
-      }
-    ]
-  },
-  {
-    "name": "南東海",
-    "is_qiao": false,
-    "role_suffix": "太守",
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./宋書/02_列傳/18_列傳第十九 殷淳 張暢 何偃 江智淵/05_江智淵.txt",
-        "byte_offset": 1672
-      }
-    ]
-  },
-  {
-    "name": "維營",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/01_帝紀第二　世宗景帝 太祖文帝/03_文帝.txt",
-        "byte_offset": 9563,
-        "time": "前秦/甘露4年"
-      }
-    ]
-  },
-  {
-    "name": "渤海",
-    "is_qiao": false,
-    "role_suffix": "太守",
     "event_count": 1,
     "sources": [
       {
         "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
-        "byte_offset": 29524,
+        "byte_offset": 28613,
         "time": "西晉/建興1年"
-      }
-    ]
-  },
-  {
-    "name": "州城",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./魏書/01_列傳/48_楊播/02_楊播.txt",
-        "byte_offset": 28118,
-        "time": "北魏/神龜2年"
       }
     ]
   },
@@ -6974,51 +6721,304 @@
     ]
   },
   {
-    "name": "豫章",
+    "name": "齊州",
     "is_qiao": false,
-    "role_suffix": "內史",
+    "role_suffix": "刺史",
     "event_count": 1,
     "sources": [
       {
-        "source_file": "./梁書/01_列傳/34_列傳第三十五 王規/08_劉潛.txt",
-        "byte_offset": 1092,
-        "time": "梁/太清1年"
+        "source_file": "./魏書/01_列傳/61_裴叔業 夏侯道遷 李元護 席法友 王世弼 江悦之 淳于誕 李苗/04_李元護.txt",
+        "byte_offset": 872
       }
     ]
   },
   {
-    "name": "平幽州諸郡",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
-        "byte_offset": 37140,
-        "time": "西晉/建興1年"
-      }
-    ]
-  },
-  {
-    "name": "陷青州",
-    "is_qiao": false,
-    "event_count": 1,
-    "sources": [
-      {
-        "source_file": "./晉書/00_紀/05_帝紀第六　中宗元帝 肅祖明帝/03_明帝.txt",
-        "byte_offset": 2660,
-        "time": "東晉/太寧1年"
-      }
-    ]
-  },
-  {
-    "name": "順陽",
+    "name": "梁興",
     "is_qiao": false,
     "role_suffix": "太守",
     "event_count": 1,
     "sources": [
       {
-        "source_file": "./晉書/02_列傳/32_列傳第三十三　邵續 李矩 段匹磾 魏浚 郭默/05_魏浚.txt",
-        "byte_offset": 2146
+        "source_file": "./陳書/02_列傳/24_列傳第二十五: 蕭摩訶 任忠 樊毅 魯廣達/04_樊毅.txt",
+        "byte_offset": 471
+      }
+    ]
+  },
+  {
+    "name": "濮陽",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/03_載記第四　石勒上/02_石勒.txt",
+        "byte_offset": 3264
+      }
+    ]
+  },
+  {
+    "name": "據膠州",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/00_帝紀/12_廢出三帝紀 前廢帝廣陵王/04_出帝.txt",
+        "byte_offset": 10039,
+        "time": "北魏/永熙1年"
+      }
+    ]
+  },
+  {
+    "name": "梓潼二郡",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/13_載記第十四　苻堅下/02_苻堅.txt",
+        "byte_offset": 2643,
+        "time": "東晉/建武4年"
+      }
+    ]
+  },
+  {
+    "name": "汝南",
+    "is_qiao": false,
+    "role_suffix": "內史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/42_趙逸 胡方回 胡叟 宋繇 張湛 宗欽 段承根 闞駰 劉昞 趙柔 索敞 陰仲達/02_趙逸.txt",
+        "byte_offset": 4725
+      }
+    ]
+  },
+  {
+    "name": "陷仇池",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/28_刁雍 王慧龍 韓延之 袁式/02_刁雍.txt",
+        "byte_offset": 2707,
+        "time": "北魏/太延4年"
+      }
+    ]
+  },
+  {
+    "name": "北新蔡、安豐二郡",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./南齊書/02_列傳/37_列傳第三十八 魏虜/02_魏虜.txt",
+        "byte_offset": 26216,
+        "time": "南齊/永元2年"
+      }
+    ]
+  },
+  {
+    "name": "豳夏諸州",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/67_宋翻 辛雄 羊深 楊機 高崇/04_羊深.txt",
+        "byte_offset": 523
+      }
+    ]
+  },
+  {
+    "name": "晉隨郡",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/13_載記第十四　苻堅下/02_苻堅.txt",
+        "byte_offset": 16810,
+        "time": "東晉/建元17年"
+      }
+    ]
+  },
+  {
+    "name": "慕容皝凡城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/05_載記第六　石季龍（石虎）上/02_石季龍.txt",
+        "byte_offset": 21851,
+        "time": "東晉/咸康3年"
+      }
+    ]
+  },
+  {
+    "name": "姚泓秦州",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/09_帝紀第十　安帝 恭帝/02_安帝.txt",
+        "byte_offset": 18610,
+        "time": "東晉/義熙12年"
+      }
+    ]
+  },
+  {
+    "name": "用諶爲揚州",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./南齊書/02_列傳/22_列傳第二十三 王晏 蕭諶 蕭坦之 江祏/03_蕭諶.txt",
+        "byte_offset": 1845,
+        "time": "南齊/建武1年"
+      }
+    ]
+  },
+  {
+    "name": "北徐州",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./梁書/01_列傳/05_列傳第六　柳惔/04_韋叡.txt",
+        "byte_offset": 4789,
+        "time": "梁/天監2年"
+      }
+    ]
+  },
+  {
+    "name": "泓秦州",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/74_匈奴劉聰 羯胡石勒 鐵弗劉虎 徒何慕容廆 臨渭氐苻健 羌姚萇 略陽氐吕光/08_姚萇.txt",
+        "byte_offset": 5925,
+        "time": "北魏/泰常1年"
+      }
+    ]
+  },
+  {
+    "name": "北地",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/18_載記第十九　姚泓/02_姚泓.txt",
+        "byte_offset": 2157,
+        "time": "東晉/義熙12年"
+      }
+    ]
+  },
+  {
+    "name": "密城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/00_紀/07_帝紀第八　孝宗穆帝 哀帝 廢帝海西公/03_哀帝.txt",
+        "byte_offset": 3348,
+        "time": "東晉/興寧1年"
+      }
+    ]
+  },
+  {
+    "name": "東陽",
+    "is_qiao": false,
+    "role_suffix": "太守",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./梁書/01_列傳/06_列傳第七　范雲 沈約/03_沈約.txt",
+        "byte_offset": 1490,
+        "time": "南齊/隆昌1年"
+      }
+    ]
+  },
+  {
+    "name": "會揚州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/02_列傳/67_列傳第六十八　王敦/02_王敦.txt",
+        "byte_offset": 1723
+      }
+    ]
+  },
+  {
+    "name": "二城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./南齊書/02_列傳/37_列傳第三十八 魏虜/02_魏虜.txt",
+        "byte_offset": 17925,
+        "time": "南齊/建武2年"
+      }
+    ]
+  },
+  {
+    "name": "兗三州",
+    "is_qiao": false,
+    "role_suffix": "刺史",
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/74_匈奴劉聰 羯胡石勒 鐵弗劉虎 徒何慕容廆 臨渭氐苻健 羌姚萇 略陽氐吕光/08_姚萇.txt",
+        "byte_offset": 766
+      }
+    ]
+  },
+  {
+    "name": "衍白苟堆鎮",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/77_島夷蕭道成 島夷蕭衍/03_蕭衍.txt",
+        "byte_offset": 9491,
+        "time": "北魏/永熙1年"
+      }
+    ]
+  },
+  {
+    "name": "赭陽城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./南齊書/02_列傳/37_列傳第三十八 魏虜/02_魏虜.txt",
+        "byte_offset": 18962,
+        "time": "南齊/建武2年"
+      }
+    ]
+  },
+  {
+    "name": "汧城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./晉書/03_載記/02_載記第三　劉曜/02_劉曜.txt",
+        "byte_offset": 14664
+      }
+    ]
+  },
+  {
+    "name": "據荊州城",
+    "is_qiao": false,
+    "event_count": 1,
+    "sources": [
+      {
+        "source_file": "./魏書/01_列傳/47_高祐 崔挺/03_崔挺.txt",
+        "byte_offset": 7041,
+        "time": "北魏/普泰1年"
       }
     ]
   }

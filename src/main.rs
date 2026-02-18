@@ -112,146 +112,63 @@ struct TimelineFile {
 fn run_timeline() {
     let data: TimelineFile = read_json("timeline.json");
 
-    // Build lookup: regime Chinese name → RegimeTimeline
-    let regime_map: std::collections::HashMap<&str, &event::RegimeTimeline> = data
-        .timeline
-        .regimes
-        .iter()
-        .map(|r| (r.regime.as_str(), r))
-        .collect();
+    // Collect all (regime, era, year, occurrence_count) triples and compute AD year
+    struct YearEntry {
+        ad_year: u16,
+        regime: String,
+        era: String,
+        year: u8,
+        occurrences: usize,
+    }
 
-    let tree = regime::regime_display_tree();
-    render_tree(&tree, &regime_map, "");
+    let mut entries: Vec<YearEntry> = Vec::new();
+    for rt in &data.timeline.regimes {
+        for et in &rt.eras {
+            for tp in &et.years {
+                if let Some(ad) = event::exact_ad_year(&rt.regime, &tp.era, tp.year) {
+                    entries.push(YearEntry {
+                        ad_year: ad,
+                        regime: rt.regime.clone(),
+                        era: tp.era.clone(),
+                        year: tp.year,
+                        occurrences: tp.occurrence_count,
+                    });
+                }
+            }
+        }
+    }
+
+    // Sort by AD year, then regime name for stable ordering
+    entries.sort_by(|a, b| a.ad_year.cmp(&b.ad_year).then(a.regime.cmp(&b.regime)));
+
+    // Group by AD year and print
+    let mut i = 0;
+    while i < entries.len() {
+        let ad = entries[i].ad_year;
+
+        // Collect all era names for this AD year
+        let mut labels: Vec<String> = Vec::new();
+        while i < entries.len() && entries[i].ad_year == ad {
+            let e = &entries[i];
+            labels.push(format!(
+                "{}/{}{}年 ({})",
+                e.regime, e.era, e.year, e.occurrences
+            ));
+            i += 1;
+        }
+
+        println!("AD{:>4}  {}", ad, labels.join("  "));
+    }
 
     eprintln!(
-        "\nTotal: {} distinct (regime, era, year) triples",
+        "\nTotal: {} AD years, {} distinct (regime, era, year) triples",
+        {
+            let mut ads: Vec<u16> = entries.iter().map(|e| e.ad_year).collect();
+            ads.dedup();
+            ads.len()
+        },
         data.timeline.total_time_points
     );
-}
-
-/// Format a regime line: "name (start_year): era1, era2, ..."
-/// Returns None if the regime has no observed data in the corpus.
-fn format_regime_line(
-    r: regime::Regime,
-    regime_map: &std::collections::HashMap<&str, &event::RegimeTimeline>,
-) -> Option<String> {
-    let name = r.as_chinese();
-    let rt = regime_map.get(name)?;
-    let eras: Vec<&str> = rt.eras.iter().map(|e| e.era.as_str()).collect();
-    Some(format!(
-        "{} ({}): {}",
-        name,
-        r.start_ad_year(),
-        eras.join(", ")
-    ))
-}
-
-/// Recursively render the display tree with box-drawing characters.
-///
-/// `prefix` is the accumulated line-drawing prefix for the current depth.
-fn render_tree(
-    node: &regime::DisplayTree,
-    regime_map: &std::collections::HashMap<&str, &event::RegimeTimeline>,
-    prefix: &str,
-) {
-    let (regime, concurrent, sequence) = match node {
-        regime::DisplayTree::Leaf(r) => (*r, &[][..], &[][..]),
-        regime::DisplayTree::Branch {
-            regime,
-            concurrent,
-            sequence,
-        } => (*regime, concurrent.as_slice(), sequence.as_slice()),
-    };
-
-    // Print this node's regime
-    if format_regime_line(regime, regime_map).is_none() {
-        return;
-    }
-    println!(
-        "{}{}",
-        prefix,
-        format_regime_line(regime, regime_map).unwrap()
-    );
-
-    // Collect children: concurrent first (with [並立] markers), then sequential
-    let has_seq = !sequence.is_empty();
-    let total_conc = concurrent.len();
-
-    for (i, child) in concurrent.iter().enumerate() {
-        let is_last = i == total_conc - 1 && !has_seq;
-        let connector = if is_last { "└─ " } else { "├─ " };
-        let continuation = if is_last { "   " } else { "│  " };
-
-        let child_regime = match child {
-            regime::DisplayTree::Leaf(r) | regime::DisplayTree::Branch { regime: r, .. } => *r,
-        };
-        if let Some(line) = format_regime_line(child_regime, regime_map) {
-            println!("{}{}[並立] {}", prefix, connector, line);
-        } else {
-            continue;
-        }
-
-        // Recurse into sub-children if this child is a Branch
-        if let regime::DisplayTree::Branch {
-            concurrent: sub_conc,
-            sequence: sub_seq,
-            ..
-        } = child
-        {
-            let sub_prefix = format!("{}{}", prefix, continuation);
-            render_children(sub_conc, sub_seq, &sub_prefix, regime_map);
-        }
-    }
-
-    // Sequential successors continue on the same vertical line
-    if has_seq {
-        let seq_prefix = if prefix.is_empty() {
-            String::new()
-        } else {
-            format!("{}│  ", prefix)
-        };
-        render_children(&[], sequence, &seq_prefix, regime_map);
-    }
-}
-
-/// Render a list of concurrent branches + sequential children at a given prefix.
-fn render_children(
-    concurrent: &[regime::DisplayTree],
-    sequence: &[regime::DisplayTree],
-    prefix: &str,
-    regime_map: &std::collections::HashMap<&str, &event::RegimeTimeline>,
-) {
-    let has_seq = !sequence.is_empty();
-    let total_conc = concurrent.len();
-
-    for (i, child) in concurrent.iter().enumerate() {
-        let is_last = i == total_conc - 1 && !has_seq;
-        let connector = if is_last { "└─ " } else { "├─ " };
-        let continuation = if is_last { "   " } else { "│  " };
-
-        let child_regime = match child {
-            regime::DisplayTree::Leaf(r) | regime::DisplayTree::Branch { regime: r, .. } => *r,
-        };
-        if let Some(line) = format_regime_line(child_regime, regime_map) {
-            println!("{}{}[並立] {}", prefix, connector, line);
-        } else {
-            continue;
-        }
-
-        if let regime::DisplayTree::Branch {
-            concurrent: sub_conc,
-            sequence: sub_seq,
-            ..
-        } = child
-        {
-            let sub_prefix = format!("{}{}", prefix, continuation);
-            render_children(sub_conc, sub_seq, &sub_prefix, regime_map);
-        }
-    }
-
-    for child in sequence {
-        render_tree(child, regime_map, prefix);
-    }
 }
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -286,6 +203,23 @@ fn run_query(query_args: &[String]) {
             .time_index
             .query_range(era, *year_from, *year_to),
         TimeQuery::Regime { regime } => timeline_data.time_index.query_regime(regime),
+        TimeQuery::AdYear { year } => timeline_data
+            .time_index
+            .scopes
+            .iter()
+            .filter(|s| {
+                event::exact_ad_year(&s.time.regime, &s.time.era, s.time.year) == Some(*year)
+            })
+            .collect(),
+        TimeQuery::AdRange { from, to } => timeline_data
+            .time_index
+            .scopes
+            .iter()
+            .filter(|s| {
+                event::exact_ad_year(&s.time.regime, &s.time.era, s.time.year)
+                    .is_some_and(|y| y >= *from && y <= *to)
+            })
+            .collect(),
     };
 
     if matching_scopes.is_empty() {
@@ -309,17 +243,7 @@ fn run_query(query_args: &[String]) {
         .iter()
         .filter(|e| {
             if let Some(t) = &e.time {
-                match &parsed {
-                    TimeQuery::Single { era, year } => {
-                        t.era == *era && year.is_none_or(|y| t.year == y)
-                    }
-                    TimeQuery::Range {
-                        era,
-                        year_from,
-                        year_to,
-                    } => t.era == *era && t.year >= *year_from && t.year <= *year_to,
-                    TimeQuery::Regime { regime } => t.regime == *regime,
-                }
+                time_matches_query(t, &parsed)
             } else {
                 false
             }
@@ -369,6 +293,10 @@ enum TimeQuery {
     },
     /// All scopes for a regime: "@東晉", "@北魏"
     Regime { regime: String },
+    /// Single AD year: "524AD"
+    AdYear { year: u16 },
+    /// AD year range: "500AD-530AD"
+    AdRange { from: u16, to: u16 },
 }
 
 fn parse_time_query(raw: &str) -> TimeQuery {
@@ -379,6 +307,22 @@ fn parse_time_query(raw: &str) -> TimeQuery {
         return TimeQuery::Regime {
             regime: r.to_string(),
         };
+    }
+
+    // AD year range: "500AD-530AD" or "500ad-530ad"
+    if let Some((left, right)) = raw
+        .split_once('-')
+        .or_else(|| raw.split_once('—'))
+        .or_else(|| raw.split_once('~'))
+        && let (Some(from), Some(to)) =
+            (parse_ad_suffix(left.trim()), parse_ad_suffix(right.trim()))
+    {
+        return TimeQuery::AdRange { from, to };
+    }
+
+    // Single AD year: "524AD" or "524ad"
+    if let Some(year) = parse_ad_suffix(raw) {
+        return TimeQuery::AdYear { year };
     }
 
     // Range with dash: "太和元年-太和六年" or "太和1-5" or "太和元-六"
@@ -481,6 +425,13 @@ fn parse_cn_year(s: &str) -> Option<u8> {
     }
 }
 
+/// Parse "524AD" or "524ad" → Some(524), else None.
+fn parse_ad_suffix(s: &str) -> Option<u16> {
+    let s = s.trim();
+    let stripped = s.strip_suffix("AD").or_else(|| s.strip_suffix("ad"))?;
+    stripped.trim().parse::<u16>().ok()
+}
+
 // ═══════════════════════════════════════════════════════════════════════
 //  TEXT MODE: extract source text for a time period
 // ═══════════════════════════════════════════════════════════════════════
@@ -500,6 +451,23 @@ fn run_text(query_args: &[String]) {
             .time_index
             .query_range(era, *year_from, *year_to),
         TimeQuery::Regime { regime } => timeline_data.time_index.query_regime(regime),
+        TimeQuery::AdYear { year } => timeline_data
+            .time_index
+            .scopes
+            .iter()
+            .filter(|s| {
+                event::exact_ad_year(&s.time.regime, &s.time.era, s.time.year) == Some(*year)
+            })
+            .collect(),
+        TimeQuery::AdRange { from, to } => timeline_data
+            .time_index
+            .scopes
+            .iter()
+            .filter(|s| {
+                event::exact_ad_year(&s.time.regime, &s.time.era, s.time.year)
+                    .is_some_and(|y| y >= *from && y <= *to)
+            })
+            .collect(),
     };
 
     if matching_scopes.is_empty() {
@@ -566,6 +534,11 @@ fn time_matches_query(t: &event::TimeRef, parsed: &TimeQuery) -> bool {
             year_to,
         } => t.era == *era && t.year >= *year_from && t.year <= *year_to,
         TimeQuery::Regime { regime } => t.regime == *regime,
+        TimeQuery::AdYear { year } => time_sort_key(t) == *year,
+        TimeQuery::AdRange { from, to } => {
+            let k = time_sort_key(t);
+            k >= *from && k <= *to
+        }
     }
 }
 
@@ -615,6 +588,7 @@ fn run_locate(query_args: &[String]) {
         role: Option<String>,
         as_of: String,
         ad_year: u16,
+        context: String,
     }
 
     let mut state: std::collections::HashMap<String, PersonState> =
@@ -629,7 +603,7 @@ fn run_locate(query_args: &[String]) {
             break;
         }
 
-        let time_label = format!("{}/{}{}年", t.regime, t.era, t.year);
+        let time_label = format!("{}/{}{}年 (AD{})", t.regime, t.era, t.year, key);
 
         // Extract person name from event
         let person = match &e.kind {
@@ -661,6 +635,7 @@ fn run_locate(query_args: &[String]) {
                     role: Some(new_title.clone()),
                     as_of: time_label.clone(),
                     ad_year: key,
+                    context: e.context.clone(),
                 });
             }
             event::EventKind::Battle {
@@ -673,6 +648,7 @@ fn run_locate(query_args: &[String]) {
                     role: None,
                     as_of: time_label.clone(),
                     ad_year: key,
+                    context: e.context.clone(),
                 });
             }
             event::EventKind::Death { .. } => {
@@ -688,6 +664,7 @@ fn run_locate(query_args: &[String]) {
                 role: loc.role_suffix.clone(),
                 as_of: time_label.clone(),
                 ad_year: key,
+                context: e.context.clone(),
             });
         }
     }
@@ -727,7 +704,9 @@ fn run_locate(query_args: &[String]) {
                 location: loc.place.clone(),
                 role: loc.role.clone(),
                 as_of: loc.as_of.clone(),
+                as_of_ad: loc.ad_year,
                 status: status.to_string(),
+                context: loc.context.clone(),
             },
         );
     }
@@ -753,7 +732,9 @@ struct PersonLocation {
     #[serde(skip_serializing_if = "Option::is_none")]
     role: Option<String>,
     as_of: String,
+    as_of_ad: u16,
     status: String,
+    context: String,
 }
 
 // ═══════════════════════════════════════════════════════════════════════
