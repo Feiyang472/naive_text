@@ -1,0 +1,1004 @@
+[
+  {
+    "regime": "西晉",
+    "era": "泰始",
+    "start_ad": 265,
+    "end_ad": 274
+  },
+  {
+    "regime": "西晉",
+    "era": "咸寧",
+    "start_ad": 275,
+    "end_ad": 280
+  },
+  {
+    "regime": "西晉",
+    "era": "太康",
+    "start_ad": 280,
+    "end_ad": 289
+  },
+  {
+    "regime": "西晉",
+    "era": "太熙",
+    "start_ad": 290,
+    "end_ad": 290
+  },
+  {
+    "regime": "西晉",
+    "era": "永熙",
+    "start_ad": 290,
+    "end_ad": 290
+  },
+  {
+    "regime": "西晉",
+    "era": "永平",
+    "start_ad": 291,
+    "end_ad": 291
+  },
+  {
+    "regime": "西晉",
+    "era": "元康",
+    "start_ad": 291,
+    "end_ad": 299
+  },
+  {
+    "regime": "西晉",
+    "era": "永康",
+    "start_ad": 300,
+    "end_ad": 301
+  },
+  {
+    "regime": "西晉",
+    "era": "永寧",
+    "start_ad": 301,
+    "end_ad": 302
+  },
+  {
+    "regime": "西晉",
+    "era": "太安",
+    "start_ad": 302,
+    "end_ad": 304
+  },
+  {
+    "regime": "西晉",
+    "era": "永安",
+    "start_ad": 304,
+    "end_ad": 304
+  },
+  {
+    "regime": "西晉",
+    "era": "建武",
+    "start_ad": 304,
+    "end_ad": 304
+  },
+  {
+    "regime": "西晉",
+    "era": "永興",
+    "start_ad": 304,
+    "end_ad": 306
+  },
+  {
+    "regime": "西晉",
+    "era": "光熙",
+    "start_ad": 306,
+    "end_ad": 306
+  },
+  {
+    "regime": "西晉",
+    "era": "永嘉",
+    "start_ad": 307,
+    "end_ad": 313
+  },
+  {
+    "regime": "西晉",
+    "era": "建興",
+    "start_ad": 313,
+    "end_ad": 317
+  },
+  {
+    "regime": "東晉",
+    "era": "建武",
+    "start_ad": 317,
+    "end_ad": 318
+  },
+  {
+    "regime": "東晉",
+    "era": "大興",
+    "start_ad": 318,
+    "end_ad": 321
+  },
+  {
+    "regime": "東晉",
+    "era": "永昌",
+    "start_ad": 322,
+    "end_ad": 323
+  },
+  {
+    "regime": "東晉",
+    "era": "太寧",
+    "start_ad": 323,
+    "end_ad": 326
+  },
+  {
+    "regime": "東晉",
+    "era": "咸和",
+    "start_ad": 326,
+    "end_ad": 334
+  },
+  {
+    "regime": "東晉",
+    "era": "咸康",
+    "start_ad": 335,
+    "end_ad": 342
+  },
+  {
+    "regime": "東晉",
+    "era": "建元",
+    "start_ad": 343,
+    "end_ad": 344
+  },
+  {
+    "regime": "東晉",
+    "era": "永和",
+    "start_ad": 345,
+    "end_ad": 356
+  },
+  {
+    "regime": "東晉",
+    "era": "升平",
+    "start_ad": 357,
+    "end_ad": 361
+  },
+  {
+    "regime": "東晉",
+    "era": "隆和",
+    "start_ad": 362,
+    "end_ad": 363
+  },
+  {
+    "regime": "東晉",
+    "era": "興寧",
+    "start_ad": 363,
+    "end_ad": 365
+  },
+  {
+    "regime": "東晉",
+    "era": "太和",
+    "start_ad": 366,
+    "end_ad": 371
+  },
+  {
+    "regime": "東晉",
+    "era": "咸安",
+    "start_ad": 371,
+    "end_ad": 372
+  },
+  {
+    "regime": "東晉",
+    "era": "寧康",
+    "start_ad": 373,
+    "end_ad": 375
+  },
+  {
+    "regime": "東晉",
+    "era": "太元",
+    "start_ad": 376,
+    "end_ad": 396
+  },
+  {
+    "regime": "東晉",
+    "era": "隆安",
+    "start_ad": 397,
+    "end_ad": 401
+  },
+  {
+    "regime": "東晉",
+    "era": "元興",
+    "start_ad": 402,
+    "end_ad": 404
+  },
+  {
+    "regime": "東晉",
+    "era": "義熙",
+    "start_ad": 405,
+    "end_ad": 418
+  },
+  {
+    "regime": "劉宋",
+    "era": "永初",
+    "start_ad": 420,
+    "end_ad": 422
+  },
+  {
+    "regime": "劉宋",
+    "era": "景平",
+    "start_ad": 423,
+    "end_ad": 424
+  },
+  {
+    "regime": "劉宋",
+    "era": "元嘉",
+    "start_ad": 424,
+    "end_ad": 453
+  },
+  {
+    "regime": "劉宋",
+    "era": "孝建",
+    "start_ad": 454,
+    "end_ad": 456
+  },
+  {
+    "regime": "劉宋",
+    "era": "大明",
+    "start_ad": 457,
+    "end_ad": 464
+  },
+  {
+    "regime": "劉宋",
+    "era": "永光",
+    "start_ad": 465,
+    "end_ad": 465
+  },
+  {
+    "regime": "劉宋",
+    "era": "景和",
+    "start_ad": 465,
+    "end_ad": 465
+  },
+  {
+    "regime": "劉宋",
+    "era": "泰始",
+    "start_ad": 465,
+    "end_ad": 471
+  },
+  {
+    "regime": "劉宋",
+    "era": "泰豫",
+    "start_ad": 472,
+    "end_ad": 472
+  },
+  {
+    "regime": "劉宋",
+    "era": "元徽",
+    "start_ad": 473,
+    "end_ad": 477
+  },
+  {
+    "regime": "劉宋",
+    "era": "昇明",
+    "start_ad": 477,
+    "end_ad": 479
+  },
+  {
+    "regime": "南齊",
+    "era": "建元",
+    "start_ad": 479,
+    "end_ad": 482
+  },
+  {
+    "regime": "南齊",
+    "era": "永明",
+    "start_ad": 483,
+    "end_ad": 493
+  },
+  {
+    "regime": "南齊",
+    "era": "隆昌",
+    "start_ad": 494,
+    "end_ad": 494
+  },
+  {
+    "regime": "南齊",
+    "era": "延興",
+    "start_ad": 494,
+    "end_ad": 494
+  },
+  {
+    "regime": "南齊",
+    "era": "建武",
+    "start_ad": 494,
+    "end_ad": 498
+  },
+  {
+    "regime": "南齊",
+    "era": "永泰",
+    "start_ad": 498,
+    "end_ad": 498
+  },
+  {
+    "regime": "南齊",
+    "era": "永元",
+    "start_ad": 499,
+    "end_ad": 501
+  },
+  {
+    "regime": "南齊",
+    "era": "中興",
+    "start_ad": 501,
+    "end_ad": 502
+  },
+  {
+    "regime": "梁",
+    "era": "天監",
+    "start_ad": 502,
+    "end_ad": 519
+  },
+  {
+    "regime": "梁",
+    "era": "普通",
+    "start_ad": 520,
+    "end_ad": 527
+  },
+  {
+    "regime": "梁",
+    "era": "大通",
+    "start_ad": 527,
+    "end_ad": 529
+  },
+  {
+    "regime": "梁",
+    "era": "中大通",
+    "start_ad": 529,
+    "end_ad": 534
+  },
+  {
+    "regime": "梁",
+    "era": "大同",
+    "start_ad": 535,
+    "end_ad": 546
+  },
+  {
+    "regime": "梁",
+    "era": "中大同",
+    "start_ad": 546,
+    "end_ad": 547
+  },
+  {
+    "regime": "梁",
+    "era": "太清",
+    "start_ad": 547,
+    "end_ad": 549
+  },
+  {
+    "regime": "梁",
+    "era": "大寶",
+    "start_ad": 550,
+    "end_ad": 551
+  },
+  {
+    "regime": "梁",
+    "era": "承聖",
+    "start_ad": 552,
+    "end_ad": 555
+  },
+  {
+    "regime": "梁",
+    "era": "天成",
+    "start_ad": 555,
+    "end_ad": 555
+  },
+  {
+    "regime": "陳",
+    "era": "永定",
+    "start_ad": 557,
+    "end_ad": 559
+  },
+  {
+    "regime": "陳",
+    "era": "天嘉",
+    "start_ad": 560,
+    "end_ad": 566
+  },
+  {
+    "regime": "陳",
+    "era": "天康",
+    "start_ad": 566,
+    "end_ad": 566
+  },
+  {
+    "regime": "陳",
+    "era": "光大",
+    "start_ad": 567,
+    "end_ad": 568
+  },
+  {
+    "regime": "陳",
+    "era": "太建",
+    "start_ad": 569,
+    "end_ad": 582
+  },
+  {
+    "regime": "陳",
+    "era": "至德",
+    "start_ad": 583,
+    "end_ad": 586
+  },
+  {
+    "regime": "陳",
+    "era": "禎明",
+    "start_ad": 587,
+    "end_ad": 589
+  },
+  {
+    "regime": "北魏",
+    "era": "登國",
+    "start_ad": 386,
+    "end_ad": 396
+  },
+  {
+    "regime": "北魏",
+    "era": "皇始",
+    "start_ad": 396,
+    "end_ad": 398
+  },
+  {
+    "regime": "北魏",
+    "era": "天興",
+    "start_ad": 398,
+    "end_ad": 404
+  },
+  {
+    "regime": "北魏",
+    "era": "天賜",
+    "start_ad": 404,
+    "end_ad": 409
+  },
+  {
+    "regime": "北魏",
+    "era": "永興",
+    "start_ad": 409,
+    "end_ad": 413
+  },
+  {
+    "regime": "北魏",
+    "era": "神瑞",
+    "start_ad": 414,
+    "end_ad": 416
+  },
+  {
+    "regime": "北魏",
+    "era": "泰常",
+    "start_ad": 416,
+    "end_ad": 423
+  },
+  {
+    "regime": "北魏",
+    "era": "始光",
+    "start_ad": 424,
+    "end_ad": 428
+  },
+  {
+    "regime": "北魏",
+    "era": "神麚",
+    "start_ad": 428,
+    "end_ad": 431
+  },
+  {
+    "regime": "北魏",
+    "era": "延和",
+    "start_ad": 432,
+    "end_ad": 435
+  },
+  {
+    "regime": "北魏",
+    "era": "太延",
+    "start_ad": 435,
+    "end_ad": 440
+  },
+  {
+    "regime": "北魏",
+    "era": "太平真君",
+    "start_ad": 440,
+    "end_ad": 451
+  },
+  {
+    "regime": "北魏",
+    "era": "正平",
+    "start_ad": 451,
+    "end_ad": 452
+  },
+  {
+    "regime": "北魏",
+    "era": "興安",
+    "start_ad": 452,
+    "end_ad": 454
+  },
+  {
+    "regime": "北魏",
+    "era": "興光",
+    "start_ad": 454,
+    "end_ad": 455
+  },
+  {
+    "regime": "北魏",
+    "era": "太安",
+    "start_ad": 455,
+    "end_ad": 459
+  },
+  {
+    "regime": "北魏",
+    "era": "和平",
+    "start_ad": 460,
+    "end_ad": 465
+  },
+  {
+    "regime": "北魏",
+    "era": "天安",
+    "start_ad": 466,
+    "end_ad": 467
+  },
+  {
+    "regime": "北魏",
+    "era": "皇興",
+    "start_ad": 467,
+    "end_ad": 471
+  },
+  {
+    "regime": "北魏",
+    "era": "延興",
+    "start_ad": 471,
+    "end_ad": 476
+  },
+  {
+    "regime": "北魏",
+    "era": "承明",
+    "start_ad": 476,
+    "end_ad": 476
+  },
+  {
+    "regime": "北魏",
+    "era": "太和",
+    "start_ad": 477,
+    "end_ad": 499
+  },
+  {
+    "regime": "北魏",
+    "era": "景明",
+    "start_ad": 500,
+    "end_ad": 504
+  },
+  {
+    "regime": "北魏",
+    "era": "正始",
+    "start_ad": 504,
+    "end_ad": 508
+  },
+  {
+    "regime": "北魏",
+    "era": "永平",
+    "start_ad": 508,
+    "end_ad": 512
+  },
+  {
+    "regime": "北魏",
+    "era": "延昌",
+    "start_ad": 512,
+    "end_ad": 515
+  },
+  {
+    "regime": "北魏",
+    "era": "熙平",
+    "start_ad": 516,
+    "end_ad": 518
+  },
+  {
+    "regime": "北魏",
+    "era": "神龜",
+    "start_ad": 518,
+    "end_ad": 520
+  },
+  {
+    "regime": "北魏",
+    "era": "正光",
+    "start_ad": 520,
+    "end_ad": 525
+  },
+  {
+    "regime": "北魏",
+    "era": "孝昌",
+    "start_ad": 525,
+    "end_ad": 528
+  },
+  {
+    "regime": "北魏",
+    "era": "武泰",
+    "start_ad": 528,
+    "end_ad": 528
+  },
+  {
+    "regime": "北魏",
+    "era": "建義",
+    "start_ad": 528,
+    "end_ad": 528
+  },
+  {
+    "regime": "北魏",
+    "era": "永安",
+    "start_ad": 528,
+    "end_ad": 530
+  },
+  {
+    "regime": "北魏",
+    "era": "建明",
+    "start_ad": 530,
+    "end_ad": 531
+  },
+  {
+    "regime": "北魏",
+    "era": "普泰",
+    "start_ad": 531,
+    "end_ad": 531
+  },
+  {
+    "regime": "北魏",
+    "era": "中興",
+    "start_ad": 531,
+    "end_ad": 532
+  },
+  {
+    "regime": "北魏",
+    "era": "太昌",
+    "start_ad": 532,
+    "end_ad": 532
+  },
+  {
+    "regime": "北魏",
+    "era": "永興",
+    "start_ad": 409,
+    "end_ad": 413
+  },
+  {
+    "regime": "北魏",
+    "era": "永熙",
+    "start_ad": 532,
+    "end_ad": 534
+  },
+  {
+    "regime": "漢趙",
+    "era": "元熙",
+    "start_ad": 304,
+    "end_ad": 308
+  },
+  {
+    "regime": "漢趙",
+    "era": "河瑞",
+    "start_ad": 309,
+    "end_ad": 310
+  },
+  {
+    "regime": "漢趙",
+    "era": "光興",
+    "start_ad": 310,
+    "end_ad": 311
+  },
+  {
+    "regime": "漢趙",
+    "era": "嘉平",
+    "start_ad": 311,
+    "end_ad": 315
+  },
+  {
+    "regime": "漢趙",
+    "era": "麟嘉",
+    "start_ad": 316,
+    "end_ad": 318
+  },
+  {
+    "regime": "漢趙",
+    "era": "光初",
+    "start_ad": 318,
+    "end_ad": 329
+  },
+  {
+    "regime": "後趙",
+    "era": "建平",
+    "start_ad": 330,
+    "end_ad": 333
+  },
+  {
+    "regime": "後趙",
+    "era": "建武",
+    "start_ad": 335,
+    "end_ad": 348
+  },
+  {
+    "regime": "後趙",
+    "era": "太寧",
+    "start_ad": 349,
+    "end_ad": 349
+  },
+  {
+    "regime": "後趙",
+    "era": "青龍",
+    "start_ad": 350,
+    "end_ad": 350
+  },
+  {
+    "regime": "成漢",
+    "era": "太武",
+    "start_ad": 303,
+    "end_ad": 304
+  },
+  {
+    "regime": "成漢",
+    "era": "晏平",
+    "start_ad": 306,
+    "end_ad": 310
+  },
+  {
+    "regime": "成漢",
+    "era": "玉衡",
+    "start_ad": 311,
+    "end_ad": 334
+  },
+  {
+    "regime": "成漢",
+    "era": "漢興",
+    "start_ad": 338,
+    "end_ad": 343
+  },
+  {
+    "regime": "前涼",
+    "era": "太初",
+    "start_ad": 314,
+    "end_ad": 320
+  },
+  {
+    "regime": "前涼",
+    "era": "建興",
+    "start_ad": 317,
+    "end_ad": 320
+  },
+  {
+    "regime": "前燕",
+    "era": "元璽",
+    "start_ad": 352,
+    "end_ad": 357
+  },
+  {
+    "regime": "前燕",
+    "era": "光壽",
+    "start_ad": 357,
+    "end_ad": 360
+  },
+  {
+    "regime": "前燕",
+    "era": "建熙",
+    "start_ad": 360,
+    "end_ad": 370
+  },
+  {
+    "regime": "前秦",
+    "era": "皇始",
+    "start_ad": 351,
+    "end_ad": 355
+  },
+  {
+    "regime": "前秦",
+    "era": "壽光",
+    "start_ad": 355,
+    "end_ad": 357
+  },
+  {
+    "regime": "前秦",
+    "era": "甘露",
+    "start_ad": 359,
+    "end_ad": 364
+  },
+  {
+    "regime": "前秦",
+    "era": "建元",
+    "start_ad": 365,
+    "end_ad": 385
+  },
+  {
+    "regime": "前秦",
+    "era": "太初",
+    "start_ad": 386,
+    "end_ad": 394
+  },
+  {
+    "regime": "後秦",
+    "era": "建初",
+    "start_ad": 386,
+    "end_ad": 394
+  },
+  {
+    "regime": "後秦",
+    "era": "皇初",
+    "start_ad": 394,
+    "end_ad": 399
+  },
+  {
+    "regime": "後秦",
+    "era": "弘始",
+    "start_ad": 399,
+    "end_ad": 416
+  },
+  {
+    "regime": "後燕",
+    "era": "建興",
+    "start_ad": 386,
+    "end_ad": 396
+  },
+  {
+    "regime": "後燕",
+    "era": "長樂",
+    "start_ad": 399,
+    "end_ad": 401
+  },
+  {
+    "regime": "後燕",
+    "era": "光始",
+    "start_ad": 401,
+    "end_ad": 406
+  },
+  {
+    "regime": "後燕",
+    "era": "建始",
+    "start_ad": 407,
+    "end_ad": 407
+  },
+  {
+    "regime": "西秦",
+    "era": "建義",
+    "start_ad": 385,
+    "end_ad": 388
+  },
+  {
+    "regime": "西秦",
+    "era": "太初",
+    "start_ad": 388,
+    "end_ad": 400
+  },
+  {
+    "regime": "西秦",
+    "era": "更始",
+    "start_ad": 409,
+    "end_ad": 412
+  },
+  {
+    "regime": "西秦",
+    "era": "建弘",
+    "start_ad": 420,
+    "end_ad": 428
+  },
+  {
+    "regime": "後涼",
+    "era": "太安",
+    "start_ad": 386,
+    "end_ad": 389
+  },
+  {
+    "regime": "後涼",
+    "era": "麟嘉",
+    "start_ad": 389,
+    "end_ad": 396
+  },
+  {
+    "regime": "後涼",
+    "era": "龍飛",
+    "start_ad": 396,
+    "end_ad": 399
+  },
+  {
+    "regime": "南涼",
+    "era": "太初",
+    "start_ad": 397,
+    "end_ad": 399
+  },
+  {
+    "regime": "南涼",
+    "era": "建和",
+    "start_ad": 400,
+    "end_ad": 402
+  },
+  {
+    "regime": "南涼",
+    "era": "弘昌",
+    "start_ad": 402,
+    "end_ad": 404
+  },
+  {
+    "regime": "南涼",
+    "era": "嘉平",
+    "start_ad": 408,
+    "end_ad": 414
+  },
+  {
+    "regime": "南燕",
+    "era": "建平",
+    "start_ad": 400,
+    "end_ad": 405
+  },
+  {
+    "regime": "南燕",
+    "era": "太上",
+    "start_ad": 405,
+    "end_ad": 410
+  },
+  {
+    "regime": "西涼",
+    "era": "庚子",
+    "start_ad": 400,
+    "end_ad": 404
+  },
+  {
+    "regime": "西涼",
+    "era": "建初",
+    "start_ad": 405,
+    "end_ad": 417
+  },
+  {
+    "regime": "北涼",
+    "era": "神璽",
+    "start_ad": 397,
+    "end_ad": 399
+  },
+  {
+    "regime": "北涼",
+    "era": "天璽",
+    "start_ad": 399,
+    "end_ad": 401
+  },
+  {
+    "regime": "北涼",
+    "era": "永安",
+    "start_ad": 401,
+    "end_ad": 412
+  },
+  {
+    "regime": "北涼",
+    "era": "玄始",
+    "start_ad": 412,
+    "end_ad": 427
+  },
+  {
+    "regime": "北涼",
+    "era": "承平",
+    "start_ad": 443,
+    "end_ad": 460
+  },
+  {
+    "regime": "夏",
+    "era": "龍昇",
+    "start_ad": 407,
+    "end_ad": 413
+  },
+  {
+    "regime": "夏",
+    "era": "鳳翔",
+    "start_ad": 413,
+    "end_ad": 418
+  },
+  {
+    "regime": "夏",
+    "era": "昌武",
+    "start_ad": 418,
+    "end_ad": 419
+  },
+  {
+    "regime": "夏",
+    "era": "真興",
+    "start_ad": 419,
+    "end_ad": 425
+  },
+  {
+    "regime": "夏",
+    "era": "承光",
+    "start_ad": 425,
+    "end_ad": 428
+  },
+  {
+    "regime": "北燕",
+    "era": "正始",
+    "start_ad": 407,
+    "end_ad": 409
+  },
+  {
+    "regime": "北燕",
+    "era": "太平",
+    "start_ad": 409,
+    "end_ad": 430
+  }
+]

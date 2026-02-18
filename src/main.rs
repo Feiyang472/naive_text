@@ -258,11 +258,20 @@ fn render_children(
 //  QUERY MODE: read cached JSONs, return matching scopes + events
 // ═══════════════════════════════════════════════════════════════════════
 
+/// Deserialization wrapper for the new events.json format.
+#[derive(serde::Deserialize)]
+struct EventsFile {
+    events: Vec<event::Event>,
+    #[allow(dead_code)]
+    unstructured_events: Vec<event::Event>,
+}
+
 fn run_query(query_args: &[String]) {
     let raw = query_args.join(" ");
 
     let timeline_data: TimelineFile = read_json("timeline.json");
-    let events: Vec<event::Event> = read_json("events.json");
+    let events_file: EventsFile = read_json("events.json");
+    let events = events_file.events;
 
     // Parse query: "太和", "太和三年", "太和元年-太和六年", "太和1-5"
     let parsed = parse_time_query(&raw);
@@ -541,10 +550,10 @@ fn run_text(query_args: &[String]) {
 //  LOCATE MODE: map persons to locations for a time period
 // ═══════════════════════════════════════════════════════════════════════
 
-/// Chronological sort key for an event's time reference.
-/// Returns (era_index_in_ERA_NAMES, year) for total ordering within a regime.
-fn time_sort_key(t: &event::TimeRef) -> (usize, u8) {
-    (event::era_sort_key(&t.regime, &t.era), t.year)
+/// Chronological sort key using exact AD year.
+/// Globally comparable across regimes.
+fn time_sort_key(t: &event::TimeRef) -> u16 {
+    event::exact_ad_year(&t.regime, &t.era, t.year).unwrap_or(0)
 }
 
 /// Check whether a time point matches the parsed query.
@@ -560,37 +569,27 @@ fn time_matches_query(t: &event::TimeRef, parsed: &TimeQuery) -> bool {
     }
 }
 
-/// Check if a person is "stale" — last seen more than 5 era-years ago.
-/// Across era boundaries, we treat any gap of ≥2 different eras as >5 years.
-fn is_stale(last_seen: (usize, u8), query_time: (usize, u8)) -> bool {
-    let (last_era, last_year) = last_seen;
-    let (query_era, query_year) = query_time;
-    if last_era == query_era {
-        query_year.saturating_sub(last_year) > 5
-    } else if query_era > last_era + 1 {
-        // Skipped at least one full era — definitely stale
-        true
-    } else {
-        // Adjacent eras — conservatively treat as not stale
-        // (the last year of one era is close to the first year of the next)
-        false
-    }
+/// Check if a person is "stale" — last seen more than ~30 AD years ago.
+const STALENESS_THRESHOLD_YEARS: u16 = 30;
+
+fn is_stale(last_seen_ad: u16, query_ad: u16) -> bool {
+    query_ad.saturating_sub(last_seen_ad) > STALENESS_THRESHOLD_YEARS
 }
 
 fn run_locate(query_args: &[String]) {
     let raw = query_args.join(" ");
-    let events: Vec<event::Event> = read_json("events.json");
+    let events_file: EventsFile = read_json("events.json");
+    let events = events_file.events;
     let parsed = parse_time_query(&raw);
 
     // Only process events that have time references
     let mut timed_events: Vec<&event::Event> = events.iter().filter(|e| e.time.is_some()).collect();
 
-    // Sort all events chronologically
+    // Sort all events chronologically by approximate AD year
     timed_events.sort_by_key(|e| time_sort_key(e.time.as_ref().unwrap()));
 
     // Determine the query time range for filtering output
-    // We need the latest time point in the query range as the "as of" cutoff
-    let query_max_key: Option<(usize, u8)> = timed_events
+    let query_max_key: Option<u16> = timed_events
         .iter()
         .filter(|e| time_matches_query(e.time.as_ref().unwrap(), &parsed))
         .map(|e| time_sort_key(e.time.as_ref().unwrap()))
@@ -607,14 +606,15 @@ fn run_locate(query_args: &[String]) {
     // Walk events in chronological order, building per-person state
     struct PersonState {
         location: Option<LocRecord>,
-        last_seen: (usize, u8), // (era_sort_key, year)
-        dead_at: Option<(usize, u8)>,
+        last_seen: u16,
+        dead_at: Option<u16>,
     }
 
     struct LocRecord {
         place: String,
         role: Option<String>,
-        as_of: String, // "regime/era N年"
+        as_of: String,
+        ad_year: u16,
     }
 
     let mut state: std::collections::HashMap<String, PersonState> =
@@ -648,43 +648,47 @@ fn run_locate(query_args: &[String]) {
         ps.last_seen = key;
 
         // Update location from structured place fields
+        let mut has_structured_place = false;
         match &e.kind {
             event::EventKind::Appointment {
                 place: Some(place),
                 new_title,
                 ..
             } => {
+                has_structured_place = true;
                 ps.location = Some(LocRecord {
                     place: place.name.clone(),
                     role: Some(new_title.clone()),
                     as_of: time_label.clone(),
+                    ad_year: key,
                 });
             }
             event::EventKind::Battle {
                 target_place: Some(place),
                 ..
             } => {
+                has_structured_place = true;
                 ps.location = Some(LocRecord {
                     place: place.name.clone(),
                     role: None,
                     as_of: time_label.clone(),
+                    ad_year: key,
                 });
             }
             event::EventKind::Death { .. } => {
                 ps.dead_at = Some(key);
             }
-            _ => {
-                // Fall back to context locations if no structured place
-                if ps.location.is_none()
-                    && let Some(loc) = e.locations.first()
-                {
-                    ps.location = Some(LocRecord {
-                        place: loc.name.clone(),
-                        role: loc.role_suffix.clone(),
-                        as_of: time_label.clone(),
-                    });
-                }
-            }
+            _ => {}
+        }
+
+        // Fall back to context locations when no structured place was set
+        if !has_structured_place && let Some(loc) = e.locations.first() {
+            ps.location = Some(LocRecord {
+                place: loc.name.clone(),
+                role: loc.role_suffix.clone(),
+                as_of: time_label.clone(),
+                ad_year: key,
+            });
         }
     }
 
@@ -706,23 +710,12 @@ fn run_locate(query_args: &[String]) {
             None => continue,
         };
 
-        // Skip stale persons (not seen in 5+ era-years)
+        // Skip stale persons
         if is_stale(ps.last_seen, query_max_key) {
             continue;
         }
 
-        // Determine status
-        let loc_key = event::era_sort_key(
-            loc.as_of.split('/').next().unwrap_or(""),
-            loc.as_of
-                .split('/')
-                .nth(1)
-                .and_then(|s| s.strip_suffix(|c: char| c.is_ascii_digit() || c == '年'))
-                .unwrap_or(""),
-        );
-        let status = if loc_key == query_max_key.0
-            && loc.as_of.ends_with(&format!("{}年", query_max_key.1))
-        {
+        let status = if loc.ad_year == query_max_key {
             "current"
         } else {
             "last_known"
@@ -987,6 +980,26 @@ fn run_extract(root: &Path) {
         eprintln!("  {} {}", time_str, event_str);
     }
 
+    // ── Build frequency maps for high-confidence filtering ─────────
+    let mut person_freq: std::collections::HashMap<String, usize> =
+        std::collections::HashMap::new();
+    let mut location_freq: std::collections::HashMap<String, usize> =
+        std::collections::HashMap::new();
+
+    for e in &events {
+        *person_freq.entry(e.person_name().to_string()).or_insert(0) += 1;
+        for loc_name in e.all_location_names() {
+            *location_freq.entry(loc_name.to_string()).or_insert(0) += 1;
+        }
+    }
+
+    let high_conf_persons: usize = person_freq.values().filter(|&&c| c >= 2).count();
+    let high_conf_locations: usize = location_freq.values().filter(|&&c| c >= 2).count();
+    eprintln!(
+        "\nHigh-confidence (freq >= 2): {} persons, {} locations",
+        high_conf_persons, high_conf_locations,
+    );
+
     // ── Write split JSON files ──────────────────────────────────────
     eprintln!("\n══════════════════════════════════════════");
     eprintln!("  WRITING OUTPUT FILES");
@@ -994,24 +1007,150 @@ fn run_extract(root: &Path) {
 
     std::fs::create_dir_all(OUTPUT_DIR).expect("cannot create output/");
 
-    // 1. persons.json
+    // 1. persons.json — biography summaries + in-text mentions + event person frequencies
+    #[derive(serde::Serialize)]
+    struct EventPersonEntry {
+        name: String,
+        event_count: usize,
+    }
     #[derive(serde::Serialize)]
     struct PersonsOutput {
         persons: Vec<extract::PersonSummary>,
         in_text_mentions: Vec<intext::InTextPerson>,
+        event_persons: Vec<EventPersonEntry>,
     }
+    let mut event_persons: Vec<EventPersonEntry> = person_freq
+        .iter()
+        .map(|(name, &count)| EventPersonEntry {
+            name: name.clone(),
+            event_count: count,
+        })
+        .collect();
+    event_persons.sort_by(|a, b| b.event_count.cmp(&a.event_count));
     write_json(
         "persons.json",
         &PersonsOutput {
             persons: summaries,
             in_text_mentions: in_text_persons,
+            event_persons,
         },
     );
 
-    // 2. events.json — just the event list (queryable by --query)
-    write_json("events.json", &events);
+    // 2. locations.json — all raw location extractions, grouped by name
+    #[derive(serde::Serialize)]
+    struct LocationSource {
+        source_file: String,
+        byte_offset: usize,
+        #[serde(skip_serializing_if = "Option::is_none")]
+        time: Option<String>,
+    }
+    #[derive(serde::Serialize)]
+    struct LocationEntry {
+        name: String,
+        is_qiao: bool,
+        #[serde(skip_serializing_if = "Option::is_none")]
+        role_suffix: Option<String>,
+        event_count: usize,
+        sources: Vec<LocationSource>,
+    }
 
-    // 3. timeline.json — timeline + time_index + stats
+    // Collect all location occurrences grouped by name
+    let mut loc_map: std::collections::HashMap<String, LocationEntry> =
+        std::collections::HashMap::new();
+    for e in &events {
+        let time_str = e
+            .time
+            .as_ref()
+            .map(|t| format!("{}/{}{}年", t.regime, t.era, t.year));
+
+        // Gather all PlaceRefs from this event
+        let mut refs_in_event: Vec<&event::PlaceRef> = e.locations.iter().collect();
+        match &e.kind {
+            event::EventKind::Appointment { place: Some(p), .. }
+            | event::EventKind::Battle {
+                target_place: Some(p),
+                ..
+            } => refs_in_event.push(p),
+            _ => {}
+        }
+
+        for pr in refs_in_event {
+            let entry = loc_map
+                .entry(pr.name.clone())
+                .or_insert_with(|| LocationEntry {
+                    name: pr.name.clone(),
+                    is_qiao: pr.is_qiao,
+                    role_suffix: pr.role_suffix.clone(),
+                    event_count: 0,
+                    sources: Vec::new(),
+                });
+            entry.event_count += 1;
+            entry.sources.push(LocationSource {
+                source_file: e.source_file.clone(),
+                byte_offset: e.byte_offset,
+                time: time_str.clone(),
+            });
+        }
+    }
+    let mut locations: Vec<LocationEntry> = loc_map.into_values().collect();
+    locations.sort_by(|a, b| b.event_count.cmp(&a.event_count));
+    write_json("locations.json", &locations);
+
+    // 3. events.json — split into high-confidence and unstructured
+    #[derive(serde::Serialize)]
+    struct EventsOutput {
+        events: Vec<event::Event>,
+        unstructured_events: Vec<event::Event>,
+    }
+
+    let mut high_confidence = Vec::new();
+    let mut unstructured = Vec::new();
+    for e in events {
+        let person_count = person_freq.get(e.person_name()).copied().unwrap_or(0);
+        if person_count >= 2 {
+            // Filter locations to only high-confidence
+            let mut filtered = e;
+            filtered
+                .locations
+                .retain(|l| location_freq.get(l.name.as_str()).copied().unwrap_or(0) >= 2);
+            // Also filter structured place fields
+            match &mut filtered.kind {
+                event::EventKind::Appointment { place, .. } => {
+                    if let Some(p) = place
+                        && location_freq.get(p.name.as_str()).copied().unwrap_or(0) < 2
+                    {
+                        *place = None;
+                    }
+                }
+                event::EventKind::Battle { target_place, .. } => {
+                    if let Some(p) = target_place
+                        && location_freq.get(p.name.as_str()).copied().unwrap_or(0) < 2
+                    {
+                        *target_place = None;
+                    }
+                }
+                event::EventKind::Death { .. } => {}
+            }
+            high_confidence.push(filtered);
+        } else {
+            unstructured.push(e);
+        }
+    }
+
+    eprintln!(
+        "  events: {} high-confidence, {} unstructured",
+        high_confidence.len(),
+        unstructured.len(),
+    );
+    write_json(
+        "events.json",
+        &EventsOutput {
+            events: high_confidence,
+            unstructured_events: unstructured,
+        },
+    );
+
+    // 4. timeline.json — timeline + time_index + stats
     #[derive(serde::Serialize)]
     struct TimelineOutput {
         timeline: event::Timeline,
@@ -1028,8 +1167,8 @@ fn run_extract(root: &Path) {
     );
 
     eprintln!("\nDone. Query with:");
-    eprintln!("  cargo run -- --query \"太和三年\"");
-    eprintln!("  cargo run -- --query \"太和元年-太和六年\"");
-    eprintln!("  cargo run -- --query \"@東晉\"");
-    eprintln!("  cargo run -- --timeline");
+    eprintln!("  cargo run -- query \"太和三年\"");
+    eprintln!("  cargo run -- query \"太和元年-太和六年\"");
+    eprintln!("  cargo run -- query \"@東晉\"");
+    eprintln!("  cargo run -- timeline");
 }
