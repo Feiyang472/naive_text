@@ -552,11 +552,25 @@ fn is_stale(last_seen_ad: u16, query_ad: u16) -> bool {
 fn run_locate(query_args: &[String]) {
     let raw = query_args.join(" ");
     let events_file: EventsFile = read_json("events.json");
-    let events = events_file.events;
+
+    // Use all events (high-confidence + unstructured) for locate
+    let mut all_events = events_file.events;
+    all_events.extend(events_file.unstructured_events);
+
     let parsed = parse_time_query(&raw);
 
+    // Pre-compute person frequency across the entire corpus (not just the query window)
+    let person_freq: std::collections::HashMap<&str, usize> = {
+        let mut freq: std::collections::HashMap<&str, usize> = std::collections::HashMap::new();
+        for e in &all_events {
+            *freq.entry(e.person_name()).or_insert(0) += 1;
+        }
+        freq
+    };
+
     // Only process events that have time references
-    let mut timed_events: Vec<&event::Event> = events.iter().filter(|e| e.time.is_some()).collect();
+    let mut timed_events: Vec<&event::Event> =
+        all_events.iter().filter(|e| e.time.is_some()).collect();
 
     // Sort all events chronologically by approximate AD year
     timed_events.sort_by_key(|e| time_sort_key(e.time.as_ref().unwrap()));
@@ -674,6 +688,11 @@ fn run_locate(query_args: &[String]) {
         std::collections::HashMap::new();
 
     for (person, ps) in &state {
+        // Skip persons appearing only once across entire corpus (likely false positives)
+        if person_freq.get(person.as_str()).copied().unwrap_or(0) < 2 {
+            continue;
+        }
+
         // Skip dead persons
         if let Some(dead_at) = ps.dead_at
             && dead_at <= query_max_key
