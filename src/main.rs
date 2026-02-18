@@ -41,6 +41,16 @@ enum Command {
     },
     /// Print the full era-year timeline inventory
     Timeline,
+    /// Extract source text for a time period
+    Text {
+        /// Time query, e.g. "太和三年", "太和元年-太和六年", "@東晉"
+        query: Vec<String>,
+    },
+    /// Map persons to locations for a time period
+    Locate {
+        /// Time query, e.g. "太和三年", "元嘉", "@東晉"
+        query: Vec<String>,
+    },
 }
 
 fn main() {
@@ -50,6 +60,8 @@ fn main() {
         Some(Command::Extract { corpus }) => run_extract(&corpus),
         Some(Command::Query { query }) => run_query(&query),
         Some(Command::Timeline) => run_timeline(),
+        Some(Command::Text { query }) => run_text(&query),
+        Some(Command::Locate { query }) => run_locate(&query),
         // Default: extract from current directory
         None => run_extract(Path::new(".")),
     }
@@ -100,26 +112,61 @@ struct TimelineFile {
 fn run_timeline() {
     let data: TimelineFile = read_json("timeline.json");
 
-    for regime in &data.timeline.regimes {
-        println!("{}:", regime.regime);
-        for era in &regime.eras {
-            let years: Vec<String> = era
-                .years
-                .iter()
-                .map(|tp| {
-                    if tp.occurrence_count > 1 {
-                        format!("{}年(×{})", tp.year, tp.occurrence_count)
-                    } else {
-                        format!("{}年", tp.year)
-                    }
-                })
-                .collect();
-            println!("  {}: {}", era.era, years.join(", "));
-        }
-        println!();
+    // Collect all (regime, era, year, occurrence_count) triples and compute AD year
+    struct YearEntry {
+        ad_year: u16,
+        regime: String,
+        era: String,
+        year: u8,
+        occurrences: usize,
     }
+
+    let mut entries: Vec<YearEntry> = Vec::new();
+    for rt in &data.timeline.regimes {
+        for et in &rt.eras {
+            for tp in &et.years {
+                if let Some(ad) = event::exact_ad_year(&rt.regime, &tp.era, tp.year) {
+                    entries.push(YearEntry {
+                        ad_year: ad,
+                        regime: rt.regime.clone(),
+                        era: tp.era.clone(),
+                        year: tp.year,
+                        occurrences: tp.occurrence_count,
+                    });
+                }
+            }
+        }
+    }
+
+    // Sort by AD year, then regime name for stable ordering
+    entries.sort_by(|a, b| a.ad_year.cmp(&b.ad_year).then(a.regime.cmp(&b.regime)));
+
+    // Group by AD year and print
+    let mut i = 0;
+    while i < entries.len() {
+        let ad = entries[i].ad_year;
+
+        // Collect all era names for this AD year
+        let mut labels: Vec<String> = Vec::new();
+        while i < entries.len() && entries[i].ad_year == ad {
+            let e = &entries[i];
+            labels.push(format!(
+                "{}/{}{}年 ({})",
+                e.regime, e.era, e.year, e.occurrences
+            ));
+            i += 1;
+        }
+
+        println!("AD{:>4}  {}", ad, labels.join("  "));
+    }
+
     eprintln!(
-        "Total: {} distinct (regime, era, year) triples",
+        "\nTotal: {} AD years, {} distinct (regime, era, year) triples",
+        {
+            let mut ads: Vec<u16> = entries.iter().map(|e| e.ad_year).collect();
+            ads.dedup();
+            ads.len()
+        },
         data.timeline.total_time_points
     );
 }
@@ -128,11 +175,20 @@ fn run_timeline() {
 //  QUERY MODE: read cached JSONs, return matching scopes + events
 // ═══════════════════════════════════════════════════════════════════════
 
+/// Deserialization wrapper for the new events.json format.
+#[derive(serde::Deserialize)]
+struct EventsFile {
+    events: Vec<event::Event>,
+    #[allow(dead_code)]
+    unstructured_events: Vec<event::Event>,
+}
+
 fn run_query(query_args: &[String]) {
     let raw = query_args.join(" ");
 
     let timeline_data: TimelineFile = read_json("timeline.json");
-    let events: Vec<event::Event> = read_json("events.json");
+    let events_file: EventsFile = read_json("events.json");
+    let events = events_file.events;
 
     // Parse query: "太和", "太和三年", "太和元年-太和六年", "太和1-5"
     let parsed = parse_time_query(&raw);
@@ -147,6 +203,23 @@ fn run_query(query_args: &[String]) {
             .time_index
             .query_range(era, *year_from, *year_to),
         TimeQuery::Regime { regime } => timeline_data.time_index.query_regime(regime),
+        TimeQuery::AdYear { year } => timeline_data
+            .time_index
+            .scopes
+            .iter()
+            .filter(|s| {
+                event::exact_ad_year(&s.time.regime, &s.time.era, s.time.year) == Some(*year)
+            })
+            .collect(),
+        TimeQuery::AdRange { from, to } => timeline_data
+            .time_index
+            .scopes
+            .iter()
+            .filter(|s| {
+                event::exact_ad_year(&s.time.regime, &s.time.era, s.time.year)
+                    .is_some_and(|y| y >= *from && y <= *to)
+            })
+            .collect(),
     };
 
     if matching_scopes.is_empty() {
@@ -170,17 +243,7 @@ fn run_query(query_args: &[String]) {
         .iter()
         .filter(|e| {
             if let Some(t) = &e.time {
-                match &parsed {
-                    TimeQuery::Single { era, year } => {
-                        t.era == *era && year.is_none_or(|y| t.year == y)
-                    }
-                    TimeQuery::Range {
-                        era,
-                        year_from,
-                        year_to,
-                    } => t.era == *era && t.year >= *year_from && t.year <= *year_to,
-                    TimeQuery::Regime { regime } => t.regime == *regime,
-                }
+                time_matches_query(t, &parsed)
             } else {
                 false
             }
@@ -230,6 +293,10 @@ enum TimeQuery {
     },
     /// All scopes for a regime: "@東晉", "@北魏"
     Regime { regime: String },
+    /// Single AD year: "524AD"
+    AdYear { year: u16 },
+    /// AD year range: "500AD-530AD"
+    AdRange { from: u16, to: u16 },
 }
 
 fn parse_time_query(raw: &str) -> TimeQuery {
@@ -240,6 +307,22 @@ fn parse_time_query(raw: &str) -> TimeQuery {
         return TimeQuery::Regime {
             regime: r.to_string(),
         };
+    }
+
+    // AD year range: "500AD-530AD" or "500ad-530ad"
+    if let Some((left, right)) = raw
+        .split_once('-')
+        .or_else(|| raw.split_once('—'))
+        .or_else(|| raw.split_once('~'))
+        && let (Some(from), Some(to)) =
+            (parse_ad_suffix(left.trim()), parse_ad_suffix(right.trim()))
+    {
+        return TimeQuery::AdRange { from, to };
+    }
+
+    // Single AD year: "524AD" or "524ad"
+    if let Some(year) = parse_ad_suffix(raw) {
+        return TimeQuery::AdYear { year };
     }
 
     // Range with dash: "太和元年-太和六年" or "太和1-5" or "太和元-六"
@@ -340,6 +423,337 @@ fn parse_cn_year(s: &str) -> Option<u8> {
         "二十" => Some(20),
         _ => None,
     }
+}
+
+/// Parse "524AD" or "524ad" → Some(524), else None.
+fn parse_ad_suffix(s: &str) -> Option<u16> {
+    let s = s.trim();
+    let stripped = s.strip_suffix("AD").or_else(|| s.strip_suffix("ad"))?;
+    stripped.trim().parse::<u16>().ok()
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  TEXT MODE: extract source text for a time period
+// ═══════════════════════════════════════════════════════════════════════
+
+fn run_text(query_args: &[String]) {
+    let raw = query_args.join(" ");
+    let timeline_data: TimelineFile = read_json("timeline.json");
+    let parsed = parse_time_query(&raw);
+
+    let matching_scopes = match &parsed {
+        TimeQuery::Single { era, year } => timeline_data.time_index.query(era, *year),
+        TimeQuery::Range {
+            era,
+            year_from,
+            year_to,
+        } => timeline_data
+            .time_index
+            .query_range(era, *year_from, *year_to),
+        TimeQuery::Regime { regime } => timeline_data.time_index.query_regime(regime),
+        TimeQuery::AdYear { year } => timeline_data
+            .time_index
+            .scopes
+            .iter()
+            .filter(|s| {
+                event::exact_ad_year(&s.time.regime, &s.time.era, s.time.year) == Some(*year)
+            })
+            .collect(),
+        TimeQuery::AdRange { from, to } => timeline_data
+            .time_index
+            .scopes
+            .iter()
+            .filter(|s| {
+                event::exact_ad_year(&s.time.regime, &s.time.era, s.time.year)
+                    .is_some_and(|y| y >= *from && y <= *to)
+            })
+            .collect(),
+    };
+
+    if matching_scopes.is_empty() {
+        eprintln!("No time scopes found for: {raw}");
+        return;
+    }
+
+    eprintln!("Found {} text scope(s) for: {}", matching_scopes.len(), raw);
+
+    // Group scopes by file to avoid re-reading
+    let mut by_file: std::collections::HashMap<&str, Vec<&event::TimeScope>> =
+        std::collections::HashMap::new();
+    for scope in &matching_scopes {
+        by_file
+            .entry(scope.span.file.as_str())
+            .or_default()
+            .push(scope);
+    }
+
+    for (file, scopes) in &by_file {
+        let content = match std::fs::read_to_string(file) {
+            Ok(c) => c,
+            Err(e) => {
+                eprintln!("Cannot read {}: {}", file, e);
+                continue;
+            }
+        };
+
+        for scope in scopes {
+            let start = scope.span.byte_start.min(content.len());
+            let end = scope.span.byte_end.min(content.len());
+            let text = &content[start..end];
+            if text.trim().is_empty() {
+                continue;
+            }
+
+            println!(
+                "── [{}/{}{}年] {} ──",
+                scope.time.regime, scope.time.era, scope.time.year, file
+            );
+            println!("{}", text.trim());
+            println!();
+        }
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  LOCATE MODE: map persons to locations for a time period
+// ═══════════════════════════════════════════════════════════════════════
+
+/// Chronological sort key using exact AD year.
+/// Globally comparable across regimes.
+fn time_sort_key(t: &event::TimeRef) -> u16 {
+    event::exact_ad_year(&t.regime, &t.era, t.year).unwrap_or(0)
+}
+
+/// Check whether a time point matches the parsed query.
+fn time_matches_query(t: &event::TimeRef, parsed: &TimeQuery) -> bool {
+    match parsed {
+        TimeQuery::Single { era, year } => t.era == *era && year.is_none_or(|y| t.year == y),
+        TimeQuery::Range {
+            era,
+            year_from,
+            year_to,
+        } => t.era == *era && t.year >= *year_from && t.year <= *year_to,
+        TimeQuery::Regime { regime } => t.regime == *regime,
+        TimeQuery::AdYear { year } => time_sort_key(t) == *year,
+        TimeQuery::AdRange { from, to } => {
+            let k = time_sort_key(t);
+            k >= *from && k <= *to
+        }
+    }
+}
+
+/// Check if a person is "stale" — last seen more than ~30 AD years ago.
+const STALENESS_THRESHOLD_YEARS: u16 = 30;
+
+fn is_stale(last_seen_ad: u16, query_ad: u16) -> bool {
+    query_ad.saturating_sub(last_seen_ad) > STALENESS_THRESHOLD_YEARS
+}
+
+fn run_locate(query_args: &[String]) {
+    let raw = query_args.join(" ");
+    let events_file: EventsFile = read_json("events.json");
+
+    // Use all events (high-confidence + unstructured) for locate
+    let mut all_events = events_file.events;
+    all_events.extend(events_file.unstructured_events);
+
+    let parsed = parse_time_query(&raw);
+
+    // Pre-compute person frequency across the entire corpus (not just the query window)
+    let person_freq: std::collections::HashMap<&str, usize> = {
+        let mut freq: std::collections::HashMap<&str, usize> = std::collections::HashMap::new();
+        for e in &all_events {
+            *freq.entry(e.person_name()).or_insert(0) += 1;
+        }
+        freq
+    };
+
+    // Only process events that have time references
+    let mut timed_events: Vec<&event::Event> =
+        all_events.iter().filter(|e| e.time.is_some()).collect();
+
+    // Sort all events chronologically by approximate AD year
+    timed_events.sort_by_key(|e| time_sort_key(e.time.as_ref().unwrap()));
+
+    // Determine the query time range for filtering output
+    let query_max_key: Option<u16> = timed_events
+        .iter()
+        .filter(|e| time_matches_query(e.time.as_ref().unwrap(), &parsed))
+        .map(|e| time_sort_key(e.time.as_ref().unwrap()))
+        .max();
+
+    let query_max_key = match query_max_key {
+        Some(k) => k,
+        None => {
+            eprintln!("No events found for: {raw}");
+            return;
+        }
+    };
+
+    // Walk events in chronological order, building per-person state
+    struct PersonState {
+        location: Option<LocRecord>,
+        last_seen: u16,
+        dead_at: Option<u16>,
+    }
+
+    struct LocRecord {
+        place: String,
+        role: Option<String>,
+        as_of: String,
+        ad_year: u16,
+        context: String,
+    }
+
+    let mut state: std::collections::HashMap<String, PersonState> =
+        std::collections::HashMap::new();
+
+    for e in &timed_events {
+        let t = e.time.as_ref().unwrap();
+        let key = time_sort_key(t);
+
+        // Stop processing events beyond the query cutoff
+        if key > query_max_key {
+            break;
+        }
+
+        let time_label = format!("{}/{}{}年 (AD{})", t.regime, t.era, t.year, key);
+
+        // Extract person name from event
+        let person = match &e.kind {
+            event::EventKind::Appointment { person, .. }
+            | event::EventKind::Battle { person, .. }
+            | event::EventKind::Death { person, .. } => person.clone(),
+        };
+
+        let ps = state.entry(person).or_insert(PersonState {
+            location: None,
+            last_seen: key,
+            dead_at: None,
+        });
+
+        // Update last seen
+        ps.last_seen = key;
+
+        // Update location from structured place fields
+        let mut has_structured_place = false;
+        match &e.kind {
+            event::EventKind::Appointment {
+                place: Some(place),
+                new_title,
+                ..
+            } => {
+                has_structured_place = true;
+                ps.location = Some(LocRecord {
+                    place: place.name.clone(),
+                    role: Some(new_title.clone()),
+                    as_of: time_label.clone(),
+                    ad_year: key,
+                    context: e.context.clone(),
+                });
+            }
+            event::EventKind::Battle {
+                target_place: Some(place),
+                ..
+            } => {
+                has_structured_place = true;
+                ps.location = Some(LocRecord {
+                    place: place.name.clone(),
+                    role: None,
+                    as_of: time_label.clone(),
+                    ad_year: key,
+                    context: e.context.clone(),
+                });
+            }
+            event::EventKind::Death { .. } => {
+                ps.dead_at = Some(key);
+            }
+            _ => {}
+        }
+
+        // Fall back to context locations when no structured place was set
+        if !has_structured_place && let Some(loc) = e.locations.first() {
+            ps.location = Some(LocRecord {
+                place: loc.name.clone(),
+                role: loc.role_suffix.clone(),
+                as_of: time_label.clone(),
+                ad_year: key,
+                context: e.context.clone(),
+            });
+        }
+    }
+
+    // Build output: filter to persons with known location, not dead, not stale
+    let mut result: std::collections::HashMap<String, PersonLocation> =
+        std::collections::HashMap::new();
+
+    for (person, ps) in &state {
+        // Skip persons appearing only once across entire corpus (likely false positives)
+        if person_freq.get(person.as_str()).copied().unwrap_or(0) < 2 {
+            continue;
+        }
+
+        // Skip dead persons
+        if let Some(dead_at) = ps.dead_at
+            && dead_at <= query_max_key
+        {
+            continue;
+        }
+
+        // Skip persons with no known location
+        let loc = match &ps.location {
+            Some(l) => l,
+            None => continue,
+        };
+
+        // Skip stale persons
+        if is_stale(ps.last_seen, query_max_key) {
+            continue;
+        }
+
+        let status = if loc.ad_year == query_max_key {
+            "current"
+        } else {
+            "last_known"
+        };
+
+        result.insert(
+            person.clone(),
+            PersonLocation {
+                location: loc.place.clone(),
+                role: loc.role.clone(),
+                as_of: loc.as_of.clone(),
+                as_of_ad: loc.ad_year,
+                status: status.to_string(),
+                context: loc.context.clone(),
+            },
+        );
+    }
+
+    if result.is_empty() {
+        eprintln!("No person-location mappings found for: {raw}");
+        return;
+    }
+
+    eprintln!(
+        "Found {} persons with location data for: {}",
+        result.len(),
+        raw
+    );
+
+    let json = serde_json::to_string_pretty(&result).expect("JSON serialization");
+    println!("{json}");
+}
+
+#[derive(serde::Serialize)]
+struct PersonLocation {
+    location: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    role: Option<String>,
+    as_of: String,
+    as_of_ad: u16,
+    status: String,
+    context: String,
 }
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -551,13 +965,40 @@ fn run_extract(root: &Path) {
                 person,
                 verb,
                 target,
-            } => format!("戰事 {}{}{}", person, verb, target),
+                target_place,
+            } => {
+                let place_str = target_place
+                    .as_ref()
+                    .map(|p| format!(" @{}", p.name))
+                    .unwrap_or_default();
+                format!("戰事 {}{}{}{}", person, verb, target, place_str)
+            }
             event::EventKind::Death { person, verb } => {
                 format!("死亡 {}{}", person, verb)
             }
         };
         eprintln!("  {} {}", time_str, event_str);
     }
+
+    // ── Build frequency maps for high-confidence filtering ─────────
+    let mut person_freq: std::collections::HashMap<String, usize> =
+        std::collections::HashMap::new();
+    let mut location_freq: std::collections::HashMap<String, usize> =
+        std::collections::HashMap::new();
+
+    for e in &events {
+        *person_freq.entry(e.person_name().to_string()).or_insert(0) += 1;
+        for loc_name in e.all_location_names() {
+            *location_freq.entry(loc_name.to_string()).or_insert(0) += 1;
+        }
+    }
+
+    let high_conf_persons: usize = person_freq.values().filter(|&&c| c >= 2).count();
+    let high_conf_locations: usize = location_freq.values().filter(|&&c| c >= 2).count();
+    eprintln!(
+        "\nHigh-confidence (freq >= 2): {} persons, {} locations",
+        high_conf_persons, high_conf_locations,
+    );
 
     // ── Write split JSON files ──────────────────────────────────────
     eprintln!("\n══════════════════════════════════════════");
@@ -566,24 +1007,150 @@ fn run_extract(root: &Path) {
 
     std::fs::create_dir_all(OUTPUT_DIR).expect("cannot create output/");
 
-    // 1. persons.json
+    // 1. persons.json — biography summaries + in-text mentions + event person frequencies
+    #[derive(serde::Serialize)]
+    struct EventPersonEntry {
+        name: String,
+        event_count: usize,
+    }
     #[derive(serde::Serialize)]
     struct PersonsOutput {
         persons: Vec<extract::PersonSummary>,
         in_text_mentions: Vec<intext::InTextPerson>,
+        event_persons: Vec<EventPersonEntry>,
     }
+    let mut event_persons: Vec<EventPersonEntry> = person_freq
+        .iter()
+        .map(|(name, &count)| EventPersonEntry {
+            name: name.clone(),
+            event_count: count,
+        })
+        .collect();
+    event_persons.sort_by(|a, b| b.event_count.cmp(&a.event_count));
     write_json(
         "persons.json",
         &PersonsOutput {
             persons: summaries,
             in_text_mentions: in_text_persons,
+            event_persons,
         },
     );
 
-    // 2. events.json — just the event list (queryable by --query)
-    write_json("events.json", &events);
+    // 2. locations.json — all raw location extractions, grouped by name
+    #[derive(serde::Serialize)]
+    struct LocationSource {
+        source_file: String,
+        byte_offset: usize,
+        #[serde(skip_serializing_if = "Option::is_none")]
+        time: Option<String>,
+    }
+    #[derive(serde::Serialize)]
+    struct LocationEntry {
+        name: String,
+        is_qiao: bool,
+        #[serde(skip_serializing_if = "Option::is_none")]
+        role_suffix: Option<String>,
+        event_count: usize,
+        sources: Vec<LocationSource>,
+    }
 
-    // 3. timeline.json — timeline + time_index + stats
+    // Collect all location occurrences grouped by name
+    let mut loc_map: std::collections::HashMap<String, LocationEntry> =
+        std::collections::HashMap::new();
+    for e in &events {
+        let time_str = e
+            .time
+            .as_ref()
+            .map(|t| format!("{}/{}{}年", t.regime, t.era, t.year));
+
+        // Gather all PlaceRefs from this event
+        let mut refs_in_event: Vec<&event::PlaceRef> = e.locations.iter().collect();
+        match &e.kind {
+            event::EventKind::Appointment { place: Some(p), .. }
+            | event::EventKind::Battle {
+                target_place: Some(p),
+                ..
+            } => refs_in_event.push(p),
+            _ => {}
+        }
+
+        for pr in refs_in_event {
+            let entry = loc_map
+                .entry(pr.name.clone())
+                .or_insert_with(|| LocationEntry {
+                    name: pr.name.clone(),
+                    is_qiao: pr.is_qiao,
+                    role_suffix: pr.role_suffix.clone(),
+                    event_count: 0,
+                    sources: Vec::new(),
+                });
+            entry.event_count += 1;
+            entry.sources.push(LocationSource {
+                source_file: e.source_file.clone(),
+                byte_offset: e.byte_offset,
+                time: time_str.clone(),
+            });
+        }
+    }
+    let mut locations: Vec<LocationEntry> = loc_map.into_values().collect();
+    locations.sort_by(|a, b| b.event_count.cmp(&a.event_count));
+    write_json("locations.json", &locations);
+
+    // 3. events.json — split into high-confidence and unstructured
+    #[derive(serde::Serialize)]
+    struct EventsOutput {
+        events: Vec<event::Event>,
+        unstructured_events: Vec<event::Event>,
+    }
+
+    let mut high_confidence = Vec::new();
+    let mut unstructured = Vec::new();
+    for e in events {
+        let person_count = person_freq.get(e.person_name()).copied().unwrap_or(0);
+        if person_count >= 2 {
+            // Filter locations to only high-confidence
+            let mut filtered = e;
+            filtered
+                .locations
+                .retain(|l| location_freq.get(l.name.as_str()).copied().unwrap_or(0) >= 2);
+            // Also filter structured place fields
+            match &mut filtered.kind {
+                event::EventKind::Appointment { place, .. } => {
+                    if let Some(p) = place
+                        && location_freq.get(p.name.as_str()).copied().unwrap_or(0) < 2
+                    {
+                        *place = None;
+                    }
+                }
+                event::EventKind::Battle { target_place, .. } => {
+                    if let Some(p) = target_place
+                        && location_freq.get(p.name.as_str()).copied().unwrap_or(0) < 2
+                    {
+                        *target_place = None;
+                    }
+                }
+                event::EventKind::Death { .. } => {}
+            }
+            high_confidence.push(filtered);
+        } else {
+            unstructured.push(e);
+        }
+    }
+
+    eprintln!(
+        "  events: {} high-confidence, {} unstructured",
+        high_confidence.len(),
+        unstructured.len(),
+    );
+    write_json(
+        "events.json",
+        &EventsOutput {
+            events: high_confidence,
+            unstructured_events: unstructured,
+        },
+    );
+
+    // 4. timeline.json — timeline + time_index + stats
     #[derive(serde::Serialize)]
     struct TimelineOutput {
         timeline: event::Timeline,
@@ -600,8 +1167,8 @@ fn run_extract(root: &Path) {
     );
 
     eprintln!("\nDone. Query with:");
-    eprintln!("  cargo run -- --query \"太和三年\"");
-    eprintln!("  cargo run -- --query \"太和元年-太和六年\"");
-    eprintln!("  cargo run -- --query \"@東晉\"");
-    eprintln!("  cargo run -- --timeline");
+    eprintln!("  cargo run -- query \"太和三年\"");
+    eprintln!("  cargo run -- query \"太和元年-太和六年\"");
+    eprintln!("  cargo run -- query \"@東晉\"");
+    eprintln!("  cargo run -- timeline");
 }

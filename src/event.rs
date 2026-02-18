@@ -160,12 +160,19 @@ impl Timeline {
                         EraTimeline { era, years }
                     })
                     .collect();
-                // Sort eras by their earliest year's first appearance
-                eras.sort_by_key(|e| e.years.first().map(|tp| tp.year).unwrap_or(0));
+                // Sort eras by position in ERA_NAMES (chronological within regime)
+                eras.sort_by_key(|e| era_sort_key(&regime, &e.era));
                 RegimeTimeline { regime, eras }
             })
             .collect();
-        regimes.sort_by_key(|r| r.regime.clone());
+        // Sort regimes by historical start year
+        regimes.sort_by_key(|r| {
+            regime::ERA_NAMES
+                .iter()
+                .find(|e| e.regime.as_chinese() == r.regime)
+                .map(|e| e.regime.start_ad_year())
+                .unwrap_or(9999)
+        });
 
         let total = map.len();
         Timeline {
@@ -203,6 +210,8 @@ pub enum EventKind {
         person: String,
         verb: String,
         target: String,
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        target_place: Option<PlaceRef>,
     },
     /// X薨/卒/崩 — death
     Death { person: String, verb: String },
@@ -218,6 +227,36 @@ pub struct Event {
     /// Byte offset of the event match in the source file
     pub byte_offset: usize,
     pub context: String,
+    /// All place references found in the event's context window.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub locations: Vec<PlaceRef>,
+}
+
+impl Event {
+    /// Extract the person name from this event's kind.
+    pub fn person_name(&self) -> &str {
+        match &self.kind {
+            EventKind::Appointment { person, .. }
+            | EventKind::Battle { person, .. }
+            | EventKind::Death { person, .. } => person,
+        }
+    }
+
+    /// Collect all location names from this event (structured + context).
+    pub fn all_location_names(&self) -> Vec<&str> {
+        let mut names: Vec<&str> = self.locations.iter().map(|l| l.name.as_str()).collect();
+        match &self.kind {
+            EventKind::Appointment { place: Some(p), .. }
+            | EventKind::Battle {
+                target_place: Some(p),
+                ..
+            } => {
+                names.push(p.name.as_str());
+            }
+            _ => {}
+        }
+        names
+    }
 }
 
 // ── Aggregated output ────────────────────────────────────────────────
@@ -331,8 +370,10 @@ impl EventScanner {
             .expect("appointment regex");
 
         // Battle: {name}{verb}{target}
+        // Stop target at function words (於/于 = "at", 以 = "with") to avoid
+        // capturing trailing place/person phrases as part of the target.
         let re_battle = Regex::new(&format!(
-            "({name_re})(攻|伐|討|克|陷|寇|圍|襲)([^，。]{{2,8}})"
+            "({name_re})(攻|伐|討|克|陷|寇|圍|襲)([^，。於于以]{{2,8}})"
         ))
         .expect("battle regex");
 
@@ -341,8 +382,10 @@ impl EventScanner {
             Regex::new(&format!("(?:{title_re})?({name_re})(薨|卒|崩)")).expect("death regex");
 
         // Place in title: {place}(刺史|太守|...)
+        // Exclude enumeration comma (、) and common punctuation to avoid matching
+        // across title boundaries like "振威將軍、刺史"
         let re_place_title =
-            Regex::new(r"(南?[^\s，。以為]{1,4})(刺史|太守|內史)").expect("place_title regex");
+            Regex::new(r"(南?[^\s，。、以為]{2,4})(刺史|太守|內史)").expect("place_title regex");
 
         EventScanner {
             re_time,
@@ -403,21 +446,83 @@ impl EventScanner {
         times
     }
 
+    /// Extract all place references from a context string.
+    /// Uses stricter validation than `extract_place_from_title` because context
+    /// windows contain arbitrary prose that can produce false place matches.
+    fn extract_places_from_context(&self, context: &str) -> Vec<PlaceRef> {
+        let mut places = Vec::new();
+        for caps in self.re_place_title.captures_iter(context) {
+            if let Some(m) = caps.get(1) {
+                let name = m.as_str().to_string();
+                if !is_plausible_place(&name) {
+                    continue;
+                }
+                let suffix = caps.get(2).map(|m| m.as_str().to_string());
+                let is_qiao =
+                    name.starts_with('南') && name.ends_with('州') && name.chars().count() >= 3;
+                places.push(PlaceRef {
+                    name,
+                    is_qiao,
+                    role_suffix: suffix,
+                });
+            }
+        }
+        places
+    }
+
     /// Extract a place reference from a title string like "郢州刺史".
+    /// Falls back to detecting bare administrative places like "梁州".
     fn extract_place_from_title(&self, title_str: &str) -> Option<PlaceRef> {
+        // Primary: match "{place}{role_suffix}" pattern (e.g., "郢州刺史")
         if let Some(caps) = self.re_place_title.captures(title_str) {
             let place_name = caps.get(1)?.as_str().to_string();
             let suffix = caps.get(2).map(|m| m.as_str().to_string());
 
-            // Detect 僑制: "南X州" pattern
             let is_qiao = place_name.starts_with('南')
                 && place_name.ends_with('州')
                 && place_name.chars().count() >= 3;
 
-            Some(PlaceRef {
+            return Some(PlaceRef {
                 name: place_name,
                 is_qiao,
                 role_suffix: suffix,
+            });
+        }
+
+        // Fallback: bare administrative place (e.g., "梁州", "南兗州", "吳郡")
+        let admin_suffixes: &[char] = &['州', '郡', '縣', '國'];
+        let char_count = title_str.chars().count();
+        if (2..=4).contains(&char_count)
+            && let Some(last) = title_str.chars().last()
+            && admin_suffixes.contains(&last)
+            && is_plausible_place(title_str)
+        {
+            let is_qiao =
+                title_str.starts_with('南') && title_str.ends_with('州') && char_count >= 3;
+            return Some(PlaceRef {
+                name: title_str.to_string(),
+                is_qiao,
+                role_suffix: None,
+            });
+        }
+
+        None
+    }
+
+    /// Detect if a battle target string is a place name.
+    fn detect_place_target(target: &str) -> Option<PlaceRef> {
+        let geo_suffixes: &[char] = &[
+            '州', '郡', '縣', '城', '關', '塞', '鎮', '壁', '山', '水', '河', '江', '池', '谷',
+            '嶺', '津', '渡', '橋', '亭', '營', '壘',
+        ];
+        let last = target.chars().last()?;
+        if geo_suffixes.contains(&last) {
+            Some(PlaceRef {
+                name: target.to_string(),
+                is_qiao: target.starts_with('南')
+                    && target.ends_with('州')
+                    && target.chars().count() >= 3,
+                role_suffix: None,
             })
         } else {
             None
@@ -485,6 +590,7 @@ impl EventScanner {
             let place = self.extract_place_from_title(new_title);
             let time = Self::find_time_context(&times, full.start());
             let context = extract_context(content, full.start(), 30);
+            let locations = self.extract_places_from_context(&context);
 
             events.push(Event {
                 kind: EventKind::Appointment {
@@ -496,6 +602,7 @@ impl EventScanner {
                 source_file: source_file.to_string(),
                 byte_offset: full.start(),
                 context,
+                locations,
             });
         }
 
@@ -510,19 +617,23 @@ impl EventScanner {
                 continue;
             }
 
+            let target_place = Self::detect_place_target(target);
             let time = Self::find_time_context(&times, full.start());
             let context = extract_context(content, full.start(), 30);
+            let locations = self.extract_places_from_context(&context);
 
             events.push(Event {
                 kind: EventKind::Battle {
                     person: person.to_string(),
                     verb: verb.to_string(),
                     target: target.to_string(),
+                    target_place,
                 },
                 time,
                 source_file: source_file.to_string(),
                 byte_offset: full.start(),
                 context,
+                locations,
             });
         }
 
@@ -538,6 +649,7 @@ impl EventScanner {
 
             let time = Self::find_time_context(&times, full.start());
             let context = extract_context(content, full.start(), 30);
+            let locations = self.extract_places_from_context(&context);
 
             events.push(Event {
                 kind: EventKind::Death {
@@ -548,6 +660,7 @@ impl EventScanner {
                 source_file: source_file.to_string(),
                 byte_offset: full.start(),
                 context,
+                locations,
             });
         }
 
@@ -582,9 +695,11 @@ impl EventScanner {
                             *place_counts.entry(p.name.clone()).or_insert(0) += 1;
                         }
                     }
-                    EventKind::Battle { target, .. } => {
+                    EventKind::Battle { target_place, .. } => {
                         battles += 1;
-                        *place_counts.entry(target.clone()).or_insert(0) += 1;
+                        if let Some(p) = target_place {
+                            *place_counts.entry(p.name.clone()).or_insert(0) += 1;
+                        }
                     }
                     EventKind::Death { .. } => {
                         deaths += 1;
@@ -623,6 +738,28 @@ impl EventScanner {
     }
 }
 
+/// Return the index of an era name within ERA_NAMES for a given regime.
+/// Used to sort eras chronologically within a regime.
+pub fn era_sort_key(regime_chinese: &str, era_name: &str) -> usize {
+    regime::ERA_NAMES
+        .iter()
+        .enumerate()
+        .find(|(_, e)| e.name == era_name && e.regime.as_chinese() == regime_chinese)
+        .map(|(i, _)| i)
+        .unwrap_or(usize::MAX)
+}
+
+/// Compute the exact AD year for a time reference.
+///
+/// Uses the per-era `start_ad` from `ERA_NAMES` (scraped from Wikipedia)
+/// to give a precise result: `start_ad + (year - 1)`.
+pub fn exact_ad_year(regime_chinese: &str, era_name: &str, year: u8) -> Option<u16> {
+    let entry = regime::ERA_NAMES
+        .iter()
+        .find(|e| e.regime.as_chinese() == regime_chinese && e.name == era_name)?;
+    Some(entry.start_ad + (year as u16 - 1))
+}
+
 fn collect_extra_surnames(persons: &[Person]) -> Vec<String> {
     let mut surnames = std::collections::HashSet::new();
     for p in persons {
@@ -639,6 +776,38 @@ fn collect_extra_surnames(persons: &[Person]) -> Vec<String> {
         }
     }
     surnames.into_iter().collect()
+}
+
+/// Check whether a string looks like a plausible administrative place name.
+/// Used to filter context-extracted place names (before 刺史/太守/內史).
+/// In Six Dynasties texts, administrative place names are 2-3 characters
+/// (e.g., 荊州, 揚州, 南兗州). Longer matches from context windows are
+/// almost always junk-prefixed (e.g., "攻暐洛州" where only "洛州" is real).
+fn is_plausible_place(name: &str) -> bool {
+    let char_count = name.chars().count();
+    // Reject very short or very long names
+    if !(2..=3).contains(&char_count) {
+        return false;
+    }
+    // Reject bracket/annotation artifacts
+    if name.contains('[') || name.contains(']') {
+        return false;
+    }
+    // Reject names starting with characters that cannot begin a place name
+    let first = name.chars().next().unwrap();
+    let bad_starts: &[char] = &[
+        '殺', '攻', '伐', '克', '陷', '討', '破', '逐', '執', // military verbs
+        '使', '令', '遣', '命', '除', '拜', '遷', '轉', '授', // appointment verbs
+        '乃', '又', '則', '其', '先', '亦', '再', '俄', '仍', // adverbs/connectives
+        '兄', '弟', '父', '母', '叔', // kinship terms
+        '偽', '僞', '故', '舊', '前', '後', '害', '盜', // modifiers/verbs
+        '加', '領', '兼', '行', '代', '署', '出', '入', '功', // official action words
+        '是', '走', '率', '擒', '獲', '斬', '在', '及', // misc verbs
+        '與', '隨', '自', '累', '左', '右', '號', '詔', '贈', // misc
+        '遙', '重', '衆', '勒', '從', '結', '更', '如', '乘', // misc
+        '時', '方', '永', '爲', '歷', '曆', '瑗', '苗', '宋', // temporal/surnames/misc
+    ];
+    !bad_starts.contains(&first)
 }
 
 fn extract_context(text: &str, byte_offset: usize, char_radius: usize) -> String {
@@ -662,4 +831,55 @@ fn extract_context(text: &str, byte_offset: usize, char_radius: usize) -> String
         .find(|l| !l.is_empty())
         .unwrap_or(&window)
         .to_string()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_exact_ad_year_liu_song() {
+        // 元嘉 started in AD 424
+        assert_eq!(exact_ad_year("劉宋", "元嘉", 1), Some(424));
+        assert_eq!(exact_ad_year("劉宋", "元嘉", 30), Some(453));
+    }
+
+    #[test]
+    fn test_exact_ad_year_northern_wei() {
+        // 太和 started in AD 477
+        assert_eq!(exact_ad_year("北魏", "太和", 1), Some(477));
+        assert_eq!(exact_ad_year("北魏", "太和", 23), Some(499));
+    }
+
+    #[test]
+    fn test_exact_ad_year_cross_regime_ordering() {
+        // 劉宋/元嘉 (AD 424) should be BEFORE 北魏/太和 (AD 477)
+        let song = exact_ad_year("劉宋", "元嘉", 1).unwrap();
+        let wei = exact_ad_year("北魏", "太和", 1).unwrap();
+        assert!(
+            song < wei,
+            "劉宋/元嘉({song}) should be before 北魏/太和({wei})"
+        );
+    }
+
+    #[test]
+    fn test_exact_ad_year_dynasty_succession() {
+        // 義熙14年 = AD 418, 元嘉1年 = AD 424 — gap of 6 years (劉宋永初 in between)
+        let yixi = exact_ad_year("東晉", "義熙", 14).unwrap();
+        let yuanjia = exact_ad_year("劉宋", "元嘉", 1).unwrap();
+        assert_eq!(yixi, 418);
+        assert_eq!(yuanjia, 424);
+        let gap = yuanjia.abs_diff(yixi);
+        assert!(gap <= 10, "義熙14→元嘉1 gap should be small, got {gap}");
+    }
+
+    #[test]
+    fn test_exact_ad_year_unknown_era() {
+        assert!(exact_ad_year("劉宋", "不存在", 1).is_none());
+    }
+
+    #[test]
+    fn test_exact_ad_year_unknown_regime() {
+        assert!(exact_ad_year("不存在", "元嘉", 1).is_none());
+    }
 }
