@@ -51,6 +51,12 @@ enum Command {
         /// Time query, e.g. "太和三年", "元嘉", "@東晉"
         query: Vec<String>,
     },
+    /// Follow all events, locations, and source text for a chosen person
+    Person {
+        /// Person name to look up (e.g. 陳顯達, 褚淵, 王敬則)
+        #[arg(required = true)]
+        name: Vec<String>,
+    },
 }
 
 fn main() {
@@ -62,6 +68,7 @@ fn main() {
         Some(Command::Timeline) => run_timeline(),
         Some(Command::Text { query }) => run_text(&query),
         Some(Command::Locate { query }) => run_locate(&query),
+        Some(Command::Person { name }) => run_person(&name),
         // Default: extract from corpus/
         None => run_extract(Path::new("corpus")),
     }
@@ -734,6 +741,240 @@ struct PersonLocation {
     as_of_ad: u16,
     status: String,
     context: String,
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  PERSON MODE: follow one person's events through the corpus
+// ═══════════════════════════════════════════════════════════════════════
+
+/// Extract a text snippet from `content` centred on `byte_offset`.
+/// Returns up to `before` bytes before and `after` bytes after the offset,
+/// snapped to valid UTF-8 char boundaries.
+fn snippet(content: &str, byte_offset: usize, before: usize, after: usize) -> String {
+    let mid = byte_offset.min(content.len());
+    let start = content.floor_char_boundary(mid.saturating_sub(before));
+    let end = content.ceil_char_boundary((mid + after).min(content.len()));
+    content[start..end].to_string()
+}
+
+/// Find person names from the events index that share the most characters
+/// with `query`, for use as "did you mean?" suggestions.
+fn suggest_names<'a>(all_names: &[&'a str], query: &str) -> Vec<&'a str> {
+    let query_chars: std::collections::HashSet<char> = query.chars().collect();
+    let mut scored: Vec<(usize, &str)> = all_names
+        .iter()
+        .map(|&n| {
+            let overlap = n.chars().filter(|c| query_chars.contains(c)).count();
+            (overlap, n)
+        })
+        .filter(|(s, _)| *s > 0)
+        .collect();
+    scored.sort_by(|a, b| b.0.cmp(&a.0));
+    scored.dedup_by_key(|(_, n)| *n);
+    scored.into_iter().map(|(_, n)| n).take(8).collect()
+}
+
+fn run_person(name_args: &[String]) {
+    // Chinese names have no spaces — join without separator.
+    let name = name_args.join("");
+
+    let events_file: EventsFile = read_json("events.json");
+    let mut all_events = events_file.events;
+    all_events.extend(events_file.unstructured_events);
+
+    // ── Filter ────────────────────────────────────────────────────────
+    let person_events: Vec<_> = all_events
+        .iter()
+        .filter(|e| e.person_name() == name)
+        .collect();
+
+    if person_events.is_empty() {
+        eprintln!("No events found for: {name}");
+
+        // Collect unique person names and suggest the closest matches.
+        let mut unique: Vec<&str> = all_events
+            .iter()
+            .map(|e| e.person_name())
+            .collect::<std::collections::HashSet<_>>()
+            .into_iter()
+            .collect();
+        unique.sort();
+
+        let suggestions = suggest_names(&unique, &name);
+        if !suggestions.is_empty() {
+            eprintln!("  Similar names found:");
+            for s in &suggestions {
+                let count = all_events.iter().filter(|e| e.person_name() == *s).count();
+                eprintln!("    {s}  ({count} events)");
+            }
+        }
+        return;
+    }
+
+    eprintln!(
+        "Found {} events for {} — building timeline…",
+        person_events.len(),
+        name
+    );
+
+    // ── Sort chronologically (untimed events last) ────────────────────
+    let mut sorted = person_events;
+    sorted.sort_by_key(|e| {
+        e.time
+            .as_ref()
+            .and_then(|t| event::exact_ad_year(&t.regime, &t.era, t.year))
+            .unwrap_or(u16::MAX)
+    });
+
+    // ── Build output ──────────────────────────────────────────────────
+    #[derive(serde::Serialize)]
+    struct Entry {
+        #[serde(skip_serializing_if = "Option::is_none")]
+        ad_year: Option<u16>,
+        #[serde(skip_serializing_if = "Option::is_none")]
+        time: Option<String>,
+        kind: &'static str,
+        detail: String,
+        #[serde(skip_serializing_if = "Option::is_none")]
+        location: Option<String>,
+        source: String,
+        snippet: String,
+    }
+
+    let mut file_cache: std::collections::HashMap<String, String> =
+        std::collections::HashMap::new();
+
+    let timeline: Vec<Entry> = sorted
+        .iter()
+        .map(|e| {
+            let ad_year = e
+                .time
+                .as_ref()
+                .and_then(|t| event::exact_ad_year(&t.regime, &t.era, t.year));
+
+            let time_str = e
+                .time
+                .as_ref()
+                .map(|t| format!("{}/{}{}年", t.regime, t.era, t.year));
+
+            let (kind, detail) = match &e.kind {
+                event::EventKind::Appointment {
+                    new_title, place, ..
+                } => {
+                    let loc = place
+                        .as_ref()
+                        .map(|p| {
+                            if p.is_qiao {
+                                format!(" @{}(僑)", p.name)
+                            } else {
+                                format!(" @{}", p.name)
+                            }
+                        })
+                        .unwrap_or_default();
+                    ("任命", format!("→{new_title}{loc}"))
+                }
+                event::EventKind::Promotion {
+                    verb,
+                    new_title,
+                    place,
+                    ..
+                } => {
+                    let loc = place
+                        .as_ref()
+                        .map(|p| {
+                            if p.is_qiao {
+                                format!(" @{}(僑)", p.name)
+                            } else {
+                                format!(" @{}", p.name)
+                            }
+                        })
+                        .unwrap_or_default();
+                    ("遷轉", format!("{verb}→{new_title}{loc}"))
+                }
+                event::EventKind::Accession { verb, .. } => ("即位", verb.clone()),
+                event::EventKind::Battle {
+                    verb,
+                    target,
+                    target_place,
+                    ..
+                } => {
+                    let loc = target_place
+                        .as_ref()
+                        .map(|p| format!(" @{}", p.name))
+                        .unwrap_or_default();
+                    ("戰事", format!("{verb}{target}{loc}"))
+                }
+                event::EventKind::Death { verb, .. } => ("死亡", verb.clone()),
+            };
+
+            let location = match &e.kind {
+                event::EventKind::Appointment { place: Some(p), .. }
+                | event::EventKind::Promotion { place: Some(p), .. } => Some(p.name.clone()),
+                event::EventKind::Battle {
+                    target_place: Some(p),
+                    ..
+                } => Some(p.name.clone()),
+                _ => e.locations.first().map(|l| l.name.clone()),
+            };
+
+            // Extract a generous text window around the event match.
+            let text_snippet = {
+                let content = file_cache
+                    .entry(e.source_file.clone())
+                    .or_insert_with(|| std::fs::read_to_string(&e.source_file).unwrap_or_default());
+                if content.is_empty() {
+                    e.context.clone()
+                } else {
+                    snippet(content, e.byte_offset, 80, 160)
+                }
+            };
+
+            Entry {
+                ad_year,
+                time: time_str,
+                kind,
+                detail,
+                location,
+                source: e.source_file.clone(),
+                snippet: text_snippet,
+            }
+        })
+        .collect();
+
+    // ── Summary to stderr, JSON to stdout ────────────────────────────
+    let timed = timeline.iter().filter(|e| e.ad_year.is_some()).count();
+    let ad_range: Option<(u16, u16)> = {
+        let years: Vec<u16> = timeline.iter().filter_map(|e| e.ad_year).collect();
+        if years.is_empty() {
+            None
+        } else {
+            Some((*years.iter().min().unwrap(), *years.iter().max().unwrap()))
+        }
+    };
+    if let Some((lo, hi)) = ad_range {
+        eprintln!(
+            "  AD{lo}–AD{hi}  ({timed} timed, {} untimed)",
+            timeline.len() - timed
+        );
+    }
+
+    #[derive(serde::Serialize)]
+    struct PersonTimeline<'a> {
+        person: &'a str,
+        event_count: usize,
+        timeline: Vec<Entry>,
+    }
+
+    let result = PersonTimeline {
+        person: &name,
+        event_count: timeline.len(),
+        timeline,
+    };
+
+    println!(
+        "{}",
+        serde_json::to_string_pretty(&result).expect("JSON serialization")
+    );
 }
 
 // ═══════════════════════════════════════════════════════════════════════
