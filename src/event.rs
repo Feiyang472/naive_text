@@ -1301,4 +1301,171 @@ mod tests {
     fn test_exact_ad_year_unknown_regime() {
         assert!(exact_ad_year("不存在", "元嘉", 1).is_none());
     }
+
+    // ── Whitelist: real historical events that MUST be extracted ─────
+    //
+    // Text snippets are taken verbatim from the corpus (晉書 载记/紀傳).
+    // If any of these tests fail after a code change, extraction quality
+    // has regressed on a well-documented historical event.
+
+    /// 以王猛為侍中、中書令、京兆尹 — 晉書·苻堅载记 (AD 357)
+    #[test]
+    fn test_whitelist_appointment_wang_meng() {
+        let s = scanner();
+        let text = "以王猛為侍中、中書令、京兆尹。";
+        let (events, _) = s.scan_file(text, crate::types::Book::JinShu, "test.txt");
+        let hit = events
+            .iter()
+            .any(|e| matches!(&e.kind, EventKind::Appointment { person, .. } if person == "王猛"));
+        assert!(hit, "王猛 appointment should be detected");
+    }
+
+    /// 慕容恪攻冀州刺史呂護于野王 — 晉書·穆帝纪 (AD 357)
+    #[test]
+    fn test_whitelist_battle_murong_ke() {
+        let s = scanner();
+        let text = "慕容恪攻冀州刺史呂護于野王，拔之，護奔走。";
+        let (events, _) = s.scan_file(text, crate::types::Book::JinShu, "test.txt");
+        let hit = events
+            .iter()
+            .any(|e| matches!(&e.kind, EventKind::Battle { person, .. } if person == "慕容恪"));
+        assert!(hit, "慕容恪 battle should be detected");
+    }
+
+    /// 溫嶠卒 — 晉書·成帝纪 (AD咸和1年)
+    #[test]
+    fn test_whitelist_death_wen_jiao() {
+        let s = scanner();
+        let text = "二月而天子反正，四月而溫嶠卒，郭默據湓口以叛。";
+        let (events, _) = s.scan_file(text, crate::types::Book::JinShu, "test.txt");
+        let hit = events
+            .iter()
+            .any(|e| matches!(&e.kind, EventKind::Death { person, .. } if person == "溫嶠"));
+        assert!(hit, "溫嶠 death should be detected");
+    }
+
+    /// 以慕容恪為輔國將軍 — 晉書·慕容儁载记 (AD永和5年)
+    #[test]
+    fn test_whitelist_appointment_murong_ke() {
+        let s = scanner();
+        let text = "以慕容恪為輔國將軍，慕容評為輔弼將軍，陽騖為輔義將軍。";
+        let (events, _) = s.scan_file(text, crate::types::Book::JinShu, "test.txt");
+        let hit = events.iter().any(
+            |e| matches!(&e.kind, EventKind::Appointment { person, .. } if person == "慕容恪"),
+        );
+        assert!(hit, "慕容恪 appointment should be detected");
+    }
+
+    /// 封劉裕為宋公 — 晉書·安帝纪 (AD義熙1年)
+    #[test]
+    fn test_whitelist_promotion_liu_yu() {
+        let s = scanner();
+        let text = "始封劉裕為宋公。";
+        let (events, _) = s.scan_file(text, crate::types::Book::JinShu, "test.txt");
+        let hit = events.iter().any(|e| {
+            matches!(&e.kind, EventKind::Promotion { person, verb, .. }
+                if person == "劉裕" && verb == "封")
+        });
+        assert!(hit, "封劉裕為宋公 should be detected as Promotion");
+    }
+
+    /// 轉王導為司徒 — 晉書·王敦传 (AD大興1年)
+    #[test]
+    fn test_whitelist_promotion_wang_dao() {
+        let s = scanner();
+        let text = "敦乃轉王導為司徒，自領揚州刺史。";
+        let (events, _) = s.scan_file(text, crate::types::Book::JinShu, "test.txt");
+        let hit = events.iter().any(|e| {
+            matches!(&e.kind, EventKind::Promotion { person, verb, .. }
+                if person == "王導" && verb == "轉")
+        });
+        assert!(hit, "轉王導為司徒 should be detected as Promotion");
+    }
+
+    // ── Blacklist: known false positives that MUST NOT be extracted ──
+    //
+    // These tests document systemic extraction bugs. They are currently
+    // EXPECTED TO FAIL — that is intentional. Fix the underlying regex
+    // or filter logic, then remove the `// KNOWN BUG` comment.
+    //
+    // Root causes:
+    //   (a) 步, 都, 石, 成 are all valid surnames in SINGLE_SURNAMES,
+    //       so the regex happily matches troop types, place names, and
+    //       title fragments as person+given-name pairs.
+    //   (b) The battle regex fires on 都督征討X where 都督征 is parsed
+    //       as surname 都 + given 督征, and 討 as the battle verb.
+    //   Fix ideas: per-event post-filter against a term blacklist, or
+    //   require that potential names must appear ≥2× in the corpus.
+
+    /// 都督征討 in a title phrase should not produce person "都督征". // KNOWN BUG
+    #[test]
+    fn test_blacklist_dudu_zheng_not_person() {
+        let s = scanner();
+        // "都督征討" is a common administrative title fragment, not a name.
+        // The battle regex fires on 督征討X because 都 is a valid surname.
+        let text = "以伏都為使持節、都督征討諸軍事、征東將軍、營州刺史。";
+        let (events, _) = s.scan_file(text, crate::types::Book::JinShu, "test.txt");
+        let fp: Vec<_> = events
+            .iter()
+            .filter(|e| e.person_name() == "都督征")
+            .collect();
+        assert!(
+            fp.is_empty(),
+            "都督征 should not be detected as a person name (false positive in title fragment)"
+        );
+    }
+
+    /// 步騎 (infantry+cavalry) should not be a person name. // KNOWN BUG
+    #[test]
+    fn test_blacklist_buqi_not_person() {
+        let s = scanner();
+        // "步騎" means "infantry and cavalry" — a troop type, not a name.
+        // Matched because 步 is in SINGLE_SURNAMES and 騎 is a valid CJK char.
+        let text = "步騎攻建康城，遂克之。";
+        let (events, _) = s.scan_file(text, crate::types::Book::JinShu, "test.txt");
+        let fp: Vec<_> = events
+            .iter()
+            .filter(|e| e.person_name() == "步騎")
+            .collect();
+        assert!(
+            fp.is_empty(),
+            "步騎 (troop type) should not be detected as a person name"
+        );
+    }
+
+    /// 石頭 (Stone Fortress 石頭城) should not be a person name. // KNOWN BUG
+    #[test]
+    fn test_blacklist_shitou_not_person() {
+        let s = scanner();
+        // 石頭 is the famous Stone Fortress (石頭城) near Jiankang, not a person.
+        // Matched because 石 is in SINGLE_SURNAMES.
+        let text = "以石頭為世子宮。";
+        let (events, _) = s.scan_file(text, crate::types::Book::SongShu, "test.txt");
+        let fp: Vec<_> = events
+            .iter()
+            .filter(|e| e.person_name() == "石頭")
+            .collect();
+        assert!(
+            fp.is_empty(),
+            "石頭 (place name) should not be detected as a person"
+        );
+    }
+
+    /// 成都 (city of Chengdu) should not be a person name. // KNOWN BUG
+    #[test]
+    fn test_blacklist_chengdu_not_person() {
+        let s = scanner();
+        // 成都 is the capital of Sichuan, not a person.
+        // Matched because 成 is in SINGLE_SURNAMES and 都 is a valid CJK char.
+        let text = "以成都為金山太守。";
+        let (events, _) = s.scan_file(text, crate::types::Book::JinShu, "test.txt");
+        let fp: Vec<_> = events
+            .iter()
+            .filter(|e| e.person_name() == "成都")
+            .collect();
+        assert!(
+            fp.is_empty(),
+            "成都 (city name) should not be detected as a person"
+        );
+    }
 }
