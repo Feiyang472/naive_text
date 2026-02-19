@@ -13,7 +13,7 @@ pub struct BiographyFile {
 /// Scan the corpus root and discover all biography/annals text files.
 ///
 /// Expected directory layout:
-///   {root}/{書名}/{NN_section}/{NN_卷名}/{NN_人名.txt}
+///   corpus/{書名}/{NN_section}/{NN_卷名}/{NN_人名.txt}
 ///
 /// We skip files named "目录.txt", "史論.txt", "史評.txt", "論.txt",
 /// "評.txt", "贊.txt", "序.txt", "注.txt" – those don't contain

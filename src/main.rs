@@ -31,7 +31,7 @@ enum Command {
     /// Run full corpus extraction → output/*.json
     Extract {
         /// Path to corpus root directory
-        #[arg(default_value = ".")]
+        #[arg(default_value = "corpus")]
         corpus: PathBuf,
     },
     /// Query time periods from cached output
@@ -62,8 +62,8 @@ fn main() {
         Some(Command::Timeline) => run_timeline(),
         Some(Command::Text { query }) => run_text(&query),
         Some(Command::Locate { query }) => run_locate(&query),
-        // Default: extract from current directory
-        None => run_extract(Path::new(".")),
+        // Default: extract from corpus/
+        None => run_extract(Path::new("corpus")),
     }
 }
 
@@ -399,30 +399,9 @@ fn parse_era_year(raw: &str) -> (String, Option<u8>) {
 }
 
 fn parse_cn_year(s: &str) -> Option<u8> {
-    match s {
-        "元" => Some(1),
-        "一" => Some(1),
-        "二" => Some(2),
-        "三" => Some(3),
-        "四" => Some(4),
-        "五" => Some(5),
-        "六" => Some(6),
-        "七" => Some(7),
-        "八" => Some(8),
-        "九" => Some(9),
-        "十" => Some(10),
-        "十一" => Some(11),
-        "十二" => Some(12),
-        "十三" => Some(13),
-        "十四" => Some(14),
-        "十五" => Some(15),
-        "十六" => Some(16),
-        "十七" => Some(17),
-        "十八" => Some(18),
-        "十九" => Some(19),
-        "二十" => Some(20),
-        _ => None,
-    }
+    // Delegate to the same algorithmic parser used in event.rs so query
+    // parsing handles the same range as event extraction (up to 九十九).
+    event::parse_cn_number(s)
 }
 
 /// Parse "524AD" or "524ad" → Some(524), else None.
@@ -620,11 +599,7 @@ fn run_locate(query_args: &[String]) {
         let time_label = format!("{}/{}{}年 (AD{})", t.regime, t.era, t.year, key);
 
         // Extract person name from event
-        let person = match &e.kind {
-            event::EventKind::Appointment { person, .. }
-            | event::EventKind::Battle { person, .. }
-            | event::EventKind::Death { person, .. } => person.clone(),
-        };
+        let person = e.person_name().to_string();
 
         let ps = state.entry(person).or_insert(PersonState {
             location: None,
@@ -639,6 +614,11 @@ fn run_locate(query_args: &[String]) {
         let mut has_structured_place = false;
         match &e.kind {
             event::EventKind::Appointment {
+                place: Some(place),
+                new_title,
+                ..
+            }
+            | event::EventKind::Promotion {
                 place: Some(place),
                 new_title,
                 ..
@@ -912,6 +892,8 @@ fn run_extract(root: &Path) {
         timeline.total_time_points
     );
     eprintln!("  Appointments: {}", event_stats.appointments);
+    eprintln!("  Promotions:   {}", event_stats.promotions);
+    eprintln!("  Accessions:   {}", event_stats.accessions);
     eprintln!("  Battles:      {}", event_stats.battles);
     eprintln!("  Deaths:       {}", event_stats.deaths);
 
@@ -948,7 +930,18 @@ fn run_extract(root: &Path) {
                 person,
                 new_title,
                 place,
+            }
+            | event::EventKind::Promotion {
+                person,
+                new_title,
+                place,
+                ..
             } => {
+                let tag = if matches!(&e.kind, event::EventKind::Promotion { .. }) {
+                    "遷轉"
+                } else {
+                    "任命"
+                };
                 let place_str = place
                     .as_ref()
                     .map(|p| {
@@ -959,7 +952,10 @@ fn run_extract(root: &Path) {
                         }
                     })
                     .unwrap_or_default();
-                format!("任命 {}→{}{}", person, new_title, place_str)
+                format!("{} {}→{}{}", tag, person, new_title, place_str)
+            }
+            event::EventKind::Accession { person, verb } => {
+                format!("即位 {}{}", person, verb)
             }
             event::EventKind::Battle {
                 person,
@@ -1063,10 +1059,11 @@ fn run_extract(root: &Path) {
             .as_ref()
             .map(|t| format!("{}/{}{}年", t.regime, t.era, t.year));
 
-        // Gather all PlaceRefs from this event
+        // Gather all PlaceRefs from this event (structured + context)
         let mut refs_in_event: Vec<&event::PlaceRef> = e.locations.iter().collect();
         match &e.kind {
             event::EventKind::Appointment { place: Some(p), .. }
+            | event::EventKind::Promotion { place: Some(p), .. }
             | event::EventKind::Battle {
                 target_place: Some(p),
                 ..
@@ -1115,7 +1112,8 @@ fn run_extract(root: &Path) {
                 .retain(|l| location_freq.get(l.name.as_str()).copied().unwrap_or(0) >= 2);
             // Also filter structured place fields
             match &mut filtered.kind {
-                event::EventKind::Appointment { place, .. } => {
+                event::EventKind::Appointment { place, .. }
+                | event::EventKind::Promotion { place, .. } => {
                     if let Some(p) = place
                         && location_freq.get(p.name.as_str()).copied().unwrap_or(0) < 2
                     {
@@ -1129,7 +1127,7 @@ fn run_extract(root: &Path) {
                         *target_place = None;
                     }
                 }
-                event::EventKind::Death { .. } => {}
+                event::EventKind::Accession { .. } | event::EventKind::Death { .. } => {}
             }
             high_confidence.push(filtered);
         } else {

@@ -17,7 +17,7 @@
 cargo build --release
 
 # 全量提取（输出到 output/*.json）
-cargo run -- extract .
+cargo run -- extract corpus
 
 # 按年号查询
 cargo run -- query "太和三年"
