@@ -1468,4 +1468,268 @@ mod tests {
             "成都 (city name) should not be detected as a person"
         );
     }
+
+    // ── Golden file tests: per-biography regression guards ───────────
+    //
+    // Each test reads a single committed corpus file and asserts that
+    // the extractor finds a known set of events. These run on every
+    // `cargo test` (no #[ignore]).  When the extractor improves and
+    // produces more events, the min_count assertions still pass.
+    // When extraction regresses (counts drop), the test fails loudly.
+
+    /// Debug helper — prints all events from a file so we can calibrate assertions.
+    #[test]
+    #[ignore = "diagnostic only; run with: cargo test test_debug_biography_events -- --ignored --nocapture"]
+    fn test_debug_biography_events() {
+        let s = scanner();
+        for (path, book) in [
+            ("corpus/晉書/03_載記/13_載記第十四　苻堅下/03_王猛.txt", crate::types::Book::JinShu),
+            ("corpus/晉書/02_列傳/36_列傳第三十七　溫嶠 郗鑒/02_溫嶠.txt", crate::types::Book::JinShu),
+            ("corpus/晉書/02_列傳/34_列傳第三十五　王導/02_王導.txt", crate::types::Book::JinShu),
+            ("corpus/南齊書/00_本紀/01_本紀第二　高帝下/02_建元元年.txt", crate::types::Book::NanQiShu),
+        ] {
+            let text = std::fs::read_to_string(path).expect("cannot read file");
+            let (events, _) = s.scan_file(&text, book, path);
+            eprintln!("=== {} ({} events) ===", path.rsplit('/').next().unwrap(), events.len());
+            for e in &events {
+                let kind_str = match &e.kind {
+                EventKind::Appointment { .. } => "Appointment",
+                EventKind::Promotion { .. } => "Promotion",
+                EventKind::Accession { .. } => "Accession",
+                EventKind::Battle { .. } => "Battle",
+                EventKind::Death { .. } => "Death",
+            };
+            eprintln!("  [{kind_str}] person={:?} ctx={:.50}", e.person_name(), e.context);
+            }
+        }
+    }
+
+    /// 建元元年 annals (南齊書·本紀) — high-density appointment file.
+    ///
+    /// This 本紀 file records many official appointments using the 以X為Y
+    /// pattern with full names, making it a reliable golden test for the
+    /// appointment extractor.  Baseline (established run): 11 events.
+    #[test]
+    fn test_golden_jianyuan_first_year_annals() {
+        let s = scanner();
+        let path = "corpus/南齊書/00_本紀/01_本紀第二　高帝下/02_建元元年.txt";
+        let text = std::fs::read_to_string(path)
+            .unwrap_or_else(|_| panic!("Cannot read corpus file: {path}"));
+
+        let (events, _) = s.scan_file(&text, crate::types::Book::NanQiShu, path);
+
+        // Specific true-positive appointments confirmed in the baseline run
+        for name in ["褚淵", "陳顯達", "李叔獻", "蕭景先"] {
+            let hit = events.iter().any(|e| {
+                matches!(&e.kind,
+                    EventKind::Appointment { person, .. } | EventKind::Promotion { person, .. }
+                    if person == name)
+            });
+            assert!(hit, "{name} appointment should be detected in 建元元年");
+        }
+
+        // At least 8 appointment/promotion events (baseline: 8)
+        let appt_count = events
+            .iter()
+            .filter(|e| {
+                matches!(&e.kind, EventKind::Appointment { .. } | EventKind::Promotion { .. })
+            })
+            .count();
+        assert!(
+            appt_count >= 8,
+            "Expected ≥8 appointment/promotion events in 建元元年, got {appt_count}"
+        );
+
+        // At least 1 death (baseline: 1 — 汝陰太妃王氏薨)
+        let death_count = events
+            .iter()
+            .filter(|e| matches!(&e.kind, EventKind::Death { .. }))
+            .count();
+        assert!(
+            death_count >= 1,
+            "Expected ≥1 death event in 建元元年, got {death_count}"
+        );
+
+        // Total events: at least 10 (baseline: 11)
+        assert!(
+            events.len() >= 10,
+            "Expected ≥10 total events in 建元元年, got {}",
+            events.len()
+        );
+    }
+
+    /// 溫嶠 biography (晉書·列傳) — checks accession and death detection.
+    ///
+    /// Classical biographies use abbreviated names after introduction, so
+    /// events about the subject himself are rarely detected.  This test
+    /// checks secondary figures mentioned in the text.
+    /// Baseline: 2 events (明帝 accession, 何氏 death).
+    #[test]
+    fn test_golden_wen_jiao_biography() {
+        let s = scanner();
+        let path = "corpus/晉書/02_列傳/36_列傳第三十七　溫嶠 郗鑒/02_溫嶠.txt";
+        let text = std::fs::read_to_string(path)
+            .unwrap_or_else(|_| panic!("Cannot read corpus file: {path}"));
+
+        let (events, _) = s.scan_file(&text, crate::types::Book::JinShu, path);
+
+        // 明帝即位 is mentioned (Emperor Ming of Eastern Jin)
+        let accession = events
+            .iter()
+            .any(|e| matches!(&e.kind, EventKind::Accession { person, .. } if person == "明帝"));
+        assert!(accession, "明帝 accession should be detected in 溫嶠 biography");
+
+        // At least 1 death event (baseline: 1 — 何氏卒)
+        let deaths = events
+            .iter()
+            .filter(|e| matches!(&e.kind, EventKind::Death { .. }))
+            .count();
+        assert!(
+            deaths >= 1,
+            "Expected ≥1 death event in 溫嶠 biography, got {deaths}"
+        );
+    }
+
+    /// 王導 biography (晉書·列傳) — checks multi-event extraction from a long text.
+    ///
+    /// Baseline: 4 events (明帝 accession, 1 battle, 2 deaths).
+    #[test]
+    fn test_golden_wang_dao_biography() {
+        let s = scanner();
+        let path = "corpus/晉書/02_列傳/34_列傳第三十五　王導/02_王導.txt";
+        let text = std::fs::read_to_string(path)
+            .unwrap_or_else(|_| panic!("Cannot read corpus file: {path}"));
+
+        let (events, _) = s.scan_file(&text, crate::types::Book::JinShu, path);
+
+        // 明帝即位 — Emperor Ming of Eastern Jin
+        let accession = events
+            .iter()
+            .any(|e| matches!(&e.kind, EventKind::Accession { person, .. } if person == "明帝"));
+        assert!(accession, "明帝 accession should be detected in 王導 biography");
+
+        // At least 2 death events (baseline: 2 — 曹氏, 聞安)
+        let deaths = events
+            .iter()
+            .filter(|e| matches!(&e.kind, EventKind::Death { .. }))
+            .count();
+        assert!(
+            deaths >= 2,
+            "Expected ≥2 death events in 王導 biography, got {deaths}"
+        );
+
+        // Total events: at least 3 (baseline: 4)
+        assert!(
+            events.len() >= 3,
+            "Expected ≥3 total events in 王導 biography, got {}",
+            events.len()
+        );
+    }
+
+    // ── Stats snapshot: full-corpus regression guard ─────────────────
+    //
+    // Reads tests/fixtures/expected_stats.json and asserts that a full
+    // corpus extraction meets the recorded minimum thresholds.
+    // Marked #[ignore] because it scans ~2100 files and takes ~10s.
+    //
+    // Run with:   cargo test -- --ignored test_corpus_stats_snapshot
+
+    #[derive(serde::Deserialize)]
+    struct ExpectedStats {
+        min_total_events: usize,
+        min_appointments: usize,
+        min_promotions: usize,
+        min_accessions: usize,
+        min_battles: usize,
+        min_deaths: usize,
+        min_high_confidence: usize,
+    }
+
+    #[test]
+    #[ignore = "full corpus extraction (~10 s); run with: cargo test -- --ignored test_corpus_stats_snapshot"]
+    fn test_corpus_stats_snapshot() {
+        use std::path::Path;
+
+        let root = Path::new("corpus");
+        assert!(root.exists(), "corpus/ directory not found");
+
+        let expected_json = std::fs::read_to_string("tests/fixtures/expected_stats.json")
+            .expect("tests/fixtures/expected_stats.json not found");
+        let expected: ExpectedStats =
+            serde_json::from_str(&expected_json).expect("invalid expected_stats.json");
+
+        let bio_files = crate::scanner::scan_corpus(root);
+        let persons: Vec<_> = bio_files
+            .iter()
+            .filter_map(crate::parser::parse_biography)
+            .collect();
+
+        let scan = EventScanner::new(&persons);
+        let (events, _, stats) = scan.scan_corpus(&bio_files);
+
+        // Count high-confidence events (person appears ≥2 times)
+        let mut person_freq = std::collections::HashMap::new();
+        for e in &events {
+            *person_freq.entry(e.person_name().to_string()).or_insert(0usize) += 1;
+        }
+        let high_conf = events
+            .iter()
+            .filter(|e| person_freq.get(e.person_name()).copied().unwrap_or(0) >= 2)
+            .count();
+
+        assert!(
+            stats.total_events >= expected.min_total_events,
+            "total_events {} fell below minimum {} — extraction regressed",
+            stats.total_events,
+            expected.min_total_events
+        );
+        assert!(
+            stats.appointments >= expected.min_appointments,
+            "appointments {} < min {}",
+            stats.appointments,
+            expected.min_appointments
+        );
+        assert!(
+            stats.promotions >= expected.min_promotions,
+            "promotions {} < min {}",
+            stats.promotions,
+            expected.min_promotions
+        );
+        assert!(
+            stats.accessions >= expected.min_accessions,
+            "accessions {} < min {}",
+            stats.accessions,
+            expected.min_accessions
+        );
+        assert!(
+            stats.battles >= expected.min_battles,
+            "battles {} < min {}",
+            stats.battles,
+            expected.min_battles
+        );
+        assert!(
+            stats.deaths >= expected.min_deaths,
+            "deaths {} < min {}",
+            stats.deaths,
+            expected.min_deaths
+        );
+        assert!(
+            high_conf >= expected.min_high_confidence,
+            "high_confidence {} < min {}",
+            high_conf,
+            expected.min_high_confidence
+        );
+
+        eprintln!(
+            "Stats snapshot passed: {} total ({} appointments, {} promotions, \
+             {} accessions, {} battles, {} deaths, {} high-confidence)",
+            stats.total_events,
+            stats.appointments,
+            stats.promotions,
+            stats.accessions,
+            stats.battles,
+            stats.deaths,
+            high_conf
+        );
+    }
 }

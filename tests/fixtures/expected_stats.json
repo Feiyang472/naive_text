@@ -1,0 +1,19 @@
+{
+  "_comment": "Minimum event counts from full corpus extraction (thresholds at ~80% of baseline run).",
+  "_baseline": {
+    "total_events": 2924,
+    "appointments": 658,
+    "promotions": 66,
+    "accessions": 134,
+    "battles": 1421,
+    "deaths": 645,
+    "high_confidence": 1446
+  },
+  "min_total_events": 2300,
+  "min_appointments": 520,
+  "min_promotions": 50,
+  "min_accessions": 100,
+  "min_battles": 1100,
+  "min_deaths": 500,
+  "min_high_confidence": 1100
+}
