@@ -18,10 +18,7 @@ fn all_events(ej: &EventsJson) -> impl Iterator<Item = &Event> {
 
 /// CJK character overlap score for name suggestion
 fn name_similarity(candidate: &str, query: &str) -> usize {
-    query
-        .chars()
-        .filter(|c| candidate.contains(*c))
-        .count()
+    query.chars().filter(|c| candidate.contains(*c)).count()
 }
 
 #[component]
