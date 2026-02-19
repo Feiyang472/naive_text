@@ -1483,23 +1483,43 @@ mod tests {
     fn test_debug_biography_events() {
         let s = scanner();
         for (path, book) in [
-            ("corpus/晉書/03_載記/13_載記第十四　苻堅下/03_王猛.txt", crate::types::Book::JinShu),
-            ("corpus/晉書/02_列傳/36_列傳第三十七　溫嶠 郗鑒/02_溫嶠.txt", crate::types::Book::JinShu),
-            ("corpus/晉書/02_列傳/34_列傳第三十五　王導/02_王導.txt", crate::types::Book::JinShu),
-            ("corpus/南齊書/00_本紀/01_本紀第二　高帝下/02_建元元年.txt", crate::types::Book::NanQiShu),
+            (
+                "corpus/晉書/03_載記/13_載記第十四　苻堅下/03_王猛.txt",
+                crate::types::Book::JinShu,
+            ),
+            (
+                "corpus/晉書/02_列傳/36_列傳第三十七　溫嶠 郗鑒/02_溫嶠.txt",
+                crate::types::Book::JinShu,
+            ),
+            (
+                "corpus/晉書/02_列傳/34_列傳第三十五　王導/02_王導.txt",
+                crate::types::Book::JinShu,
+            ),
+            (
+                "corpus/南齊書/00_本紀/01_本紀第二　高帝下/02_建元元年.txt",
+                crate::types::Book::NanQiShu,
+            ),
         ] {
             let text = std::fs::read_to_string(path).expect("cannot read file");
             let (events, _) = s.scan_file(&text, book, path);
-            eprintln!("=== {} ({} events) ===", path.rsplit('/').next().unwrap(), events.len());
+            eprintln!(
+                "=== {} ({} events) ===",
+                path.rsplit('/').next().unwrap(),
+                events.len()
+            );
             for e in &events {
                 let kind_str = match &e.kind {
-                EventKind::Appointment { .. } => "Appointment",
-                EventKind::Promotion { .. } => "Promotion",
-                EventKind::Accession { .. } => "Accession",
-                EventKind::Battle { .. } => "Battle",
-                EventKind::Death { .. } => "Death",
-            };
-            eprintln!("  [{kind_str}] person={:?} ctx={:.50}", e.person_name(), e.context);
+                    EventKind::Appointment { .. } => "Appointment",
+                    EventKind::Promotion { .. } => "Promotion",
+                    EventKind::Accession { .. } => "Accession",
+                    EventKind::Battle { .. } => "Battle",
+                    EventKind::Death { .. } => "Death",
+                };
+                eprintln!(
+                    "  [{kind_str}] person={:?} ctx={:.50}",
+                    e.person_name(),
+                    e.context
+                );
             }
         }
     }
@@ -1532,7 +1552,10 @@ mod tests {
         let appt_count = events
             .iter()
             .filter(|e| {
-                matches!(&e.kind, EventKind::Appointment { .. } | EventKind::Promotion { .. })
+                matches!(
+                    &e.kind,
+                    EventKind::Appointment { .. } | EventKind::Promotion { .. }
+                )
             })
             .count();
         assert!(
@@ -1577,7 +1600,10 @@ mod tests {
         let accession = events
             .iter()
             .any(|e| matches!(&e.kind, EventKind::Accession { person, .. } if person == "明帝"));
-        assert!(accession, "明帝 accession should be detected in 溫嶠 biography");
+        assert!(
+            accession,
+            "明帝 accession should be detected in 溫嶠 biography"
+        );
 
         // At least 1 death event (baseline: 1 — 何氏卒)
         let deaths = events
@@ -1606,7 +1632,10 @@ mod tests {
         let accession = events
             .iter()
             .any(|e| matches!(&e.kind, EventKind::Accession { person, .. } if person == "明帝"));
-        assert!(accession, "明帝 accession should be detected in 王導 biography");
+        assert!(
+            accession,
+            "明帝 accession should be detected in 王導 biography"
+        );
 
         // At least 2 death events (baseline: 2 — 曹氏, 聞安)
         let deaths = events
@@ -1670,7 +1699,9 @@ mod tests {
         // Count high-confidence events (person appears ≥2 times)
         let mut person_freq = std::collections::HashMap::new();
         for e in &events {
-            *person_freq.entry(e.person_name().to_string()).or_insert(0usize) += 1;
+            *person_freq
+                .entry(e.person_name().to_string())
+                .or_insert(0usize) += 1;
         }
         let high_conf = events
             .iter()
