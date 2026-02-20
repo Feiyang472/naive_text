@@ -40,10 +40,19 @@ fn build_cloud_items(events: &[Event]) -> Vec<CloudItem> {
     let mut counts: HashMap<String, usize> = HashMap::new();
 
     for event in events {
-        let d = event.data();
-        *counts.entry(d.person_name.clone()).or_insert(0) += 1;
-        if let Some(place) = &d.place {
-            *counts.entry(place.clone()).or_insert(0) += 1;
+        *counts.entry(event.person_name().to_string()).or_insert(0) += 1;
+        let place_name = match &event.kind {
+            crate::types::EventKind::Appointment { place, .. }
+            | crate::types::EventKind::Promotion { place, .. } => {
+                place.as_ref().map(|p| p.name.clone())
+            }
+            crate::types::EventKind::Battle { target_place, .. } => {
+                target_place.as_ref().map(|p| p.name.clone())
+            }
+            _ => None,
+        };
+        if let Some(place) = place_name {
+            *counts.entry(place).or_insert(0) += 1;
         }
     }
 
@@ -180,9 +189,9 @@ pub fn QueryPage() -> impl IntoView {
 
                         let cloud = if show_cloud {
                             let merged: Vec<Event> = ej
-                                .high_confidence
+                                .events
                                 .iter()
-                                .chain(ej.unstructured.iter())
+                                .chain(ej.unstructured_events.iter())
                                 .cloned()
                                 .collect();
                             let cloud_items = build_cloud_items(&merged);
@@ -225,26 +234,34 @@ pub fn QueryPage() -> impl IntoView {
                         }
 
                         let mut matched: Vec<Event> = ej
-                            .high_confidence
+                            .events
                             .iter()
-                            .chain(ej.unstructured.iter())
+                            .chain(ej.unstructured_events.iter())
                             .filter(|e| {
-                                let d = e.data();
-                                let person_ok = person.is_empty() || d.person_name.contains(&person);
+                                let person_ok = person.is_empty() || e.person_name().contains(&person);
+                                let place_name = match &e.kind {
+                                    crate::types::EventKind::Appointment { place, .. }
+                                    | crate::types::EventKind::Promotion { place, .. } => {
+                                        place.as_ref().map(|p| p.name.as_str())
+                                    },
+                                    crate::types::EventKind::Battle { target_place, .. } => {
+                                        target_place.as_ref().map(|p| p.name.as_str())
+                                    },
+                                    _ => None,
+                                };
                                 let place_ok = place.is_empty()
-                                    || d.place
-                                        .as_deref()
+                                    || place_name
                                         .map(|p| p.contains(&place))
                                         .unwrap_or(false);
                                 let era_ok = era.is_empty()
-                                    || d.time
-                                        .as_deref()
-                                        .map(|t| t.contains(&era))
+                                    || e.time
+                                        .as_ref()
+                                        .map(|t| t.raw.contains(&era))
                                         .unwrap_or(false);
-                                let year_ok = match (from, to, d.ad_year) {
-                                    (Some(f), Some(t), Some(y)) => y >= f && y <= t,
-                                    (Some(f), None, Some(y)) => y >= f,
-                                    (None, Some(t), Some(y)) => y <= t,
+                                let year_ok = match (from, to, e.time.as_ref()) {
+                                    (Some(f), Some(t), Some(tm)) => tm.year >= f as u8 && tm.year <= t as u8,
+                                    (Some(f), None, Some(tm)) => tm.year >= f as u8,
+                                    (None, Some(t), Some(tm)) => tm.year <= t as u8,
                                     (None, None, _) => true,
                                     _ => false,
                                 };
@@ -253,7 +270,15 @@ pub fn QueryPage() -> impl IntoView {
                                     || to.is_some()
                                     || !person.is_empty()
                                     || !place.is_empty();
-                                let kind_ok = kind == "all" || e.kind_str() == kind;
+                                let kind_ok = kind == "all" || {
+                                    match &e.kind {
+                                        crate::types::EventKind::Appointment { .. } => kind == "任命",
+                                        crate::types::EventKind::Promotion { .. } => kind == "晋升",
+                                        crate::types::EventKind::Accession { .. } => kind == "即位",
+                                        crate::types::EventKind::Battle { .. } => kind == "战役",
+                                        crate::types::EventKind::Death { .. } => kind == "薨卒",
+                                    }
+                                };
                                 (if has_filter {
                                     person_ok && place_ok && (era_ok || year_ok)
                                 } else {
@@ -263,7 +288,7 @@ pub fn QueryPage() -> impl IntoView {
                             .cloned()
                             .collect();
 
-                        matched.sort_by_key(|e| e.data().ad_year.unwrap_or(i32::MAX));
+                        matched.sort_by_key(|e| e.time.as_ref().map(|t| t.year).unwrap_or(255));
                         let count = matched.len();
 
                         if count == 0 {
@@ -283,20 +308,29 @@ pub fn QueryPage() -> impl IntoView {
                                 </p>
                                 <ul class="event-list">
                                     {matched.into_iter().take(500).map(|ev| {
-                                        let d = ev.data().clone();
-                                        let kind_str = ev.kind_str();
                                         let kind_zh = ev.kind_zh();
+                                        let person_name = ev.person_name().to_string();
+                                        let time_str = ev.time.as_ref().map(|t| t.raw.clone());
+                                        let place_name = match &ev.kind {
+                                            crate::types::EventKind::Appointment { place, .. }
+                                            | crate::types::EventKind::Promotion { place, .. } => {
+                                                place.as_ref().map(|p| p.name.clone())
+                                            },
+                                            crate::types::EventKind::Battle { target_place, .. } => {
+                                                target_place.as_ref().map(|p| p.name.clone())
+                                            },
+                                            _ => None,
+                                        };
                                         view! {
-                                            <li class=format!("event-item {kind_str}")>
+                                            <li class="event-item">
                                                 <div class="event-meta">
                                                     <span class="event-type-badge">{kind_zh}</span>
-                                                    <span class="event-person">{d.person_name.clone()}</span>
-                                                    {d.time.clone().map(|t| view! { <span class="event-time">{t}</span> })}
-                                                    {d.place.clone().map(|p| view! { <span class="event-place">"📍 " {p}</span> })}
-                                                    {d.ad_year.map(|y| view! { <span class="event-time">"(AD " {y} ")"</span> })}
+                                                    <span class="event-person">{person_name}</span>
+                                                    {time_str.map(|t| view! { <span class="event-time">{t}</span> })}
+                                                    {place_name.map(|p| view! { <span class="event-place">"📍 " {p}</span> })}
                                                 </div>
-                                                <div class="event-context">{d.context}</div>
-                                                <div class="event-source">{d.source_file}</div>
+                                                <div class="event-context">{ev.context.clone()}</div>
+                                                <div class="event-source">{ev.source_file.clone()}</div>
                                             </li>
                                         }
                                     }).collect_view()}

@@ -2,68 +2,15 @@
 use serde::Deserialize;
 use std::collections::HashMap;
 
+// Re-export shared types from person_types
+pub use person_types::{Event, EventKind};
+
 // ── events.json ──────────────────────────────────────────────────────────────
 
-#[derive(Deserialize, Clone, Debug)]
+#[derive(Debug, Clone, Deserialize)]
 pub struct EventsJson {
-    pub high_confidence: Vec<Event>,
-    pub unstructured: Vec<Event>,
-}
-
-#[derive(Deserialize, Clone, Debug)]
-#[serde(tag = "type")]
-pub enum Event {
-    Appointment(EventData),
-    Promotion(EventData),
-    Accession(EventData),
-    Battle(EventData),
-    Death(EventData),
-}
-
-impl Event {
-    pub fn data(&self) -> &EventData {
-        match self {
-            Event::Appointment(d)
-            | Event::Promotion(d)
-            | Event::Accession(d)
-            | Event::Battle(d)
-            | Event::Death(d) => d,
-        }
-    }
-
-    pub fn kind_str(&self) -> &'static str {
-        match self {
-            Event::Appointment(_) => "Appointment",
-            Event::Promotion(_) => "Promotion",
-            Event::Accession(_) => "Accession",
-            Event::Battle(_) => "Battle",
-            Event::Death(_) => "Death",
-        }
-    }
-
-    pub fn kind_zh(&self) -> &'static str {
-        match self {
-            Event::Appointment(_) => "任命",
-            Event::Promotion(_) => "晋升",
-            Event::Accession(_) => "即位",
-            Event::Battle(_) => "战役",
-            Event::Death(_) => "薨卒",
-        }
-    }
-}
-
-#[derive(Deserialize, Clone, Debug)]
-pub struct EventData {
-    pub person_name: String,
-    #[serde(default)]
-    pub time: Option<String>,
-    #[serde(default)]
-    pub place: Option<String>,
-    pub context: String,
-    pub source_file: String,
-    pub byte_offset: usize,
-    #[serde(default)]
-    pub ad_year: Option<i32>,
+    pub events: Vec<Event>,
+    pub unstructured_events: Vec<Event>,
 }
 
 // ── timeline.json ─────────────────────────────────────────────────────────────

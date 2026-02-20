@@ -1,6 +1,6 @@
 use leptos::prelude::*;
 use leptos_router::{
-    components::{Route, Router, Routes, A},
+    components::{A, Route, Router, Routes},
     path,
 };
 
