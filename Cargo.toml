@@ -1,6 +1,3 @@
-[workspace]
-members = [".", "frontend", "types"]
-
 [package]
 name = "person_extract"
 version = "0.1.0"
