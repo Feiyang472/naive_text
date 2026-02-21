@@ -142,10 +142,18 @@ name = "person_extract"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "person_types",
  "regex",
  "serde",
  "serde_json",
  "walkdir",
+]
+
+[[package]]
+name = "person_types"
+version = "0.1.0"
+dependencies = [
+ "serde",
 ]
 
 [[package]]

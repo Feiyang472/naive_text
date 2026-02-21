@@ -2,7 +2,7 @@ use leptos::prelude::*;
 use leptos::task::spawn_local;
 use leptos::web_sys;
 
-use crate::types::{Event, EventsJson};
+use crate::types::{Event, EventKind, EventsJson};
 
 async fn fetch_events() -> Result<EventsJson, String> {
     let resp = gloo_net::http::Request::get("/data/events.json")
@@ -13,15 +13,12 @@ async fn fetch_events() -> Result<EventsJson, String> {
 }
 
 fn all_events(ej: &EventsJson) -> impl Iterator<Item = &Event> {
-    ej.high_confidence.iter().chain(ej.unstructured.iter())
+    ej.events.iter().chain(ej.unstructured_events.iter())
 }
 
 /// CJK character overlap score for name suggestion
 fn name_similarity(candidate: &str, query: &str) -> usize {
-    query
-        .chars()
-        .filter(|c| candidate.contains(*c))
-        .count()
+    query.chars().filter(|c| candidate.contains(*c)).count()
 }
 
 #[component]
@@ -67,14 +64,14 @@ pub fn PersonPage() -> impl IntoView {
                     Some(Err(e)) => view! { <p class="error">{e}</p> }.into_any(),
                     Some(Ok(ej)) => {
                         let mut matched: Vec<Event> = all_events(&ej)
-                            .filter(|e| e.data().person_name == query)
+                            .filter(|e| e.person_name() == query)
                             .cloned()
                             .collect();
 
                         if matched.is_empty() {
                             // Suggest similar names
                             let mut names: Vec<String> = all_events(&ej)
-                                .map(|e| e.data().person_name.clone())
+                                .map(|e| e.person_name().to_string())
                                 .collect::<std::collections::HashSet<_>>()
                                 .into_iter()
                                 .collect();
@@ -115,12 +112,12 @@ pub fn PersonPage() -> impl IntoView {
                             }.into_any();
                         }
 
-                        // Sort by ad_year, untimed last
-                        matched.sort_by_key(|e| e.data().ad_year.unwrap_or(i32::MAX));
+                        // Sort by time year, untimed last
+                        matched.sort_by_key(|e| e.time.as_ref().map(|t| t.year).unwrap_or(255));
 
                         let count = matched.len();
-                        let first_year = matched.iter().find_map(|e| e.data().ad_year);
-                        let last_year = matched.iter().rev().find_map(|e| e.data().ad_year);
+                        let first_year = matched.iter().find_map(|e| e.time.as_ref().map(|t| t.year as i32));
+                        let last_year = matched.iter().rev().find_map(|e| e.time.as_ref().map(|t| t.year as i32));
 
                         view! {
                             <div>
@@ -135,25 +132,30 @@ pub fn PersonPage() -> impl IntoView {
                                 </p>
                                 <ul class="event-list">
                                     {matched.into_iter().map(|ev| {
-                                        let d = ev.data().clone();
-                                        let kind = ev.kind_str();
                                         let kind_zh = ev.kind_zh();
+                                        let time_str = ev.time.as_ref().map(|t| t.raw.clone());
+                                        let place_str = match &ev.kind {
+                                            EventKind::Appointment { place, .. } | EventKind::Promotion { place, .. } => {
+                                                place.as_ref().map(|p| p.name.clone())
+                                            },
+                                            EventKind::Battle { target_place, .. } => {
+                                                target_place.as_ref().map(|p| p.name.clone())
+                                            },
+                                            _ => None,
+                                        };
                                         view! {
-                                            <li class=format!("event-item {kind}")>
+                                            <li class="event-item">
                                                 <div class="event-meta">
                                                     <span class="event-type-badge">{kind_zh}</span>
-                                                    {d.time.clone().map(|t| view! {
+                                                    {time_str.clone().map(|t| view! {
                                                         <span class="event-time">{t}</span>
                                                     })}
-                                                    {d.place.clone().map(|p| view! {
+                                                    {place_str.map(|p| view! {
                                                         <span class="event-place">"📍 " {p}</span>
                                                     })}
-                                                    {d.ad_year.map(|y| view! {
-                                                        <span class="event-time">"(AD " {y} ")"</span>
-                                                    })}
                                                 </div>
-                                                <div class="event-context">{d.context}</div>
-                                                <div class="event-source">{d.source_file}</div>
+                                                <div class="event-context">{ev.context.clone()}</div>
+                                                <div class="event-source">{ev.source_file.clone()}</div>
                                             </li>
                                         }
                                     }).collect_view()}

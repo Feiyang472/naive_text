@@ -182,19 +182,11 @@ fn run_timeline() {
 //  QUERY MODE: read cached JSONs, return matching scopes + events
 // ═══════════════════════════════════════════════════════════════════════
 
-/// Deserialization wrapper for the new events.json format.
-#[derive(serde::Deserialize)]
-struct EventsFile {
-    events: Vec<event::Event>,
-    #[allow(dead_code)]
-    unstructured_events: Vec<event::Event>,
-}
-
 fn run_query(query_args: &[String]) {
     let raw = query_args.join(" ");
 
     let timeline_data: TimelineFile = read_json("timeline.json");
-    let events_file: EventsFile = read_json("events.json");
+    let events_file: person_types::EventsOutput = read_json("events.json");
     let events = events_file.events;
 
     // Parse query: "太和", "太和三年", "太和元年-太和六年", "太和1-5"
@@ -537,7 +529,7 @@ fn is_stale(last_seen_ad: u16, query_ad: u16) -> bool {
 
 fn run_locate(query_args: &[String]) {
     let raw = query_args.join(" ");
-    let events_file: EventsFile = read_json("events.json");
+    let events_file: person_types::EventsOutput = read_json("events.json");
 
     // Use all events (high-confidence + unstructured) for locate
     let mut all_events = events_file.events;
@@ -778,7 +770,7 @@ fn run_person(name_args: &[String]) {
     // Chinese names have no spaces — join without separator.
     let name = name_args.join("");
 
-    let events_file: EventsFile = read_json("events.json");
+    let events_file: person_types::EventsOutput = read_json("events.json");
     let mut all_events = events_file.events;
     all_events.extend(events_file.unstructured_events);
 
@@ -1335,12 +1327,6 @@ fn run_extract(root: &Path) {
     write_json("locations.json", &locations);
 
     // 3. events.json — split into high-confidence and unstructured
-    #[derive(serde::Serialize)]
-    struct EventsOutput {
-        events: Vec<event::Event>,
-        unstructured_events: Vec<event::Event>,
-    }
-
     let mut high_confidence = Vec::new();
     let mut unstructured = Vec::new();
     for e in events {
@@ -1383,7 +1369,7 @@ fn run_extract(root: &Path) {
     );
     write_json(
         "events.json",
-        &EventsOutput {
+        &person_types::EventsOutput {
             events: high_confidence,
             unstructured_events: unstructured,
         },

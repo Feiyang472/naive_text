@@ -72,7 +72,7 @@ pub fn HomePage() -> impl IntoView {
                                     <h3>"高频地名"</h3>
                                     <ul style="list-style:none;display:flex;flex-wrap:wrap;gap:0.4rem;">
                                         {s.top_places.iter().take(20).map(|(name, count)| view! {
-                                            <li style="background:#f4f0e8;border-radius:3px;padding:0.15rem 0.4rem;font-size:0.85rem;">
+                                            <li style="background:#000000;border-radius:3px;padding:0.15rem 0.4rem;font-size:0.85rem;">
                                                 {name.clone()}
                                                 <span style="color:#999;margin-left:0.25rem;">{count.to_string()}</span>
                                             </li>

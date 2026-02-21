@@ -119,6 +119,11 @@ const BLACKLIST: &[&str] = &[
     "虜軍",
     // "{X}之眾/之師/之兵" — collective, not person
     "梁之眾",
+    // Troop types and place names mistaken for person names
+    "步騎",   // infantry+cavalry (troop type)
+    "石頭",   // Stone Fortress (石頭城) near Jiankang
+    "成都",   // city of Chengdu (Sichuan capital)
+    "都督征", // title fragment: 都督征討 (military administrative role)
 ];
 
 /// Check if the captured name is a false positive.
